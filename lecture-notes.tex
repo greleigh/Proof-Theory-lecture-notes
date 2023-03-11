@@ -1,0 +1,57 @@
+\documentclass[%
+	paper=174mm:247mm,
+	11pt,
+	DIV=10,
+	leqno,
+	titlepage,
+	headsepline,
+	%headings=twolinechapter,
+	headsepline=false,
+	toc=bib,
+	toc=sectionentrywithoutdots,
+	toc=chapterentrywithoutdots
+	% enabledeprecatedfontcommands,
+	% final,
+	unicode
+	]%
+	{scrbook}
+%
+%\usepackage{polyglossia}
+\usepackage[british]{babel}
+%
+\input{input/typesetting}
+%
+\input{input/packages}
+\input{input/styling}
+%
+\input{input/unicodes}
+%
+\input{input/macros}
+%
+\usepackage[bookmarks]{hyperref}
+
+% Meta
+\title{Lecture Notes in Proof Theory}
+\author{Graham E.\ Leigh}
+
+\includeonly{
+	chapters/intro,
+	chapters/int-prop-logic,
+	chapters/cla-prop-logic,
+	chapters/FOL,
+	chapters/conseq-of-ce,
+	chapters/ord-anal,
+	}
+
+\begin{document}
+\maketitle
+
+% Intro
+\include{chapters/intro}
+\include{chapters/int-prop-logic}
+\include{chapters/cla-prop-logic}
+\include{chapters/FOL}
+\include{chapters/conseq-of-ce}
+\include{chapters/ord-anal}
+
+\end{document}

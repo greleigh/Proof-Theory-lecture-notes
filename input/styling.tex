@@ -1,0 +1,80 @@
+% File styling.tex
+% !TEX root = ../syntax.tex
+% LTeX: enabled=false
+% Packages and default settings regarding typesetting and format
+%---------------------------------
+% Page layout assistance
+\usepackage{scrlayer-scrpage}
+\usepackage[marginparsep=2mm]{geometry}
+%---------------------------------
+% Theorem environments
+%\usepackage[amsmath,thmmarks,hyperref]{ntheorem}
+\usepackage{thmtools}
+\usepackage{mathtools}
+%---------------------------------
+\declaretheorem[numberwithin=section]{theorem}
+\declaretheorem[sibling=theorem]{lemma}
+\declaretheorem[sibling=theorem]{corollary}
+\declaretheorem[sibling=theorem]{remark}
+\declaretheorem[style=definition,sibling=theorem]{definition}
+\declaretheorem[style=definition,numberwithin=section]{example}
+% \declaretheorem[numbered=no]{proof}
+%---------------------------------
+% BibLaTeX
+%\usepackage[%
+%  style=authoryear,% author-year style with extensions
+%  backend=biber,%
+%  articlein=false,% remove 'in' for journals
+%  innamebeforetitle=true,% "in: Editor, Book"
+%  dashed=false,% repeated authorship is not dashed
+%  maxnames=1000,% don't cut listings short unless we want them too.
+%  language=autobib,autolang=hyphen,% Can help with language
+%  doi=false,isbn=false,eprint=false,% do not print doi, etc. 
+%  ]{biblatex}
+%
+%---------------------------------
+% Disposition
+% Chapter:
+\renewcommand{\raggedchapter}{\centering}
+\setkomafont{chapter}{\sffamily\mdseries\LARGE}
+\addtokomafont{chapterentry}{\rmfamily\mdseries}
+\addtokomafont{chapterprefix}{\normalsize}
+% (Sub)section
+\renewcommand{\raggedsection}{\centering}
+\setkomafont{section}{\rmfamily\mdseries\sffamily\large}
+\setkomafont{subsection}{\centering\rmfamily\mdseries\itshape}
+% Paragraph
+% \renewcommand{\raggedsection}{\centering}
+\setkomafont{paragraph}{\rmfamily\mdseries\itshape}
+\RedeclareSectionCommands[
+  beforeskip=-1.5ex plus -.5ex minus -0.2ex,
+  afterskip=1.5ex plus .5ex minus 0.2ex,
+  ]{paragraph}
+\addtokomafont{paragraph}{\raggedright} 
+% Remove reference to chapter from section.
+% \RedeclareSectionCommand[%
+%   counterwithout=chapter,
+%             ]{section}
+%---------------------------------
+% Layout
+% Page layouts
+\setkomafont{pagehead}{\itshape}
+\ohead{\upshape\thepage} % Outer side of pages
+\rehead{\leftmark} % Right side of even pages
+\lohead{\rightmark} % Left side of odd pages
+\ofoot{\small\itshape version: \today}
+\ifoot{}
+\cfoot{}
+\pagestyle{scrheadings}
+%---------------------------------
+% Control over lists:
+\usepackage{enumitem}
+% New defaults for enumerate & itemize:
+\setlist{itemsep=0pt}
+%   Label should be upright
+\setlist[enumerate,itemize]{format=\normalfont}
+%   Label #1: roman (i), (ii), etc
+\setlist[enumerate,1]{label=(\roman*)}
+%   Label #2: alph (a), (b), etc
+\setlist[enumerate,2]{label=(\alph*)} 
+%%% AXIOM LISTS
