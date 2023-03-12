@@ -1,6 +1,76 @@
-\usepackage{xparse}
+
 %---------------------------------
-% 
+% LOGICS & THEORIES
+\newcommand{\Gip}{\SeqCal{IP}}
+\newcommand{\Gcp}{\SeqCal{CP}}
+\newcommand{\Gmp}{\SeqCal{M}}
+\newcommand{\Gi}{\SeqCal{I}}
+\newcommand{\Gc}{\SeqCal{C}}
+
+\newcommand{\PA}{\Theory{PA}}
+\newcommand{\HA}{\Theory{HA}}
+
+\newcommand{\PAo}{\Theory{PAω}}
+\newcommand{\HAo}{\Theory{HAω}}
+\newcommand{\PAop}[1][\prec]{\Theory{PAω}+({#1})}
+%---------------------------------
+% SEQUENTS
+\newcommand{\sa}{\Rightarrow}
+
+\newcommand{\prv}[2]{\vdash^{#1}_{#2}}
+%---------------------------------
+% INFERENCES
+\NewDocumentCommand{\LeftRule}{m}{\ensuremath{{#1}\mathrm{L}}}
+\NewDocumentCommand{\RightRule}{m}{\ensuremath{{#1}\mathrm{R}}}
+%
+\newcommand{\axiom}{\mathrm{ax}}
+%
+\newcommand{\faL}{\LeftRule{∀}}
+\newcommand{\faR}{\RightRule{∀}}
+\newcommand{\exL}{\LeftRule{∃}}
+\newcommand{\exR}{\RightRule{∃}}
+\newcommand{\omL}{\LeftRule{ω}}
+\newcommand{\omR}{\RightRule{ω}}
+%
+\newcommand{\impL}{\LeftRule{→}}
+\newcommand{\impR}{\RightRule{→}}
+%
+\newcommand{\disL}{\LeftRule{∨}}
+\newcommand{\disR}{\RightRule{∨}}
+%
+\newcommand{\conL}{\LeftRule{∧}}
+\newcommand{\conR}{\RightRule{∧}}
+%
+%---------------------------------
+% TERMS & FORMULAS
+\newcommand{\nm}[1]{\underline{#1}}
+\newcommand{\cd}[1]{\overline{#1}}
+%
+\newcommand{\0}{\Symbol{0}}
+\newcommand{\suc}{\Symbol{s}}
+%\newcommand{\num}[1]{\underline{#1}}
+
+% Shorthands
+\newcommand{\Prog}[2][\prec]{\Frml{Prog}({#1},{#2})}
+\newcommand{\TI}[2][\prec]{\Frml{TI}({#1},{#2})}
+%---------------------------------
+\NewDocumentCommand{\setof}{mo}{\{\,{#1}\IfValueT{#2}{\mid {#2}}\,\}}
+\NewDocumentCommand{\supof}{mo}{\sup\{\,{#1}\IfValueT{#2}{\mid {#2}}\,\}}
+\newcommand{\supseq}[1][i]{\sup_i}
+%---------------------------------
+% LANGUAGES
+\newcommand{\La}{\Lang{L}_{\mathrm{A}}}
+
+%---------------------------------
+% SETS
+\newcommand{\Nat}{\mathbb{N}}
 %---------------------------------
 % Proof-theoretic tools
 \NewDocumentCommand{\pto}{m}{\lVert{#1}\rVert}
+\NewDocumentCommand{\ot}{O{\prec}}{\lVert{#1}\rVert}
+\NewDocumentCommand{\otin}{ O{\prec} m }{\lvert{#2}\rvert_{#1}}
+
+%---------------------------------
+% Proof-tree shortcuts
+\NewDocumentCommand{\Infer}{omO{}m}{\begin{prooftree}\hypo{#2}\infer1[$#3$]{#4}\end{prooftree}}
+

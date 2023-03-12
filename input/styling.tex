@@ -1,5 +1,5 @@
 % File styling.tex
-% !TEX root = ../syntax.tex
+% !TEX root = ../lecture-notes.tex
 % LTeX: enabled=false
 % Packages and default settings regarding typesetting and format
 %---------------------------------
@@ -8,17 +8,10 @@
 \usepackage[marginparsep=2mm]{geometry}
 %---------------------------------
 % Theorem environments
-%\usepackage[amsmath,thmmarks,hyperref]{ntheorem}
-\usepackage{thmtools}
 \usepackage{mathtools}
 %---------------------------------
-\declaretheorem[numberwithin=section]{theorem}
-\declaretheorem[sibling=theorem]{lemma}
-\declaretheorem[sibling=theorem]{corollary}
-\declaretheorem[sibling=theorem]{remark}
-\declaretheorem[style=definition,sibling=theorem]{definition}
-\declaretheorem[style=definition,numberwithin=section]{example}
-% \declaretheorem[numbered=no]{proof}
+% Styling for theorems
+%
 %---------------------------------
 % BibLaTeX
 %\usepackage[%
@@ -33,7 +26,18 @@
 %  ]{biblatex}
 %
 %---------------------------------
+% ELEMENTS
+\NewDocumentCommand{\SeqCal}{m}{\mathsf{#1}}
+\NewDocumentCommand{\Theory}{m}{\mathsf{#1}}
+\NewDocumentCommand{\Set}{m}{\mathrm{#1}}
+\NewDocumentCommand{\Frml}{m}{\mathsf{#1}} % Why not working?
+\NewDocumentCommand{\Symbol}{m}{\mathsf{#1}}
+\NewDocumentCommand{\Lang}{m}{\mathcal{#1}}
+%---------------------------------
 % Disposition
+% Part:
+%\renewcommand*{\partname}{Module} % Does not achieve anything!
+\renewcommand*{\partformat}{Module~\thepart\autodot}
 % Chapter:
 \renewcommand{\raggedchapter}{\centering}
 \setkomafont{chapter}{\sffamily\mdseries\LARGE}
@@ -55,6 +59,15 @@
 % \RedeclareSectionCommand[%
 %   counterwithout=chapter,
 %             ]{section}
+%
+%---------------------------------
+% TABLE OF CONTENTS
+%
+\renewcommand*{\addparttocentry}[2]{%
+  \addtocentrydefault{part}{Module\nobreakspace #1}{#2}%
+}%
+\usepackage[tocindentauto]{tocstyle}
+\usetocstyle{KOMAlike}
 %---------------------------------
 % Layout
 % Page layouts
@@ -71,10 +84,14 @@
 \usepackage{enumitem}
 % New defaults for enumerate & itemize:
 \setlist{itemsep=0pt}
-%   Label should be upright
+%%   Label should be upright
 \setlist[enumerate,itemize]{format=\normalfont}
-%   Label #1: roman (i), (ii), etc
-\setlist[enumerate,1]{label=(\roman*)}
-%   Label #2: alph (a), (b), etc
-\setlist[enumerate,2]{label=(\alph*)} 
-%%% AXIOM LISTS
+%%   Label #1: roman (i), (ii), etc
+%\setlist[enumerate,1]{label=(\roman*)}
+%%   Label #2: alph (a), (b), etc
+%\setlist[enumerate,2]{label=(\alph*)} 
+%
+% Special lists
+
+
+

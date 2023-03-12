@@ -1,0 +1,98 @@
+
+%% 
+%% Theorems et al
+\usepackage[amsmath,thmmarks,hyperref]{ntheorem}
+%% LTeX: enabled=false
+%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%
+%% BEGIN: §7. Environments
+%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%
+%%% §7.2. Default (plain) style
+%% Our Theorem styles:
+\makeatletter
+%%%
+%% plain:
+%%   Theorem 6.13 · Löb's theorem  
+\renewtheoremstyle{plain}
+    {\item[\hskip\labelsep \theorem@headerfont ##1\ ##2\theorem@separator]}%
+    {\item[\hskip\labelsep \theorem@headerfont ##1\ ##2\ \textperiodcentered\ ##3\theorem@separator]}
+% plain w/o number:
+\renewtheoremstyle{nonumberplain}
+    {\item[\hskip\labelsep \theorem@headerfont ##1\theorem@separator]}%
+    {\item[\hskip\labelsep \theorem@headerfont ##1\ \textperiodcentered\ ##3\theorem@separator]}
+%%% 
+% implicit: (uses optional argument for name)
+%   9.20 Löb's Theorem
+%
+\newtheoremstyle{implicit}
+    {\item[\hskip\labelsep \theorem@headerfont ##1\ ##2\theorem@separator]}%
+    {\item[\hskip\labelsep \theorem@headerfont ##3\ ##2\theorem@separator]}
+%
+% no-number version  
+\newtheoremstyle{nonumberimplicit}
+    {\item[\hskip\labelsep \theorem@headerfont ##1\theorem@separator]}%
+    {\item[\hskip\labelsep \theorem@headerfont ##3\theorem@separator]}
+%%%
+%%% remark:
+%%%    Remark on A6
+%%
+%%\newtheoremstyle{remark}
+%%  {\item[\hskip\labelsep \theorem@headerfont ##2\ ##1\theorem@separator]}%
+%%  {\item[\hskip\labelsep \theorem@headerfont ##2\ ##1 on\ ##3\theorem@separator]}
+%%% no-number version:
+%%\newtheoremstyle{nonumberremark}
+%%  {\item[\hskip\labelsep \theorem@headerfont ##1\theorem@separator]}%
+%%  {\item[\hskip\labelsep \theorem@headerfont ##1\ on\ ##3\theorem@separator]}
+%%%
+%% PROOF
+%%   Proof [of theorem 8.71]
+\newtheoremstyle{proof}
+  {\item[\hskip\labelsep \theorem@headerfont ##1\theorem@separator]}%
+  {\item[\hskip\labelsep \theorem@headerfont ##1\ ##3\theorem@separator]}
+\makeatother
+%%%
+\theoremstyle{plain}
+%\theoremheaderfont{\upshape\scshape}
+\newtheorem {theorem}           {Theorem} [chapter]
+\newtheorem {lemma}[theorem]    {Lemma}
+\newtheorem {proposition}[theorem] {Proposition}
+\newtheorem {claim}[theorem]    {Claim}
+\newtheorem {corollary}[theorem]{Corollary}
+\newtheorem {example}[theorem]	{Example}
+%%
+\theoremstyle{implicit}
+%\newtheorem*{thing}{thing}
+%% \newtheorem*{covind}    {Course of values induction}
+%% \newtheorem*{natind}    {Principle of induction for natural numbers}
+%%
+%\newtheorem{namedparadox}[theorem]{paradox}
+\newtheorem{namedtheorem}[theorem]{Theorem}
+\newtheorem{namedlemma}[theorem]{Lemma}
+\newtheorem*{nameonly}{Thing}
+%%%
+%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%
+%%%% §7.3. Upright style
+\theoremstyle{plain}
+\theorembodyfont{\upshape}
+\newtheorem{definition}[theorem] {Definition}
+%%\newtheorem{assumption}[theorem]  {assumption}
+%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%
+%%%% §7.4. Proof style (no number)
+\theoremstyle{proof}
+\theorembodyfont{\upshape}
+%% \theoremprework{\arabicenum}
+\theoremsymbol{\ensuremath{\dashv}}
+\newtheorem {proof} {Proof}
+%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%
+%%%% §7.5. Exercise (remove?)
+\theoremstyle{plain}
+\theorembodyfont{\upshape}
+\newtheorem {exercise}[theorem]   {Exercise}
+%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%
+%%%% §7.6. Remark
+%%% Uses special remark formatting
+\theoremstyle{remark}
+\theoremsymbol{} % no end of remark symbol
+\newtheorem*{remark}{remark}
+%\newtheorem*{convention}{convention}
+%
+%% END
