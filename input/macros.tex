@@ -1,5 +1,10 @@
 
 %---------------------------------
+% Note-making
+\NewDocumentCommand{\marginnote}{m}{\marginpar{\scriptsize #1}}
+\newcommand{\note}[1]{\marginnote{\emph{NB.~#1}}}
+\newcommand{\tbw}{To be written.\marginnote{TBW}}
+%---------------------------------
 % LOGICS & THEORIES
 \newcommand{\Gip}{\SeqCal{IP}}
 \newcommand{\Gcp}{\SeqCal{CP}}
