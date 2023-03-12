@@ -185,10 +185,18 @@ Henceforth, let \( ≺ \) be a fixed primitive recursive well-ordering on \( \Na
 	\]
 	The infinitary sequent calculus \( \PAop \) extends the axioms and rules of \( \PAo \) by the inference \( (≺) \) above. The relation \( \PAop \prv{α}k Γ ⇒ Δ \) is defined in \cref{d-bound-omega-logic}.
 \end{definition}
-%
+
+In general, the rule \( (≺) \) will have infinitely many premises like the \( ω \)-rules.
+For instance, if there is an element \( m \) with order-type \( ω \), then an instance of the rule
+\[
+  \Infer{X⇒Y \text{ for all Z}}[≺]{X ⇒ Y , P \nm m}
+\]
+
+
+
 The next three lemmas provide the motivation for this extension of \( \PAo \).
 %
-\begin{lemma}
+\begin{lemma}\label{l-PAo-in-PAop}
 	If \( \PAo \prv{α}k Γ ⇒ Δ \) then  \( \PAop \prv{α}k Γ ⇒ Δ \).
 \end{lemma}
 \begin{proof}
@@ -202,14 +210,19 @@ The next three lemmas provide the motivation for this extension of \( \PAo \).
 \begin{proof}
 	Recall that \( \Prog P = ∀ x ( ∀ y ( y ≺ x → Py ) → P x ) \). 
 	Let \( K \) be the constant given by \cref{p-PAo-S1} such that \( \PAo \prv K 0 { ⇒ \nm m ≺ \nm n }\) for all \( m ≺ n \). 
-	For every \( n ∈ \Nat \) we have the following derivation in \( \PAop \):
+	For every \( n ∈ \Nat \) we have the following derivation in \( \PAo \) (with implicit application of weakening):
 	\begin{prooftree*}
-	  \hypo{ \prv00 P\nm m , F ⇒ P \nm m }
+	  \hypo{ \prv00 P\nm m ⇒ P \nm m }
 	  \hypo{}\ellipsis{}{\prv K0 {}⇒ \nm m \prec \nm n \text{ for all \( m ≺ n \)} }
-	  \infer[separation=3em]2[\impL]{\prv{K+1}0 \nm m ≺ \nm n → P \nm m  ⇒ P\nm m \text{ for all \( m ≺ n \)} }
-	  \infer1[\faL]{\prv{K+2}0 ∀y ( y ≺ \nm n → Py ) ⇒ P\nm m \text{ for all \( m ≺ n \)} }
-	  \infer1[\( ≺ \)]{\prv{K+3}0 ∀y ( y ≺ \nm n → Py ) ⇒ P\nm n }
-	  \infer1[\impR]{\prv{K+4}0 {} ⇒ ∀y ( y ≺ \nm n → Py ) → P\nm n }
+	  \infer[separation=3em]2[\impL]{\prv{K+1}0 \nm m ≺ \nm n → P \nm m  &⇒ P\nm m \text{ for all \( m ≺ n \)} }
+	  \infer1[\faL]{\prv{K+2}0 ∀y ( y ≺ \nm n → Py ) &⇒ P \nm m \text{ for all \( m ≺ n \)} }
+	\end{prooftree*}
+	By weakening and \cref{l-PAo-in-PAop} we have, for every \( m ≺ n ∈ \Nat \), \[ \PAo \prv{K+2}0 ∀y ( y ≺ \nm n → Py ) &⇒ P \nm n , P \nm m .\]
+	Continuing the derivation in \( \PAop \):
+	\begin{prooftree*}
+		\hypo{\prv{K+2}0 ∀y ( y ≺ \nm n → Py ) ⇒ P \nm m \text{ for all \( m ≺ n \)} }
+		\infer1[\( ≺ \)]{\prv{K+3}0 ∀y ( y ≺ \nm n → Py ) ⇒ P\nm n }
+		\infer1[\impR]{\prv{K+4}0 {} ⇒ ∀y ( y ≺ \nm n → Py ) → P\nm n }
 	\end{prooftree*}
 	An application of the \( ω \)-rule completes the proof.
 \end{proof}
@@ -223,7 +236,11 @@ The next three lemmas provide the motivation for this extension of \( \PAo \).
 	\Cref{l-PAop-Prog} and a pair of cuts yields the desired result.
 \end{proof}
 
-The previous result
+Once paired with cut elimination for \( \PAop \), which we tend to next, the final lemma above gives the claim in \eqref{eqn-oa-TI2}.
+
+%---------------------------------
+\section{Cut elimination, revisited}
+%---------------------------------
 
 The proof of the following admissibility lemmas is left as an exercise.
 %
@@ -240,6 +257,37 @@ The proof of the following admissibility lemmas is left as an exercise.
 	If \( \PAop \prv{α}k Γ ⇒ Δ , A , A \) then \( \PAop \prv{α}k Γ ⇒ Δ , A \).
 \end{namedlemma}
 %
+
+Cut elimination for \( \PAop \) can be deduced from the proof we gave ….
+%
+\begin{namedlemma}[Reduction lemma]
+	As expected
+\end{namedlemma}
+%
+\begin{theorem}[Cut elimination for \( \PAop \)]
+	\tbw
+\end{theorem}
+ 
+We require one further result on cut free proofs in this calculus before we can conclude our main result.
+%
+\begin{lemma}
+	Suppose \( \PAop \prv{β}0 P\cd{α_1}, … , P\cd{α_k} ⇒ P\cd{γ_1} , …, P\cd{γ_l} \).
+	Then \note{make sure \( \cd{α} \) is defined.}
+	\begin{equation}\label{eqn-bounding-lemma}
+		 \min\setof{γ_1, …, γ_l } ≤ \max \setof{α_1, …, α_k } + β  . 
+	\end{equation}
+\end{lemma}
+%
+\begin{proof}
+	Induction on \( β \).
+	If \( P\cd{α_1}, … , P\cd{α_k} ⇒ P\cd{γ_1} , …, P\cd{γ_l} \) is an axiom, then \( α_i = γ_j \) for some \( i \) and \( j \) and \eqref{eqn-bounding-lemma} is immediate.
+	If, however, the sequent is not an axiom, then it is necessarily the conclusion of an instance of \( (≺) \) for which we may assume, without loss of generality, that the principal formula is \( P \cd{γ_l} \).
+	Therefore, for every \( δ < γ_l \) there is \( β_δ < β \) such that
+\end{proof}
+%
+%---------------------------------
+\section{Characterisation of provable transfinite induction}
+%---------------------------------
 
 Combining \cref{pto-lower-bound,pto-upper-bound} is
 %
