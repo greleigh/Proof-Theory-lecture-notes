@@ -17,18 +17,23 @@
 	{scrbook}
 %
 %\usepackage{polyglossia}
+\usepackage[utf8]{inputenc}
 \usepackage[british]{babel}
+\usepackage{xparse}
 %
 \input{input/typesetting}
 %
 \input{input/packages}
 \input{input/styling}
+\input{input/environments}
 %
 \input{input/unicodes}
 %
 \input{input/macros}
 %
 \usepackage[bookmarks]{hyperref}
+\usepackage[nameinlink,noabbrev]{cleveref}
+\input{input/cleveref}
 
 % Meta
 \title{Lecture Notes in Proof Theory}
@@ -41,17 +46,34 @@
 	chapters/FOL,
 	chapters/conseq-of-ce,
 	chapters/ord-anal,
+	chapters/ordinal-interlude,
+	chapters/ordinal-analysis,
 	}
 
 \begin{document}
 \maketitle
 
+% TOC
+\tableofcontents
+
 % Intro
 \include{chapters/intro}
+%
+\part{Propositional Logic}
+%
 \include{chapters/int-prop-logic}
 \include{chapters/cla-prop-logic}
+
+%
+\part{Predicate Logic}
+%
 \include{chapters/FOL}
 \include{chapters/conseq-of-ce}
+%
+\part{An Introduction to Ordinal Analysis}
+%
 \include{chapters/ord-anal}
+\include{chapters/ordinal-interlude}
+\include{chapters/ordinal-analysis}
 
 \end{document}

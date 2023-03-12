@@ -1,20 +1,70 @@
 %
-\chapter{Ordinal analysis}
+\chapter{Arithmetic and Proof Theory}\label{c-oa}
 %
 We now turn our attention to the theory of arithmetic.
 
 %---------------------------------
-\section{Peano and Heyting arithmetic}
+\section{Peano and Heyting arithmetic}\label{s-oa-arithmetic}
 %---------------------------------
 %
 \begin{definition}
-	\dots 
+	The \emph{language of arithmetic} is the first-order language \( \La \) with equality comprising of the nonlogical symbols:
+	\begin{enumerate}
+		\item function symbols: \( \0^0 \), \( \suc^1 \), \( +^2 \), \( ×^2 \).
+		\item predicates: \( P^1 \).
+	\end{enumerate}
 \end{definition}
 %
-%---------------------------------
-\section{A characterisation of arithmetic}
-%---------------------------------
+\begin{definition}
+	The theory of Peano arithmetic is axiomatised by …
+\end{definition}
+%
+As well as some basics of the theory of arithmetic, we recall the primitive recursive representation theorem.
+%
+\begin{definition}
+	A formula is \( Σ_1 \) if it can be constructed from atomic formulas excluding \( P \) using the monotone propositional connectives, bounded universal quantifier and (unbounded) existential quantifier. That is, the \( Σ_1 \) formulas forms the smallest collection of \( \La \)-formulas satisfying:
+	\begin{itemize}
+		\item \( s = t , ⊥ ∈ Σ_1 \) for all (arithmetic) terms \( s \) and \( t \),
+		\item if \( A \) and \( B \) are \( Σ_0 \), then so is \( A ∨ B \), \( A ∧ B \), and \( ∃ x\, A \),
+		\item if \( A \) is \( Σ_1 \) and \( s \) is any (arithmetic) term not containing \( x \), then \( ∀x< s\, A \) is \( Σ_1 \), where this formula is shorthand for \( ∀x ( x< s → A ) \),
+		\item if \( A \) and \( B \) are \( Σ_1 \) and, in addition, \( A \) does not contain the existential quantifier, then \( A → B \) is \( Σ_1 \).
+	\end{itemize}
+\end{definition}
 %
 \begin{theorem}
-	
+	Let \( R ⊆ \Nat^n \) be an \( n \)-ary relation on natural numbers. If \( R \) is primitive recursive then there exists a \( Σ_1 \) formula \( \Frml{R}(x_1, …, x_k ) \) of \( \La \) with at most the displayed variables occurring free such that for all \( n_1, …, n_k ∈ \Nat \),
+	\[
+		\HA ⊢ \Frml{R}(n_1 , …, n_k ) \quad\text{iff}\quad (n_1 , …, n_k ) ∈ R.
+	\]
 \end{theorem}
+%
+
+%---------------------------------
+\section{Infinitary sequent calculi}\label{s-oa-omega-logic}
+%---------------------------------
+
+Onwards into infinitary proofs.
+\begin{definition}\label{d-PAomega}
+	\( \PAo \). Sequents/rules
+	
+	\( \HAo \). Likewise
+\end{definition}
+%
+A look at induction.
+%
+\begin{namedlemma}[Embedding lemma]
+	If \( \PA ⊢ Γ ⇒ Δ \) and \( Γ ⇒ Δ \) is a closed sequent.
+	Then \( \PAo ⊢ Γ ⇒ Δ \).
+\end{namedlemma}
+%
+To prove the lemma it is necessary to generalise its statement to include also
+\( Γ^* ⇒ Δ^* \) is any closed instantiation of \( Γ ⇒ Δ \), then \( \PAo ⊢ Γ^* ⇒ Δ^* \).
+%
+%\begin{proof}
+%	asd
+%\end{proof}
+
+Currently we have no means to measure the size of \( \PAo \)-proofs.
+For this we will use ordinals.
+
+

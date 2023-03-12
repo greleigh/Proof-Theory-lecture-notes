@@ -1,0 +1,55 @@
+%---------------------------------
+\chapter{Ordinal interlude}\label{s-oa-ordinals}
+%---------------------------------
+We need some elementary theory of ordinals.
+
+%---------------------------------
+\section{Transfinite induction}
+%---------------------------------
+
+%---------------------------------
+\section{Cantor normal form and \( ε_0 \)}
+%---------------------------------
+Later we will find interest in a very particular ordinal, named \( ε_0 \).
+\begin{definition}
+	\( ε_0 ≔ \supseq ω_i^0 \) where \( ω^α_0 = α \) and \( ω^α_{k+1} = ω^{ω^α_k} \).
+\end{definition}
+%
+The ordinal \( ω_n^α \) denotes a tower of exponentials base \( ω \) of height \( n \) with `top' exponent \( α \):
+\[
+  ω_1^α = ω^α \quad ω_2^α = ω^{ω^α} \quad ω_3^{α} = ω^{ω^{ω^α}} \quad ⋯
+\]
+\( ε_0 \) is the supremum of this tower for \( α = 0 \):
+\[
+	ε_0 = \supof{0 , ω^0 , ω , ω^ω , ω^{ω^{ω}} , … }
+\]
+
+%
+\begin{lemma}
+	\( ε_0 \) is the least fixed point of the ordinal function \( α \mapsto ω^α \). 
+	That is, \( ω^{ε_0} = ε_0 \) and \( α < ω^{α} \) for all \( α < ε_0 \).
+\end{lemma}
+%
+\begin{exercise}
+	Compute the fixed points of exponentiation base-\( 2 \). 
+	That is, characterise the ordinals \( α ≤ ε_0 \) for which \( 2^α = α \).
+\end{exercise}
+%
+\begin{exercise}
+	For each \( α \), defined \( ε_α \) as the least ordinal such that
+	\begin{enumerate}
+		\item \( ε_β < ε_α \) for every \( β < α \),
+		\item \( ω^{ε_α} = ε_α \).
+	\end{enumerate}
+	Prove that \( ε_α \) exists for all \( α \).
+\end{exercise}
+
+
+%
+\begin{namedtheorem}[Cantor Normal Form Theorem]\label{t-cantornf}
+	For every ordinal \( α < ε_0 \) there exists \( n \) and ordinals \( α > α_1 ≥ α_2 ≥ ⋯ ≥ α_n \) such that 
+	\[
+		α = ω^{α_1} + ⋯ + ω^{α_n}.
+	\]
+	Moreover, this decomposition is unique.
+\end{namedtheorem}
