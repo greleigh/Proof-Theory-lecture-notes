@@ -2,4 +2,45 @@
 \usepackage{graphicx}
 %
 % Proofs
-\usepackage{ebproof}
+\usepackage{ebproof,ebprooffix} % ebprooffix for old versions of ebproof.
+
+% Default settings for proof trees
+\ebproofset{
+	left label template={\normalfont\small (\inserttext)},
+	right label template={\small \inserttext},
+	rule margin=.5ex,% default .7ex
+%	rule separation=1pt,% default 2pt % gap between double-rules
+	separation=1.5em,% default 1.5em
+	label separation=.5ex,% default .5ex
+}
+% Small size
+\ebproofnewstyle{small}{
+  template = \small$\inserttext$,
+  left label template = \footnotesize{\inserttext},
+  right label template = \footnotesize{\inserttext} }
+% Footnote size
+\ebproofnewstyle{smaller}{
+  template = \footnotesize$\inserttext$,
+  left label template = \scriptsize{\inserttext},
+  right label template = \scriptsize{\inserttext} }
+% Compact
+\ebproofnewstyle{compact}{
+  separation = 1.5ex, rule margin = .25ex,}
+% tight
+\ebproofnewstyle{tight}{
+  separation = 1em, rule margin = .4ex,
+  }
+% Some additions to ebproof:
+% for lists of premises 
+\newcommand{\hypod}{\hypo{\dotsm}}
+% axiom
+\newcommand{\axiom}[2][]{\hypo{}\infer1[#1]{#2}}
+% Sub-proof
+\NewDocumentCommand{\subproof}{sO{}m}{%
+	\IfBooleanTF{#1}{%
+		\hypo{#2}\infer[no rule]1{#3}
+	}{%
+	\hypo{}\ellipsis{$#2$}{#3}
+	}
+	}
+\providecommand{\subproof}[2][]{\hypo{#1}\infer[no rule]1{#2}}

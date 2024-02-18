@@ -1,0 +1,357 @@
+%
+\chapter{Arithmetic and Sequent Calculi}\label{c-oa-arith}
+%
+As an application of proof theory beyond logic I will give an analysis of perhaps the most important formal theory in mathematics, the theory of Peano arithmetic.
+Among the results we present is a syntactic characterisation of the theorems of the theory, and a proof of its consistency which does not invoke any semantic considerations.
+A corollary of the analysis will be a characterisation of the non-finite mathematical assumptions required to establish the consistency of Peano arithmetic.
+
+The proof I present has its origins in Gentzen's 1938 consistency proof\nocite{Gen-1938} but employs a simplification due to Kurt Schütte (1950)\nocite{Schu1950} whereby arithmetic is treated as a fragment of infinitary logic and a corresponding infinitary notion of sequent calculus proof.
+
+Elementary results about this theory covered in the pre-requisite course \emph{Logical Theory} will be stated without proof; see corresponding chapters of \cite{LogThe} for details.
+
+%---------------------------------
+\section{Peano and Heyting arithmetic}\label{s-oa-arithmetic}
+%---------------------------------
+%
+\begin{definition}
+	The \emph{language of arithmetic} is the first-order language \( \La \) comprising the following nonlogical symbols with associated arities:
+	\begin{enumerate}
+		\item function symbols: \( \0^0 \), \( \suc^1 \), \( +^2 \), \( ×^2 \).
+		\item predicates: \( P^1 \).
+	\end{enumerate}
+\end{definition}
+%
+The theory of arithmetic is formulated over predicate logic \emph{with equality}. 
+I will first present theory with logic given by the classical natural deduction calculus with equality \( \NDceq \) before presenting an equivalent presentation based on the sequent calculus \( \Gceq \).
+Both logics were introduced in \cref{c-equality}; see also~\cite[§6.5]{Negri_von_Plato}.
+
+Henceforth, \emph{formula} will always refer to the language of arithmetic.
+%
+\begin{definition}
+	The Peano axioms of arithmetic are the following sentences.
+	\begin{itemize}
+		\item \emph{Basic axioms:}
+		\begin{axioms}[pa]
+			\item \( ∀ x ¬ ( \0 = \suc x ) \)
+			\item \( ∀ x ∀ y ( \suc x = \suc y → x = y ) \)
+			\item \( ∀ x ( x + \0 = x ) \)
+			\item \( ∀ x ∀ y ( x + \suc y = \suc ( x + y ) ) \)
+			\item \( ∀ x ( x × \0 = \0 ) \)
+			\item \( ∀ x ∀ y ( x × \suc y = ( x × y ) + x ) \)
+		\end{axioms}
+		\item \emph{Axiom scheme of induction:}
+		\begin{axioms}[pa][start=7]
+			\item The universal closure of \( A(\0) ∧ ∀x ( A(x) → A(\suc x) ) → ∀x A(x) \) for every formula \( A(a) \).
+		\end{axioms}
+	\end{itemize}
+\end{definition}
+%
+\begin{definition}
+	\emph{Peano arithmetic} (\( \PA \)) is theory over classical predicate logic axiomatised by the Peano axioms.
+	I will write \( \PA \vdash A \) to express that \( A \) is a theorem of Peano arithmetic, that is, \( \Set{PA} ⊢_\NDceq A \) where \( \Set{PA} \) is the set of Peano axioms.
+	\emph{Heyting arithmetic} (\( \HA \)) is the corresponding \emph{intuitionistic} theory, i.e., \( \HA ⊢ A \) expresses \( \Set{PA} ⊢_\NDieq A \).
+\end{definition}
+%
+%\( \HA \vdash A \) means that \( A \) is a theorem of Heyting arithmetic.
+%Observe that the theories above are specified over predicate logic \emph{with equality}.
+
+The predicate \( P \) is auxiliary to the language of arithmetic in that it has no intended interpretation associated to it. 
+It plays the role of a ‘free’ predicate as the next \namecref{oa-arith-P} demonstrates.
+
+For a formulas \( A \) and \( B(a) \) in the language of arithmetic, let \( A[B/P] \) mark the result of replacing each occurrence of \( Ps \) in \( A \) by \( B(s) \) for every term \( s \).
+That is, 
+\begin{align*}
+	(Ps)[B/P] &= B(s)
+	\\
+	A[B/P] &= A \quad\text{for \( A \) any other atomic formula}
+	\\
+	(A_0 → A_1)[B/P] &= ( A_0[B/P] → A_1[B/P] )
+	\\
+	(∀x A)[B/P] &= ∀ x( A[B/P] )
+	\\
+	&\text{etc}
+\end{align*}
+
+The following result is easy to prove.
+
+\begin{proposition}
+	\label{oa-arith-P}
+	If \( \PA \vdash A \) then \( \PA \vdash A[B/P] \) for every formula \( B(a) \).
+	Likewise for \( \HA \).
+\end{proposition}
+%
+\begin{proof}
+	Exercise.
+\end{proof}
+
+\begin{exercise}
+	Show the following are theorems of Heyting arithmetic.
+	\begin{enumerate}
+		\item \( ∀ x( ¬ x = \0 → ∃ y( x = \suc y )) \).
+		\item \( ∀ x ∀ y ( x + y = y + x ) \).
+		\item \( ∀ x ∀ y ∀ z ( ( x + y ) + z = x + ( y + z ) ) \).
+		\item \( ∀ x ∀ y ( x × y = y × x ) \).
+	\end{enumerate}
+\end{exercise}
+
+As well as some basics of the theory of arithmetic, we recall the primitive recursive representation theorem. See \cite{LogThe}, for example, for details.
+%
+\begin{definition}
+	A formula is \( Δ_0 \) if it can be constructed from atomic formulas excluding \( P \) by the propositional connectives and bounded quantifiers.
+	That is, the \( Δ_0 \) formulas forms the smallest collection of \( \La \)-formulas satisfying:
+	\begin{enumerate}
+		\item all equations \( s = t \) are \( Δ_0 \) formulas,
+		\item \( ⊥ \) is a \( Δ_0 \) formula,
+		\item if \( F \) and \( G \) are \( Δ_0 \), then so is \( F → G \), \( F ∨ G \) and \( F ∧ G \),
+		\item if \( F(a) \) is \( Δ_0 \) and \( s \) is a term, then \( ∀x < s\, F(x) \) and \( ∃x < s \, F(x) \) are \( Δ_0 \), where these formulas are shorthands for \( ∀x ( x< s → F(x) ) \) and \( ∃x ( x < s ∧ F(x) ) \) respectively.
+%		\item if \( A \) and \( B \) are \( Σ_1 \) and, in addition, \( A \) does not contain the existential quantifier, then \( A → B \) is \( Σ_1 \).
+	\end{enumerate}
+	A formula is \( Σ_1 \) (\( Π_1 \)) if it has the form \( ∃x F(x) \) (respectively \( ∀x F(x) \)) where \( F(a) \) is \( Δ_0 \).
+\end{definition}
+
+Notice that the bound variable \( x \) does not occur in the ‘bounding’ term \( s \) in the construction \( ∀x < s\, F(x) \) above because terms do not contain bound variables.
+
+Terms of the specific form \( \suc ⋯ \suc \0 \) are called \emph{numerals}.
+The numeral evaluating to \( n ∈ ℕ \) is denoted \( \nm n \):
+\[
+	\nm n ≔ \underbrace{\suc ⋯ \suc}_n \0.
+\]
+
+I state the representation theorem for primitive recursive relations.
+%
+\begin{theorem}[Representation theorem]
+	\label{representation-thm}
+	Let \( R ⊆ \Nat^n \) be an \( k \)-ary relation on natural numbers. 
+	If \( R \) is primitive recursive there exists a \( Δ_0 \) formula \( F_R(a_1, …, a_k ) \) of \( \La \) with at most the displayed variables free such that for all \( n_1, …, n_k ∈ \Nat \),
+	\begin{align*}
+		\PA ⊢ F_R(\nm n_1 , …, \nm n_k ) \quad &\text{iff}\quad (n_1 , …, n_k ) ∈ R
+		\\
+		\PA ⊢ ¬ F_R(\nm n_1 , …, \nm n_k ) \quad &\text{iff}\quad (n_1 , …, n_k ) ∉ R.
+	\end{align*}
+\end{theorem}
+%
+
+%---------------------------------
+\section{Sequent calculi for arithmetic}\label{s-oa-omega-logic}
+%---------------------------------
+
+There are different ways to formulate arithmetic in sequent calculi.
+One can incorporate all the axioms of arithmetic as initial sequents or treat each Peano axiom as contributing a rule of the calculus.
+A convenient definition is the following.
+\( \PA ⊢ Γ ⇒ Δ \) means that the sequent \( Γ ⇒ Δ \) has a derivation in the sequent calculus \( \Gceq \) expanded by:
+\begin{itemize}
+	\item Initial sequents \( Π ⇒ Σ , A \) for \( A \) a basic Peano axiom.
+	\item The \emph{induction rule}:
+	\[
+	  \begin{prooftree}
+	  	\hypo{ A(a) , Π ⇒ Σ , A( \suc a ) }
+	  	\infer1[\IRule]{A(\0) , Π ⇒ Σ , ∀ x A(x) }
+	  \end{prooftree}
+	\]
+	where \( a \) does not occur in the lower sequent.
+\end{itemize}
+The sequent calculus for Heyting arithmetic is the restriction to intuitionistic sequents. 
+Recall, a sequent \( Γ ⇒ Δ \) is \emph{intuitionistic} if \( \card{Δ} = 1 \).
+Define \( \HA ⊢ Γ ⇒ Δ \) as there exists a sequent calculus derivation witnessing \( \PA ⊢ Γ ⇒ Δ \) using only intuitionistic sequents.
+
+
+\begin{proposition}
+	\label{oa-PA-as-SC}\ 
+	\begin{enumerate}
+		\item \( \PA ⊢ A \) iff \( \PA ⊢ {} ⇒ A \).
+		\item \( \HA ⊢ A \) iff \( \HA ⊢ {} ⇒ A \).
+	\end{enumerate}
+\end{proposition}
+%
+\begin{proof}
+	I will show that every induction axiom admits a sequent calculus proof. The remainder of the proof is left as an exercise.
+	
+	Fix a formula \( F(a) \) and let \( Γ = \setof{ F(\0) , ∀x( F(x) → F( \suc x) ) } \).
+	By logic, a derivation of \( F(a) , Γ ⇒ F( \suc a )  \) is readily obtained. An application of the induction rule, followed by more logic completes the derivation:
+	\begin{prooftree*}
+		\subproof{ F(a), Γ ⇒ F(a) }
+		\subproof{ F( \suc a), Γ ⇒ F(\suc a)}
+		\infer2[\impL]{ F(a) → F( \suc a ) , F(a), Γ ⇒ F(\suc a) }
+		\infer1[\faL]{ F(a) , Γ ⇒ F(\suc a) }
+		\infer1[\IRule]{ Γ ⇒ ∀ x F(x) }
+%		\infer[double]1[\conjL, \impR]{ ⇒ F(\0) ∧ G → ∀x F(x)}
+	\end{prooftree*}
+\end{proof}
+
+\begin{exercise}
+	Show that \( \PA \) derives the same sequents as the calculus with induction axioms as initial sequents (along with the basic axioms) and no induction rule.
+\end{exercise}
+
+By \cref{oa-PA-as-SC}, \( \PA \) is consistent iff the empty sequent is not derivable.
+As with the sequent calculi from previous chapters, it is clear that there can be no cut-free derivation of the empty sequent, neither in \( \PA \) nor \( \HA \).
+Thus, consistency of either theory would follow directly from a cut-elimination theorem for the above sequent calculi.
+%
+There are sequents, however, that are provable but not \emph{cut-free} provable. 
+We will not present the argument here, which appeals to Gödel's incompleteness theorems;\note{Sketch the argument} the finer details are beyond the scope of this book and can be found in, for example,~\cite{BBJ}.
+
+Gentzen's observation was that every derivable \emph{equational} sequent can be shown to have a cut-free derivation, where an equational sequent is one of the form \( r_1 = s_1 , …, r_k = s_k ⇒ t_1 = u_1 , …, t_l = u_l \) wherein all terms are closed.
+As the empty sequent is an example of an equational sequent, consistency is an immediate corollary of the (partial) cut-elimination result.
+
+Gentzen's argument is highly intricate and was greatly streamlined by Kurt Schütte (1950)\nocite{Schu1950} who showed that full cut-elimination can be obtained by moving to a more relaxed notion of a sequent calculus derivation, termed ‘\( ω \)-proofs’, in which proofs are in general infinite objects.
+%
+The basic idea is to replace the logical rules \( \faR \) and \( \exL \) each by a rule with infinitely many premises:
+\begin{gather*}
+  \begin{prooftree}
+	\hypo{ Γ ⇒ Δ , A(\0) }
+	\hypo{ Γ ⇒ Δ , A(\nm 1) }
+	\hypod
+	\hypo{ Γ ⇒ Δ , A(\nm n) }
+	\hypod
+	\infer5[\omR]{ Γ ⇒ Δ , ∀x A(x) }
+  \end{prooftree}
+  \\[2ex]
+  \begin{prooftree}
+	\hypo{ A(\0) , Γ ⇒ Δ }
+	\hypo{ A(\nm 1) , Γ ⇒ Δ }
+	\hypod
+	\hypo{ A(\nm n) , Γ ⇒ Δ }
+	\hypod
+	\infer5[\omL]{ ∃x A(x) , Γ ⇒ Δ }
+  \end{prooftree}
+\end{gather*}
+The rules \( \omR \) and \( \omL \) above are collectively called the \( ω \)-rules.
+
+‘Proof’ in the sense of the sequent calculi of previous chapters meant ‘finite tree labelled by sequents in agreement with the rules of the calculus’.
+A ‘proof’ that uses an \( ω \)-rule can never be finite as these rules have infinitely many premises.
+But the condition ‘finite or infinite tree labelled by sequents in agreement with the rules of the calculus’ is too liberal as it admits as 'proofs' trees with infinitely long branches, such as 
+\begin{prooftree*}
+	\subproof{ ⇒ ⊥ }
+	\axiom[\botL]{ ⊥ ⇒ ⊥ }
+	\infer2[\Cut]{ ⇒ ⊥ }
+	\axiom[\botL]{ ⊥ ⇒ ⊥ }
+	\infer2[\Cut]{ ⇒ ⊥ }
+	\axiom[\botL]{ ⊥ ⇒ ⊥ }
+	\infer2[\Cut]{ ⇒ ⊥ }
+\end{prooftree*}
+The answer is that, as in the finite case, there can be no infinite paths in an \( ω \)-proof but, unlike the finite case, the tree underlying an \( ω \)-proof may have infinitely wide branching.
+Such trees are called \emph{well-founded}.
+
+In sum, an \emph{\( ω \)-proof} is a well-founded tree that is labelled by sequents in a way consistent with the rules of the sequent calculus (the \( ω \)- and non \( ω \)-rules).
+%A sequent derivation which (possibly) use \( ω \)-rules is called an \emph{\( ω \)-proof}.
+
+\begin{proposition}\ 
+	\label{oa-oproofs-simple}
+	\begin{enumerate}
+		\item There is an \( ω \)-proof of every sequent of the form \( F , Γ ⇒ Δ , F \)
+		\item If there is an \( ω \)-proof of \( Γ(a) ⇒ Δ(a) \), then for every term \( s \) there is an \( ω \)-proof of \( Γ(s) ⇒ Δ(s) \).
+	\end{enumerate}
+\end{proposition}
+%
+\begin{proof}
+	Exercise.
+\end{proof}
+%
+\begin{proposition}
+	\label{oa-ind-omega}
+	The induction rule can be simulated via \( \omega \)-proofs.
+\end{proposition}
+%
+%
+\begin{proof}
+	Fix a formula \( F(a) \) and as before let \( Γ = \setof{ F(\0), ∀x( F(x) → F( \suc x) ) } \).
+	Suppose \( F(a) , Γ ⇒ Δ , F(\suc a) \) admits an \( ω \)-proof. 
+	As this is a premise to an induction rule the variable \( a \) does not occur in \( Γ ∪ Δ \).
+	By the previous \namecref{oa-oproofs-simple} there is an \( ω \)-proof of the sequent \( F(\nm n) , Γ ⇒ Δ , F(\nm {n+1}) \) for each \( n \).
+	A sequence of cuts induces an \( ω \)-proof of \( F(\0) , Γ ⇒ Δ , F(\nm n) \): for \( n = 0,1 \) the claim is immediate. For \( n = m + 1 > 1 \) append the proof of the induction hypothesis by a single cut:
+	\begin{prooftree*}
+		\subproof{ F(\nm0) , Γ ⇒ Δ , F(\nm m) }
+		\subproof{ F(\nm m) , Γ ⇒ Δ , F(\nm n) }
+		\infer2[\Cut]{F(\0) , Γ ⇒ Δ , F(\nm n)}
+	\end{prooftree*}
+	As \( F(\0) , Γ ⇒ Δ , F(\nm n) \) is derivable for each \( n \), an application of \( \omR \) completes the (\( ω \)-)proof.
+\end{proof}
+
+\begin{exercise}
+	Show that the induction axioms admit \emph{cut-free} \( ω \)-proofs.
+\end{exercise}
+
+
+With the \( ω \)-rules replacing the traditional quantifier rules \( \faR \) and \( \exL \) it turns out that free variables can be completely eliminated from the sequent calculus, meaning that only closed sequents are derived.
+This convention serves to simplify much of the reasoning about \( ω \)-proofs.
+It is also possible to dispense with the logical rules for equality by adopting more liberal initial sequents.
+
+The next definition introduces both conventions and settles the notion of \( ω \)-proof used hereon.
+Observe that it is decidable whether two closed terms \( s \) and \( t \) in the language of arithmetic evaluate to the same natural number. I will write \( ℕ ⊨ s = t \) if this is the case, and \( ℕ ⊭ s = t \) otherwise.
+%
+\begin{definition}[\( \PAo \) and \( \HAo \)]\label{d-PAomega}
+	\( \PAo \) is the sequent calculus given by the following:
+	\begin{itemize}
+		\item sequents comprise formulas in the language of arithmetic (with equality).
+		\item Initial sequents are \emph{closed} sequents of the form
+		\begin{itemize}
+			\item[(\botL)] \( ⊥, Γ ⇒ Δ \)
+			\item[(\idRule)] \( Ps, Γ ⇒ Δ , Pt \) if \( ℕ ⊨ s = t \)
+			\item[(\eqR)] \( Γ ⇒ Δ , s = t \) if \( ℕ ⊨ s = t \)
+			\item[(\eqL)] \( s = t , Γ ⇒ Δ \) if \( ℕ ⊭ s = t \)
+		\end{itemize}
+		\item Inference rules are rules of \( \Gc \) but restricted to closed sequents and with \( \faR \) and \( \exL \) replaced by the two \( ω \)-rules:
+		\begin{itemize}
+			\item[(\omR)] \begin{prooftree} \hypo{ Γ ⇒ Δ , F(\nm n) \ \text{for every } n ∈ ℕ } \infer1{ Γ ⇒ Δ , ∀x F(x) }\end{prooftree}
+			\item[(\omL)] \begin{prooftree} \hypo{ F(\nm n) , Γ ⇒ Δ \ \text{for every } n ∈ ℕ } \infer1{ ∃x F(x) , Γ ⇒ Δ }\end{prooftree}
+		\end{itemize}
+	\end{itemize}
+	Writing \( \PAo ⊢ Γ ⇒ Δ \) expresses that there is an \( ω \)-proof of \( Γ ⇒ Δ \) according to the above rules. In other words, there exists a well-founded tree labelled by sequents such that each leaf is an initial sequent and that each inner vertex together with its immediate successors in the tree forms a correct application of a rule of the calculus listed above.
+	
+	\( \HAo \) is the calculus above restricted to intuitionistic sequents.
+\end{definition}
+%
+
+With the sequent calculus formally defined, the realisation of finite \( \PA \)-proofs as \( ω \)-proofs can resume.
+The first step is to give \( ω \)-proofs of the basic axioms of arithmetic.
+%
+\begin{proposition}
+	\label{oa-embed-basic}
+	Every closed initial sequent of \( \PA \) is derivable in \( \PAo \).
+%	If \( F \) is a basic axiom of \( \PA \) and \( Γ ⇒ Δ \) any closed sequent, then \( \PAo ⊢ Γ ⇒ Δ , A \).
+\end{proposition}
+%
+\begin{proof}
+	Among the sequents to be shown derivable in \( \PA \) are all initial sequents of \( \Gc \) and the basic axioms of \( \PA \).
+	I will treat the case of the basic axiom \textsc{pa}1, \( ∀x( ¬ \0 = \suc x ) \).
+	Let \( n ∈ ℕ \) be arbitrary. As the equation \( \0 = \suc \nm n \) is false, \( \0 = \suc \nm n , Γ ⇒ Δ , ⊥ \) is an initial sequent of \( \PAo \) for all closed \( Γ , Δ  \).
+	Therefore \( \PAo ⊢ Γ ⇒ Δ , ¬ \0 = \suc \nm n \) for every \( n ∈ ℕ \) and \( \PAo ⊢ Γ ⇒ Δ , ∀x( ¬ \0 = \suc x ) \) by \( \omR \).
+\end{proof}
+%
+\begin{exercise}
+	Complete the proof of \cref{oa-embed-basic}.
+\end{exercise}
+%
+\begin{exercise}\label{ex:oa-id-simple}
+	Show that all closed sequents of the form \( A, Γ ⇒ Δ , A \) are provable in \( \PAo \).
+\end{exercise}
+
+%
+\begin{lemma}[Embedding lemma]\label{oa-embed-weak}
+	Suppose \( \PA ⊢ Γ ⇒ Δ \) and let \( Γ^* ⇒ Δ^* \) be any closed substitution instance of \( Γ ⇒ Δ \) (obtained by substituting closed terms for free variables).
+	Then \( \PAo ⊢ Γ ⇒ Δ \).
+	Likewise, for Heyting arithmetic and \( \HAo \).
+\end{lemma}
+%
+%
+%\begin{proof}
+%	Proceed by induction on the height of the (finite) \( \PA \)-proof.
+%	\Cref{oa-embed-basic} covers the case of initial sequents as these are closed under substitution (if \( Γ(a) ⇒ Δ(a) \) is an initial sequent of \( \PA \) then so is \( Γ(s) ⇒ Δ(s) \) for every term \( s \)).
+%\end{proof}
+
+\begin{exercise}
+	Prove the embedding lemma. Do not forget the equality rules implicit in \( \Gceq \).
+\end{exercise}
+
+The next task is to analyse \( ω \)-proofs and establish a cut elimination theorem.
+Currently lacking, however, is some measure of the \emph{complexity} of an \( ω \)-proof analogous (or, perhaps, generalising) the height of finite sequent calculus proofs.
+Although every path through an \( ω \)-proof is, by requirement, finite there are \( ω \)-proofs that admit paths of arbitrary (finite) length.
+The \( ω \)-proof described by the proof of \cref{oa-ind-omega} is such an example.
+It comprises a single application of an \( ω \)-rule at the root with the premise for the numeral \( n \) being derived by a (finite) sequent proof of height at least \( n \).
+
+Thus the question comes down to how to associate a measure to \( ω \)-proofs such that strict subproofs (i.e., proofs of the premises of the root inference) can be recognised as being ‘smaller’ than the proof itself?
+The answer to this conundrum is in the title of this part: \emph{ordinals}.
+
+%Currently we have no means to measure the size of \( \PAo \)-proofs.
+%For this we will use ordinals.
+
+

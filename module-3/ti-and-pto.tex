@@ -1,0 +1,498 @@
+%---------------------------------
+\chapter{Transfinite induction and proof-theoretic ordinals}
+\label{c-TI-and-PTO}
+%---------------------------------
+
+The final chapter is devoted to proving the optimality of \cref{oa-embed-PA-ce}/\cref{PA-consis}.
+I will show how the principle of transfinite induction can be rendered in arithmetic and show that it is precisely the ordinal \( ε_0 \) that marks the boundary between the provable and unprovable instance of transfinite induction.
+%Such a characterisation of Peano arithmetic
+It turns out that many interesting theories extending arithmetic (including set theories and theories of second-order arithmetic) can be characterised in such a way.
+The ordinal corresponding to ‘provable instances of transfinite induction’ is one of a number of ways in which ordinals can be used to describe, delineate and compare mathematical theories.
+\emph{Ordinal analysis}, in a nutshell, is the isolation and comparison of such ordinal measures.
+
+
+%---------------------------------
+\section{Provable transfinite induction}\label{s-oa-lower}
+%---------------------------------
+In the present section I will define precisely one way to assign an ordinal to a theory of arithmetic and show that under this measure the \emph{proof-theoretic ordinal} of Peano arithmetic is at least \( ε_0 \).
+The following section will establish that this bound is optimal.
+
+I begin by recalling some basic order-theory.
+\begin{definition}
+	Let \( ≺ \) be a relation on a non-empty set \( X \).
+	\( ≺ \) is:
+	\begin{itemize}
+		\item \emph{well-founded} if there is no infinite \( ≺ \)-descending sequence, namely no sequence \( (x_i)_{i<ω} \) such that \( x_{i+1} ≺ x_i \) for every \( i \).
+		\item a \emph{well-order} if \( ≺ \) is linear and well-founded.
+	\end{itemize}
+\end{definition}
+
+\begin{example}\label{oa-ex-order-type}
+	The following two orderings on natural numbers are well-orders.
+	The third is well-founded but not a well-order.
+	\begin{align*}
+		m <_1 n \;&\text{iff}\; 0 < m < n \text{, or } n = 0 \text{ and } m ≠ 0 .
+		\\
+		m <_2 n \;&\text{iff}\; 
+		\begin{cases}
+			m < n, \text{and both are even or both odd, or}
+			\\
+			\text{$n$ even and \( m \) odd.}
+		\end{cases}
+		\\
+		m <_2 n \;&\text{iff}\; m = 0 \text{ and } n ≠ 0.
+	\end{align*}
+\end{example}
+
+The proof of the next lemma is left as an exercise.
+
+\begin{lemma}
+	A relation \( ≺  \) on a non-empty set \( X \) if a well-order iff every non-empty \( Y ⊆ X \) has a \( ≺ \)-least element.
+\end{lemma}
+
+Let \( ≺ \) be a well-founded ordering of \( \Nat \). I define
+\begin{align*}
+	\otin n &≔ \supof{ \otin m + 1 }[m ≺ n]
+	\\
+	\ot &≔ \supof{ \otin n + 1 }[ n ∈ \Nat ]
+\end{align*}
+Well-foundedness ensures the above notions are well-defined.
+I call \( \otin[≺] n \) the order-type of \( n \) in \( ≺ \), and \( \ot \) the order-type of \( ≺ \).
+The function \( \otin {·} \colon ℕ → \Ord \) is order-preserving: \( m ≺ n \) implies \( \otin m < \otin n \) and its range is a segment of \( \Ord \).
+If \( ≺ \) is a well-order then the function is also injective, whence \( \otin {·}  \) is an order-preserving enumeration of \( ℕ \) in \( \Ord \).
+%
+\begin{example}
+	I compute the order types of natural numbers in the three orderings from \cref{oa-ex-order-type}.
+	Note, for the standard ordering on \( ℕ \),
+	\begin{align*}
+		\otin[<]{n} &= n \quad \text{for every \( n \)}
+		\\
+		\ot[<] &= \sup\setof{ n + 1 }[n ∈ \Nat] = ω .
+	\end{align*}
+	%
+The ordering \( <_1 \) satisfies
+\begin{gather*}
+	\otin[<_1]{n+1} = n 
+	\quad\text{and}\quad
+	\otin[<_1]{0} =  ω
+	\\
+	\ot[<_1] = ω + 1 .
+\end{gather*}
+%
+The ordering \( <_2 \) satisfies
+\begin{align*}
+	\otin[<_2]{2n} &= n 
+	\\
+	\otin[<_2]{2n+1} &= ω + n
+	\\
+	\ot[<_2] &= ω + ω .
+\end{align*}
+The ordering \( <_3 \) satisfies
+\begin{align*}
+	\otin[<_3]{0} &= 0
+	\\
+	\otin[<_3]{n} &= 1 \;\text{ for all $n>0$}
+	\\
+	\ot[<_3] &= 2.
+\end{align*}
+\end{example}
+%
+\begin{lemma}
+	If \( ≺ \) is a well-founded relation on \( \Nat \) then for every \( α < \ot \) there exists \( n ∈ \Nat \) such that \( \otin n = α \).
+	If \( ≺ \) is a well-ordering then \( n \) is unique.
+\end{lemma}
+%\begin{proof}
+%	Let \( O = \setof{ \otin n }[n ∈ ℕ] \) and \( α ∈ O \).
+%	If \(  \)
+%%	Let \( ≺ \) be well-founded and assume, to the contrary, that \(  \)
+%\end{proof}
+
+For \( ≺ \) a primitive recursive relation on \( ℕ \) the representation theorem for arithmetic (\cref{representation-thm}) presents a \( Δ_0 \) formula \( {F_≺}(a,b) \) in the language of arithmetic (without the predicate \( P \)) such that for all \( n,m ∈ ℕ \),
+\[
+  \PA ⊢ {F_≺}(\nm m , \nm n) \text{ iff } m ≺ n.
+\]
+In what follows, I will write \( a ≺ b \) for the formula \( F_≺(a,b) \), and use \( ∀x ≺ a F(x) \) as an abbreviation for the formula \( ∀x ( x ≺ a ∧ F(x) ) \).
+
+%
+\begin{definition}
+	For each primitive recursive ordering \( ≺ \) and formula \( A(x) \) define formulas:
+	\begin{align*}
+		\Prog {A} &≔ ∀x( ∀ y ≺ x \, A(y) → A(x) )
+		\\
+		\TI {A, a} &≔ \Prog {A} → ∀ y ≺ a\, A(y)
+		\\
+		\TI {A} &≔ ∀x\, \TI {A,x}
+	\end{align*}
+\end{definition}
+%
+
+If \( ≺ \) is a well-order, the formula \( \Prog A \) expresses progressiveness of the set of ordinals \( \otin n \) such that \( ℕ ⊨ A(\nm n) \).
+In the case \( {≺} = {<} \) is the standard ordering on \( \Nat \), this is the same as \( A(x) \) being \emph{inductive}. 
+As a result, \( \TI {A, a} \) states the principle of transfinite induction for this set restricted to the segment of ordinals \( \setof{ \otin n }[ n ≺ a ] \).
+
+
+%
+\begin{definition}
+	Let \( \Theory{T} \) be a theory in the language \( \La \). The \emph{proof theoretic ordinal} of\, \( \Theory{T} \) is the ordinal \( \pto{\Theory T} \) defined by
+	\[
+	  \pto{\Theory T} = \supof{\ot }[\text{\( ≺ \) is a pr.~rec.,~well-founded  and \( \Theory{T} ⊢ \TI{P} \)}]
+	\]
+%	Equivalently, \( \pto{\Theory T} \) is the least primitive recursively representable ordinal for which the principal transfinite induction up to this ordinal for the predicate \( P \) is not derivable.
+\end{definition}
+%
+
+%The restriction to primitive recursive orderings rather than of arbitrary complexity in the definition is because of its role in the formula \( \TI P \).
+\noindent
+The goal of this section is a lower bound on the proof-theoretic ordinal of Peano and Heyting arithmetic:
+%
+\begin{theorem}\label{pto-lower-bound}
+	\( \pto \PA ≥ \pto \HA ≥ ε_0 \).
+\end{theorem}
+%
+Unpacking \cref{pto-lower-bound}, it states that there exists a sequence of well-founded relations \( \setof{ ≺_i }_i \) such that \( \supseq \ot[≺_i] = ε_0 \) and \( \HA ⊢ \TI[≺_i] P \) for each \( i \).
+A sequence of well-founded relations is not, strictly speaking, necessary as a single well-ordering can be defined of order-type \( ε_0 \) and for which transfinite induction can be proven for each proper initial segment.
+I leave the proof of the next lemma as an exercise.
+%
+\begin{lemma}
+	\label{oa-wo-e0}
+	There exists a primitive recursive well-ordering of \( ℕ \) of order-type \( ε_0 \) and primitive recursive functions \( \oplus \) and \( \dot{ω} \) representing addition and exponentiation respectively in the sense that \( \oplus \colon ℕ × ℕ → ℕ \) and \( \dot{ω} \colon ℕ → ℕ \) satisfy
+	\[
+		\otin{ m \oplus n } = \otin m \nsum \otin n
+		\qquad\text{and}\qquad
+		\otin{ \dot{ω}(m) } = ω^{\otin m}
+	\]
+	for all \( m,n ∈ ℕ \).
+\end{lemma}
+%
+\begin{exercise}
+	\label{ex-wo-e0}
+	Prove \cref{oa-wo-e0}.
+	Hint: Utilise the Cantor normal form theorem and a (primitive recursive) bijection between \( ℕ \) and finite sequences of \( ℕ \).
+\end{exercise}
+%
+\begin{exercise}
+	Prove the following generalisation of \cref{oa-wo-e0}: Given a primitive recursive well-ordering of order-type \( α \) construct a primitive recursive ordering of \( ℕ \) of order-type \( ε_α \).
+\end{exercise}
+
+In the following \( ≺ \) denotes the primitive recursive well-ordering of order type \( ε_0 \) given by \cref{oa-wo-e0}.
+%For \( α < ε_0 \) I will write \( ≺_α \) for the restriction of \( ≺ \) to numbers whose order-type in \( ≺ \) is \( < α \).
+%That is,
+%\[
+%  {≺_α} ≔ \setof{ (m,n) }[ m ≺ n \text{ and } \otin[≺] n < α ]
+%\]
+%The relation \( ≺_α \) is not a well-order because every \( n \) for which \( \otin[≺] n ≥ α \) has the same order-type, namely \( 0 \).
+%
+%If \( ≺ \) is represented in arithmetic in the sense that \( \PA ⊢ \nm m ≺ \nm n \) iff \( m ≺ n \), the orderings \( ≺_α \) are represented through a formula of three variables:
+%\[
+%	{≺_*}(a,b,c) ≔ a ≺ b ∧ b ≺ c.
+%\]
+%This formula clearly has the property that
+%\[
+%  \PA ⊢ {≺_*}(\nm m , \nm n, \nm o) \text{ iff } \otin m ≺_{\otin o} \otin n .
+%\]
+%Henceforth, I will write \( a ≺_c b \) for the formula\( {≺_*}(a,b,c) \) above.
+%
+The proof of \cref{pto-lower-bound} relies on one lemma whose proof is rather time-consuming and will be omitted:
+%
+\begin{lemma}
+	\label{pto-lower-bound-lem}
+	For every formula \( A(a) \) in the language of arithmetic, there exists a formula \( A'(a) \) such that
+	\[
+		\PA ⊢ ∀x\bigl( \TI[≺] {A' , x } → \TI[≺] {A, \dot{ω}^x} \bigr).
+%		\PA ⊢ \Prog[≺_{ω^α}] {A} → \Prog[≺_α] {A'}.
+	\]
+%	In particular, \( \PA ⊢ ∀x\bigl( \TI[≺] {A' , x } → \TI[≺] {A, \dot{ω}^x} \bigr) \).
+\end{lemma}
+
+%Viewing \( A \) as a set of ordinals,  
+%\cref{pto-lower-bound-lem} expresses that there is a set \( A' ⊆ \ot \) such that for all \( α < \ot \), if transfinite induction holds for \( A' \) on the segment \( \ot \) up to \( α \) and \( A \) is progressive on the segment \( \ot \), then \( A \) contains all ordinals \( < ω^α \).
+%
+Although I won't present the proof, it will be useful to know how \( A' \) is constructed from \( A \).
+First, I present the construction as an operation on sets of ordinals.
+I write \( β ⊆ O \) as shorthand for \( (∀ξ< β)ξ ∈ O \).
+Given \( O ⊆ \Ord \), define \( O' \) as the class
+\[
+  O' = \setof{ α }[ ∀ξ ( \, ξ ⊆ O \text{ implies } ξ + ω^α ⊆ O \, )].
+\]
+It is not difficult to see that \( O' \) is a segment and \( α ∈ O' \) implies \( ω^α ∈ O \), from which \( ω^{α+1} ⊆ O \) quickly follows.
+%For the first observation, if \( β < α ∈ O' \) then \( ω^α ⊆ O \) (pick \( ξ = 0 \)), so \( β ∈ O \).
+%And if \( α ∈ O' \) then \( ω^α ⊆ O \) (again picking \( ξ = 0 \)), so \( ω^α ∈ O \) (now picking \( ξ = ω^α \)).
+%
+%Looking closer at the definition, it is clear that \( O' \) is simply the largest segment of \( O \) such that \( \setof{ ω^α }[α ∈ O'] \) is a segment of \( O \).
+%
+Expressing the operation in the language of arithmetic provides the formula \( A' \) in \cref{pto-lower-bound-lem}:
+\[
+	A'(a) ≔ ∀x ( ∀ y ≺ x \, A(y) → ∀ y ≺ x \oplus \dot{ω}^a \, A(y) ).
+\]
+
+The above remarks concerning the properties of \( O \) and \( O' \) can be shown in \( \PA \) to hold for \( A \) and \( A' \). 
+Thus, to prove the \namecref{pto-lower-bound-lem} it suffices to show that \( \PA ⊢ \Prog {A} → \Prog {A'} \), which involves similar argumentation.
+
+
+%---------------------------------
+\section{Bounding provable transfinite induction}\label{s-oa-upper}
+%---------------------------------
+
+The goal of this section is the converse to \cref{pto-lower-bound}:
+%
+\begin{theorem}\label{pto-upper-bound}
+	\( \pto{\PA} ≤ ε_0 \).
+\end{theorem}
+%
+The proof strategy is as follows. 
+I fix an arbitrary primitive recursive well-ordering \( ≺ \) and suppose that \( \TI P \) is provable in \( \PA \). 
+The embedding theorem for \( \PAo \) provides an ordinal \( α < ε_0 \) and a cut-free proof of \( \TI P \) bounded above by \( α \).
+Applying the inversion lemma yields, for every \( n ∈ ℕ \),
+\begin{equation}
+	\PAo \prv{α}0 {\Prog P ⇒ ∀x ≺ \nm n \, Px} . \tag{\dag}\label{oa-eqn-TI}
+\end{equation}
+I want to infer from (\dag) that \( \otin n < ε_0 \) for every \( n \).
+In fact, it will be the case that (\dag) holds only if \( \otin n ≤ α \).
+%The goal of this section is to establish that from \eqref{oa-eqn-TI} we can infer that \( \ot  < ε_0 \).
+
+To that aim I will utilise an extension of \( \PAo \), called \( \PAop \), such that \eqref{oa-eqn-TI} implies
+\begin{equation}
+	\PAop \prv{α}0 { ⇒ ∀x ≺ \nm n Px}. \tag{\ddag}\label{oa-eqn-TI2}
+\end{equation}
+%
+The transfer from \eqref{oa-eqn-TI} to \eqref{oa-eqn-TI2} will depend on a cut elimination theorem for \( \PAop \).
+An analysis of cut-free provability in \( \PAop \) will lead me from \eqref{oa-eqn-TI2} quite directly to \( \otin n ≤ α \) for all \( n \), i.e., \( \ot ≤ α < ε_0 \).
+\medskip
+
+I begin by introducing the extension of \( \PAo \) used in \eqref{oa-eqn-TI2}.
+Henceforth, let \( ≺ \) be a fixed primitive recursive well-ordering on \( \Nat \). 
+%Without loss of generality, I assume \( \ot \) is a limit ordinal.
+For the sake of simplifying notation, I will write \( s^ℕ \) for the value of \( s \) in the standard model, i.e., the \( n \) such that \( ℕ ⊨ \nm n = s \).
+This notation presupposes that \( s \) is closed.
+
+%
+\begin{definition}
+%	Let \( ≺ \) be a well-ordering on \( \Nat \). 
+%	We introduce the inference rule \( (≺) \):
+	The rule \( (≺) \) comprises all instances of the inference
+	\[
+	  \Infer{Γ \sa Δ , P \nm n \quad\text{for every \( n ≺ s^\Nat \)}}[\( ≺ \)]{ Γ \sa Δ , Ps }
+	\]
+	The infinitary sequent calculus \( \PAop \) extends the axioms and rules of \( \PAo \) by the inference \( (≺) \) above. 
+	The relation \( \PAop \prv{α}k Γ ⇒ Δ \) is given as in \cref{d-bound-omega-logic}.
+\end{definition}
+
+In general, the rule \( (≺) \) will have infinitely many premises like the \( ω \)-rules.
+For instance, if there is an element \( m \) with order-type \( ω \), and \( M = \setof{ n ∈ ℕ }[n ≺ m] \) then one instance of the rule is
+\[
+  \Infer{ Γ ⇒ P \nm n \text{ for all } n ∈ M }[\( ≺ \)]{ Γ ⇒ P \nm m}
+\]
+
+
+
+The next three lemmas provide the motivation for this extension of \( \PAo \).
+%
+\begin{lemma}\label{oa-PAo-in-PAop}
+	If \( \PAo \prv{α}k Γ ⇒ Δ \) then  \( \PAop \prv{α}k Γ ⇒ Δ \).
+\end{lemma}
+\begin{proof}
+	Immediate.
+\end{proof}
+%
+\begin{lemma}\label{oa-PAop-Prog}
+	\( \PAop \prv{ω}0 {{}⇒ \Prog P} \).
+\end{lemma}
+%
+\begin{proof}
+	Recall that \( \Prog P = ∀ x ( ∀ y ( y ≺ x → Py ) → P x ) \). 
+	Let \( k \) be the constant given by \cref{p-PAo-S1} such that \( \PAo \prv k 0 { ⇒ \nm m ≺ \nm n }\) for all \( m ≺ n \). 
+	For every \( n ∈ \Nat \) I obtain the following derivation in \( \PAo \) (with implicit application of weakening) for all \( m , n ∈ ℕ \) satisfying \( m ≺ n \):
+	\begin{prooftree*}
+	  \axiom[\idRule]{ \prv00 P\nm m ⇒ P \nm m }
+	  \subproof{\prv k0 {}⇒ \nm m \prec \nm n }
+	  \infer[separation=3em]2[\impL]{\prv{k+1}0 \nm m ≺ \nm n → P \nm m  &⇒ P\nm m }
+	  \infer1[\faL]{\prv{k+2}0 ∀y ≺ \nm n \, Py &⇒ P \nm m}
+	\end{prooftree*}
+	Continuing the derivation in \( \PAop \):
+	\begin{prooftree*}
+		\subproof{\prv{k+2}0 ∀y ≺ \nm n \, Py ⇒ P \nm m \text{ for all \( m ≺ n \)} }
+		\infer1[\( ≺ \)]{\prv{k+3}0 ∀y ≺ \nm n \, Py ⇒ P\nm n }
+		\infer1[\impR]{\prv{k+4}0 {} ⇒ ( ∀y ≺ \nm n \, Py ) → P\nm n }
+		\hypo{\text{for every } n}
+		\infer2[\faR]{\prv{k+5}0 {} ⇒ \Prog P }
+	\end{prooftree*}
+	An application of bound weakening completes the proof.
+\end{proof}
+%
+\begin{lemma}[Refined embedding lemma]\label{oa-PAop-embedding}
+	If\, \( \PA ⊢ \TI P \) then there exists \( k < ω \) such that for all \( n ∈ ℕ \), 
+	\[ \PAop \prv{ω^2}k {{}⇒ ∀ y ≺ \nm n \, P y }. \]
+\end{lemma}
+%
+\begin{proof}
+	The embedding lemma for \( \PAo \) (\cref{oa-embed-PAo-w-bounds}) and inversions yields a \( k < ω \) such that for all \( n ∈ ℕ \):
+	\[ 
+		\PAo \prv{ω.k}k { \Prog P ⇒ ∀y ≺ \nm n \, P y } 
+	\]
+	\Cref{oa-PAop-Prog} and a pair of cuts completes the argument.
+\end{proof}
+
+Paired with cut elimination for \( \PAop \), treated in the next section, the \namecref{oa-PAop-embedding} above yields \eqref{oa-eqn-TI2}.
+Under the assumption of cut elimination (with the same bounds as \( \PAo \)), just one lemma stands before an optimal upper bound on the proof-theoretic strength of \( \PA \).
+This is the lemma below.
+
+Since \( ≺ \) is a fixed well-ordering, for \( α < \ot \) I will write \( \cd{α} \) for the numeral \( \nm n \) such that \( α = \otin n \).
+%
+\begin{lemma}[Bounding lemma]
+	\label{oa-bounding-lemma}
+	Let \( α_1 , …, α_m , β_0, …, β_n < \ot \). If
+	\[ \PAop \prv{γ}0 P\cd{α_1}, … , P\cd{α_m} ⇒ P\cd{β_0} , …, P\cd{β_n} \]
+	then
+	\(%begin{equation}\label{eqn-bounding-lemma}
+		 \min\setof{β_0, …, β_n } ≤ \max \setof{α_1, …, α_m } + γ  . %\tag{\ast}
+	\)%end{equation}
+\end{lemma}
+%
+\begin{proof}
+	Induction on \( γ \).
+	If \( P\cd{α_1}, … , P\cd{α_m} ⇒ P\cd{β_0} , …, P\cd{β_n} \) is initial, then \( α_i = β_j \) for some \( i \) and \( j \) and the claim holds vacuously.
+	If, however, the sequent is not initial then, as the derivation is cut-free, the final rule applied must be an instance of \( (≺) \). 
+	I can assume, without loss of generality, that the principal formula is \( P \cd{β_n} \), i.e., that the inference applied is
+	\begin{prooftree*}
+		\hypo{ P\cd{α_1}, … , P\cd{α_m} ⇒ P\cd{β_0} , …, P\cd{β_n} , P\cd{δ} \quad\text{for all \( δ < β_n \)} }
+		\infer1[\( ≺ \)]{ P\cd{α_1}, … , P\cd{α_m} ⇒ P\cd{β_0} , …, P\cd{β_n} }
+	\end{prooftree*}
+	For each \( δ <  β_n \) the corresponding premise has a cut-free derivation of height \( < γ \).
+	That is, for every \( δ < β_n \) there exists \( γ_δ < γ \) such that 
+	\[
+	  \PAop \prv{γ_δ}0 P\cd{α_1}, … , P\cd{α_m} ⇒ P\cd{β_0} , …, P\cd{β_n} , P\cd{δ}.
+	\]
+	Let \( β = \min \setof{β_0, …, β_n } \) and \( α = \max \setof{α_1, …, α_m } \).
+	The induction hypothesis implies that 
+	\begin{equation}
+		\label{eqn-bouding-lemma-sub}
+		\text{for every \( δ < β_n \), } \min\setof{ β , δ } ≤ α + γ_δ.
+	\end{equation}
+	%
+	Consider two cases. 
+	First, suppose \( β < β_n \). 
+	Choosing \( δ = β \) in \eqref{eqn-bouding-lemma-sub} yields
+	\[
+		β ≤ α + γ_β < α + γ,
+	\]
+	whereby the claim holds as desired.
+	Otherwise, \( β = β_n \), and
+	\begin{align*}
+		β = \supof{ δ + 1 }[ δ < β ] &≤ \supof{ α + γ_δ + 1 }[ δ < β ] &&\text{by \eqref{eqn-bouding-lemma-sub}}
+	  \\
+	  &≤ α + \supof{ γ_δ + 1 }[ δ < β ] &&\text{continuity}
+	  \\
+	  &≤ α + γ.
+	 \end{align*}
+%	 as required.
+\end{proof}
+
+\begin{proof}[of \cref{pto-upper-bound} (assuming cut elmination)]
+	Let \( ≺ \) be any primitive recursive well-order of \( ℕ \) and suppose \( \PA ⊢ \TI P \).
+	Let \( α = \ot \).
+	The refined embedding lemma~(\cref{oa-PAop-embedding}) provides a finite \( k \) such that for all \( n ∈ ℕ \)
+	\[
+		\PAop \prv{ω^2} k {}⇒ ∀ y ≺ \nm n\, Py .
+	\]
+	In particular, for every \( β < α \),
+	\[
+		\PAop \prv{ω^2} k {}⇒ P \cd {β} .
+	\]
+	Cut elimination for \( \PAop \) provides an ordinal \( γ < ε_0 \) such that (see next \namecref{s-oa-PAop-ce}) for every \( β < α \)
+	\[
+		\PAop \prv{γ} 0 {}⇒ P\cd{β} .
+	\]
+	The bounding lemma ensures that \( β ≤ γ \), meaning that \( \ot ≤ γ + 1 < ε_0 \).
+\end{proof}
+
+%---------------------------------
+\section{Cut elimination, revisited}
+\label{s-oa-PAop-ce}
+%---------------------------------
+
+What remains is to confirm cut elimination for the extended calculus \( \PAop \).
+The reader can confirm that weakening and substitution remain admissible in this extension.
+%
+\begin{lemma}[Weakening Lemma]
+	If \( \PAop \prv{α}k Γ ⇒ Δ \) and \( Γ'⇒Δ' \) is closed then \( \PAop \prv{α}k Γ' , Γ ⇒ Δ, Δ' \).
+\end{lemma}
+%
+\begin{lemma}[Substitution Lemma]
+	Let \( Γ(a) ⇒ Δ(a) \) be a sequent with \( a \) the only free variable, and let \( s \) and \( t \) be closed terms such that \( \Nat ⊨ s = t \). If \( \PAop \prv{α}k Γ(s) ⇒ Δ(s) \) then \( \PAop \prv{α}k Γ(t) ⇒ Δ(t) \).
+\end{lemma}
+%
+%\begin{lemma}[Contraction Lemma]
+%	If \( \PAop \prv{α}k A , A , Γ ⇒ Δ \) then \( \PAop \prv{α}k A , Γ ⇒ Δ \).
+%	If \( \PAop \prv{α}k Γ ⇒ Δ , A , A \) then \( \PAop \prv{α}k Γ ⇒ Δ , A \).
+%\end{lemma}
+%
+\begin{exercise}
+	Prove the weakening and substitution lemmas for \( \PAop \).
+\end{exercise}
+
+Precisely the same formulation of the reduction lemma also holds, but here there are some notable changes to the proof.
+%In fact, it is simple to see how 
+%
+I present only the ‘simple’ version of this result and leave the quantifier-relevant form for the reader.
+%
+\begin{lemma}[Reduction lemma]
+	Suppose \( \PAop \prv{α}k Γ ⇒ Δ , C \) and \( \PAop \prv{β}k C, Γ ⇒ Λ \).
+	If \( \rk C = k \) then \( \PAop \prv{α\nsum β}k Γ ⇒ Δ,Λ \).
+\end{lemma}
+%
+\begin{proof}
+	Like the inferences of \( \PAo \), the rule \( (≺) \) has the property of just one principal formula,
+	namely
+	\[
+%		\text{If} \quad
+		\Infer{Γ_i ⇒ Δ_i \;\text{for } i ∈ I}{Γ⇒Δ}
+	\]
+	is an instance iff there is \( F ∈ Δ \) such that
+	\[
+		\Infer{ Σ, Γ_i ⇒ Δ_i , Λ  \;\text{for } i ∈ I}{ Σ ⇒ Λ, F}
+	\]
+	is an instance for all \( Σ \) and \( Λ \).
+
+	As such, the new rule does not affect the part of the argument where \( C \) is not principal in one of the assumptions.
+	So it suffices to treat the case in which \( C = P s\) for some \( s \) and is principal in both assumptions.
+	But if \( Ps \) is principal in the proof \( \prv{α}k Γ ⇒ Δ , C \) then inference deriving this sequent is either initial (whence \( P t ∈ Γ \) for \( ℕ ⊨ s = t \)) or the conclusion of \( (≺) \).
+	In the latter case, however, it is not clear how to use the premises of the rule against the second assumption.
+	Fortunately, though, it is not necessary because we are assuming that \( C \) is principal in the second hypothesis, \( \prv{β}k C,Γ ⇒ Λ \).
+	For this to be the case, \( C , Γ ⇒ Λ \) must be an initial sequent, meaning that \( P t ∈ Λ \) such that \( ℕ ⊨ s = t \).
+	The substitution lemma applied to the \emph{first} hypothesis, shows derivability of \( \prv{α}k Γ ⇒ Δ , Λ \).	
+\end{proof}
+
+\begin{exercise}
+	Complete the proof of the reduction lemma.
+\end{exercise}
+
+\begin{exercise}
+	Formulate and prove a quantifier-relevant formulation of the reduction lemma for \( \PAop \) following the schema of \cref{oa-red-lem-PAo-quant}.
+\end{exercise}
+%
+\begin{theorem}[Cut elimination]
+	If \( \PAop \prv{α}k Γ ⇒ Δ \) then \( \PAop \prv{ω_k^α}0 Γ ⇒ Δ  \).
+\end{theorem}
+%
+\begin{proof}
+	The proof proceeds precisely as before.
+\end{proof}
+
+%
+%---------------------------------
+\section{Characterisation of provable transfinite induction}
+%---------------------------------
+
+Combining the results in this chapter:
+%
+\begin{theorem}[Proof-theoretic characterisation theorem]
+	The proof-the\-oretic ordinal of Peano and Heyting arithmetic is \( ε_0 \).
+\end{theorem}
+%
+\begin{proof}
+	As \( ε_0 ≤ \pto{\HA} ≤ \pto{\PA} \) by \cref{pto-lower-bound} and \( \pto{\PA} ≤ ε_0 \) by \cref{pto-upper-bound}.
+\end{proof}
+%
+\begin{corollary}[Independence of transfinite induction]
+	There is a primitive recursive well-ordering \( ≺ \) on \( \Nat \) and a formula \( A \) in the language of arithmetic such that \( \PA ⊬ \TI A \).
+\end{corollary}

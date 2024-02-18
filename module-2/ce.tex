@@ -1,0 +1,52 @@
+%---------------------------------
+\chapter{Cut elimination}\label{c-cut-elim}
+%---------------------------------
+Here we present cut elimination for the calculi.
+
+Cut rank,
+Inversion lemma and the like
+
+\begin{lemma}[First inversion lemma]\label{ce-inversion-lemma}
+	Let \( ⊢ \) denoted provability in either \( \Gc \) or \( \Gi \).
+	The following hold for all sequents and all \( n \), \( k \):
+	\begin{enumerate}
+		\item If \( \prv n k Γ ⇒ Δ , ⊥ \) then \( \prv n k Γ ⇒ Δ \).
+		\item If \( \prv n k Γ ⇒ Δ , F ∧ G \) then \( \prv n k Γ ⇒ Δ , F \) and \( \prv n k Γ ⇒ Δ , G \).
+		\item If \( \prv n k F ∧ G , Γ ⇒ Δ \) then \( \prv n k F , G , Γ ⇒ Δ \).
+		\item If \( \prv n k F ∨ G , Γ ⇒ Δ \) then \( \prv n k F , Γ ⇒ Δ \) and \( \prv n k G , Γ ⇒ Δ \).
+		\item If \( \prv n k Γ ⇒ Δ , F → G \) then \( \prv n k F , Γ ⇒ Δ , G \).
+		\item If \( \prv n k Γ ⇒ Δ , ∀x F(x) \) then \( \prv n k Γ ⇒ Δ , F(s) \) for every term \( s \).
+		\item If \( \prv n k ∃x F(x) , Γ ⇒ Δ \) then \( \prv n k F(s) , Γ ⇒ Δ \) for every term \( s \).
+	\end{enumerate}
+\end{lemma}
+
+\begin{lemma}[Second inversion lemma]\ 
+	\begin{enumerate}
+		\item If \( \Gc \prv n k Γ ⇒ Δ , F ∨ G \) then \( \Gc \prv n k Γ ⇒ Δ , F , G \).
+		\item If \( \Gc \prv n k F → G , Γ ⇒ Δ \) then \( \Gc \prv n k G ,Γ ⇒ Δ \) and \( \Gc \prv n k Γ ⇒ Δ , F \).
+	\end{enumerate}
+\end{lemma}
+
+\begin{lemma}[Third inversion lemma]
+	If \( \Gi \prv n k F → G , Γ ⇒ Δ \) then \( \Gi \prv n k G , Γ ⇒ Δ \).
+\end{lemma}
+
+% ---
+\section{For classical logic}
+
+\begin{lemma}[Reduction lemma for \( \Gc \)]
+	\label{ce-red-lem-C}
+	Suppose \( \prv m k Γ ⇒ Δ , C \) and \( \prv n k C , Σ ⇒ Λ  \).
+	If \( \rk C = k \) then \( \prv {m+n}k Γ,Σ⇒ D,Λ  \).
+\end{lemma}
+
+\begin{exercise}
+	\label{ex-red-lem-special}
+	In this exercise you will prove a strengthening of the reduction lemma and, as a consequence, obtain more precise bounds on the cost of cut elimination in classical logic.
+	
+	See Canvas assign 4.
+\end{exercise}
+
+
+% ---
+\section{For intuitionistic logic}

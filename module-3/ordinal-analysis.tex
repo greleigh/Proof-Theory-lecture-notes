@@ -1,302 +1,634 @@
 
 %---------------------------------
-\chapter{Ordinal Analsysis of Arithmetic}\label{s-oa-PAo}
+\chapter{Ordinal analysis of arithmetic}\label{c-oa-PAo}
 %---------------------------------
-We being by recalling the definition of the infinitary sequent calculi for arithmetic:
+Ordinals will now be used to measure the \emph{height} of \( ω \)-proofs.
+I begin by recalling the infinitary sequent calculi for arithmetic from the end of \cref{c-oa-arith}.
 %
-\begin{definition}
-	\( \PAo \) and \( \HAo \).
+\begin{definition}%\label{d-PAomega}
+	\( \PAo \) is the sequent calculus given by the following:
+	\begin{itemize}
+		\item sequents comprise formulas in the language of arithmetic (with equality).
+		\item Initial sequents are \emph{closed} sequents of the form
+		\begin{itemize}
+			\item[(\botL)] \( ⊥, Γ ⇒ Δ \)
+			\item[(\idRule)] \( Ps, Γ ⇒ Δ , Pt \) if \( ℕ ⊨ s = t \)
+			\item[(\eqR)] \( Γ ⇒ Δ , s = t \) if \( ℕ ⊨ s = t \)
+			\item[(\eqL)] \( s = t , Γ ⇒ Δ \) if \( ℕ ⊭ s = t \)
+		\end{itemize}
+		\item Inference rules are rules of \( \Gc \) but restricted to closed sequents and with \( \faR \) and \( \exL \) replaced by the two \( ω \)-rules:\note{\( \Gc \) or more general \( \Logic{G3} \)?}
+		\begin{itemize}
+			\item[(\omR)] \begin{prooftree} \hypo{ Γ ⇒ Δ , F(\nm n) \ \text{for every } n ∈ ℕ } \infer1{ Γ ⇒ Δ , ∀x F(x) }\end{prooftree}
+			\item[(\omL)] \begin{prooftree} \hypo{ F(\nm n) , Γ ⇒ Δ \ \text{for every } n ∈ ℕ } \infer1{ ∃x F(x) , Γ ⇒ Δ }\end{prooftree}
+		\end{itemize}
+	\end{itemize}
+%	Writing \( \PAo ⊢ Γ ⇒ Δ \) expresses that there is an \( ω \)-proof of \( Γ ⇒ Δ \) according to the above rules. In other words, there exists a well-founded tree labelled by sequents such that each leaf is an initial sequent and that each inner vertex together with its immediate successors in the tree forms a correct application of a rule of the calculus listed above.
+%	
+	\( \HAo \) is the same calculus but restricted to intuitionistic sequents.
 \end{definition}
 %
 \begin{definition}\label{d-bound-omega-logic}
-	Let \( \Theory{T} \) be a classical sequent calculus.
-	The ternary relation \( \Theory{T} \prv{α}k Γ ⇒ Δ \) is defined by transfinite recursion on the rules of \( \Theory{T} \):
+	Let \( \Theory{T} \) be \( \PAo \), \( \HAo \) or an extension of either calculus by rules that are at most \( ω \)-branching.
+	The ternary relation \( \Theory{T} \prv{α}k Γ ⇒ Δ \), between a sequent \( Γ ⇒ Δ \), an ordinal \( α \) and \( k < ω \), is defined by transfinite recursion on the rules of \( \Theory{T} \):
 	\begin{enumerate}
-		\item If \( Γ ⇒ Δ \) is an axiom of \( \Theory{T} \), then \( \Theory{T} \prv{α}k Γ ⇒ Δ \) for all \( α \) and \( k \);
+		\item If \( Γ ⇒ Δ \) is an initial sequent of \( \Theory{T} \), then \( \Theory{T} \prv{α}k Γ ⇒ Δ \) for all \( α \) and \( k \);
 		\item For each inference \( (*) \) of \( \Theory{T} \) except cut of the form
 		\[
-			\Infer{\setof{ Γ_i ⇒ Δ_i }[i ∈ I]}[*]{ Γ ⇒ Δ }
+			\Infer{\setof{ Γ_i ⇒ Δ_i }[i ∈ I]}[\( * \)]{ Γ ⇒ Δ }
 		\]
 		\( \Theory{T} \prv{α}k Γ ⇒ Δ \) holds if \( \Theory{T} \prv{α_i}k Γ_i ⇒ Δ_i \) and \( α_i < α \) for all \( i ∈ I \);
-		\item If \( \Theory{T} \prv{α_0}k Γ ⇒ Δ , C \) and \( \Theory{T} \prv{α_1}k C , Γ ⇒ Δ \) for \( α_0,α_1 < α \) and \( w(C) < k \), then \( \Theory{T} \prv{α}k Γ ⇒ Δ \).
+		\item If \( \Theory{T} \prv{α_0}k Γ ⇒ Δ , C \) and \( \Theory{T} \prv{α_1}k C , Γ ⇒ Σ \) for \( α_0,α_1 < α \) and \( \rk C < k \), then \( \Theory{T} \prv{α}k Γ ⇒ Δ, Σ \).
 	\end{enumerate}
-	If \( \Theory{T} \) is a calculus of intuitionistic sequents, \( \Theory{T} \prv{α}k Γ ⇒ A \) is defined via the same conditions but with a modification of the final clause:
-	\begin{enumerate}[resume]
-		\item If \( \Theory{T} \prv{α_0}k Γ ⇒ C \) and \( \Theory{T} \prv{α_1}k C , Γ ⇒ A \) for \( α_0,α_1 < α \) and \( w(C) < k \), then \( \Theory{T} \prv{α}k Γ ⇒ A \).
-	\end{enumerate}
-	Given \( \Theory{T} \prv{α}k Γ ⇒ Δ \) we refer to \( α \) as the (ordinal) height and \( k \) the cut rank.
+%	If \( \Theory{T} \) is a calculus of intuitionistic sequents, \( \Theory{T} \prv{α}k Γ ⇒ A \) is defined via the same conditions but with a modification of the final clause:
+%	\begin{enumerate}[resume]
+%		\item If \( \Theory{T} \prv{α_0}k Γ ⇒ C \) and \( \Theory{T} \prv{α_1}k C , Γ ⇒ A \) for \( α_0,α_1 < α \) and \( w(C) < k \), then \( \Theory{T} \prv{α}k Γ ⇒ A \).
+%	\end{enumerate}
+	Given \( \Theory{T} \prv{α}k Γ ⇒ Δ \) I will write that \( Γ ⇒ Δ \) is derivable (in \( \Theory T \)) with height \( ≤ α \) and cut rank \( ≤ k \).
 \end{definition}
 %
-There is no requirement of minimality of \( α \) and \( k \) in the above definition. In particular, the relation \( \prv{α}k \) is monotone in \( α \) and \( k \):
+
+%Some of the terminology  to \( ω \)-proofs as before.
+
+There is no requirement of minimality of \( α \) and \( k \) in the above definition. 
+So the relation \( \prv{α}k \) is monotone in \( α \) and \( k \):
 %
-\begin{lemma}\label{l-PAo-index}
+\begin{lemma}\label{oa-PAo-weak1}
 	If \( α ≤ β \) and \( k ≤ l \) then \( \Theory{T} \prv{α}k Γ ⇒ Δ \) implies \( \Theory{T} \prv{β}l Γ ⇒ Δ \).
 \end{lemma}
 %
-Now we look at some examples … 
+\begin{proof}
+	By transfinite induction on \( α \). If \( Γ ⇒ Δ  \) is an initial sequent, the result is immediate.
+	Otherwise, there is an inference rule of \( \Theory T \)
+	\[
+		\Infer{\setof{ Γ_i ⇒ Δ_i }[i ∈ I]}[\( * \)]{ Γ ⇒ Δ }
+	\]
+	and ordinals \( α_i < α \) such that \( \smash{\Theory T \prv{α_i}k Γ_i ⇒ Δ_i} \) for each \( i ∈ I \).
+	The induction hypothesis implies that \( \Theory T \prv{α_i}l Γ_i ⇒ Δ_i \) for each \( i \), whereby \( \Theory T \prv{β}l Γ ⇒ Δ \) obtains.
+\end{proof}
+
+\Cref{oa-PAo-weak1} operates in the background of the majority of the results to follow. For that reason I will not make any explicit reference to the \namecref{oa-PAo-weak1}.
+
+\begin{example}
+	\tbw
+\end{example}
+
+\begin{lemma}\label{oa-HA-good}
+	If \( \HAo \prv{α}k Γ ⇒ A \) then this fact can be observed by use of sequents of the form \( Σ ⇒ B \) (i.e., exactly one formula on the right).
+\end{lemma}
+
+\begin{exercise}
+	Assign ordinal bounds on the \( ω \)-proofs of \( A , Γ ⇒ Δ , A \) constructed in exercise~\ref{ex:oa-id-simple}.
+\end{exercise}
+
+Revisiting the Embedding lemma (lemma \ref{oa-embed-weak}) it is possible provide ordinal bounds on the size of the resulting \( ω \)-proof.
+Let \( α.k = \underbrace{α + ⋯ + α }_k \).
+
+\begin{lemma}[Refined embedding lemma]\label{oa-embed-PAo-w-bounds}
+	Suppose \( \PA ⊢ Γ ⇒ Δ \) and \( Γ ⇒ Δ \) is closed. Then there is \( n,k < ω \) such that \( \PAo \prv{ω.n}k Γ ⇒ Δ \) where \( ω .n = ω + ⋯ + ω \) (\( n \) times).
+	Likewise, \( \HA \) into \( \HAo \).
+\end{lemma}
 %
-\begin{namedlemma}[Refined Embedding Lemma]\label{l-embedding-PAo-w-bounds}
-	Suppose \( \PA ⊢ Γ ⇒ Δ \) and \( Γ ⇒ Δ \) is closed. Then there is \( k < ω \) such that \( \PAo \prv{ω.k}k Γ ⇒ Δ \).
-\end{namedlemma}
+\begin{exercise}
+	Prove the refined embedding lemma following the schema of embedding lemma at the end of \cref{c-oa-arith}.
+\end{exercise}
+%
+The next lemma hints at part of the usefulness of the \( ω \)-rule with the ability to isolate finitary reasoning from infinitary reasoning.
+The result will be useful in \cref{s-oa-upper}.
+%
+\begin{proposition}\label{p-PAo-S1}
+	Let \( A(a_1,…, a_k) \) be a \( Σ_1 \) formula. 
+	There exists \( m < ω \) such that for all \( n_1, …, n_k ∈ \Nat \), 
+	\[ \text{if }\thinspace  \Nat ⊨ A(\nm {n_1}, …, \nm {n_k} ) \text{ then } \HAo \prv m0 {⇒ A(\nm {n_1}, …, \nm {n_k})} .
+	\]
+\end{proposition}
+%
+\begin{proof}
+	By induction on the rank of \( A \).
+\end{proof}
+
+Henceforth, I will omit explicit mention of \( \PAo \) and write \( \prv{α}k Γ ⇒ Δ \) to mean \( \PAo \prv{α}k Γ ⇒ Δ \).
+The following results are stated only for \( \PAo \) but apply equally to \( \HAo \) in the expected way.
+Admissibility of weakening becomes 
+%
+\begin{lemma}[Weakening Lemma]
+	If \( \prv{α}k Γ ⇒ Δ \) and \( Γ' ⇒ Δ' \) is closed then \( \prv{α}k Γ' , Γ ⇒ Δ, Δ' \).
+%	Likewise for \( \HAo \).
+\end{lemma}
+%
+%\begin{proof}
+%	By (transfinite) induction on \( α \).
+%\end{proof}
+\begin{exercise}
+	Prove the weakening lemma.
+\end{exercise}
+
+The substitution lemma for \( \PAo \) takes a different formulation from previously. 
+As sequents are closed, the correct formulation for \( ω \)-proofs is that provability depends on the \emph{value} of terms, not their \emph{form}.
+
+\begin{lemma}[Substitution Lemma]
+	Let \( Γ(a) ⇒ Δ(a) \) be a sequent and \( s \) and \( t \) be closed terms such that \( \Nat ⊨ s = t \). If \( \prv{α}k Γ(s) ⇒ Δ(s) \) implies \( \prv{α}k Γ(t) ⇒ Δ(t) \).
+\end{lemma}
+%
+\begin{proof}
+%	Analogous argument. I will treat the case of \( \exR \): 
+	Suppose 
+	\( \prv{α}k Γ(s) ⇒ Δ(s) \) and \( \Nat ⊨ s = t \).
+	Let \( Γ(a) ⇒ Δ(a) \) be any sequent with at most \( a \) free.
+	If \( Γ(s) ⇒ Δ(s) \) is initial then a case distinction on the different forms this sequent can take confirms that \( Γ(s) ⇒ Δ(s) \) is also initial provided \( \Nat ⊨ s = t \). The other case proceed by transfinite induction on \( α \).
+\end{proof}
+
+The final ingredient is the inversion lemma, the statement of which has the same form as before with two new cases treating equality.
+
+\begin{lemma}[Inversion lemma]
+	\label{oa-inversion}\ 
+	\begin{enumerate}
+		\item If \( \prv{α}k Γ ⇒ Δ , ⊥ \) then \( \prv{α}k Γ ⇒ Δ \).
+		\item If \( \prv{α}k s = t , Γ ⇒ Δ \) and \( ℕ ⊨ s = t \) then \( \prv{α}k Γ ⇒ Δ \).\label{oa-inversion-eq1}
+		\item If \( \prv{α}k Γ ⇒ Δ , s = t \) and \( ℕ ⊭ s = t \) then \( \prv{α}k Γ ⇒ Δ \).
+		\item If \( \prv{α}k Γ ⇒ Δ , ∀x F(x) \) then \( \prv{α}k Γ ⇒ Δ , F(s) \) for every closed term \( s \).\label{oa-inversion-fa}
+		\item If \( \prv{α}k ∃x F(x) , Γ ⇒ Δ \) then \( \prv{α}k F(s) , Γ ⇒ Δ \) for every closed term \( s \).
+		\item Analogous inversion principles for the rules \( \disjL \), \( \conjR \), \( \impR \) and \( \impL \).
+	\end{enumerate}
+\end{lemma}
+\begin{proof}
+	I show cases \ref{oa-inversion-eq1} \& \ref{oa-inversion-fa}.
+	
+	\ref{oa-inversion-eq1}. By induction on \( α \). Suppose \( \prv{α}k s = t , Γ ⇒ Δ \) and \( ℕ ⊨ s = t \). If \( s = t , Γ ⇒ Δ \) is initial then so is \( Γ ⇒ Δ \). The other cases are straightforward because the equation \( s = t \) cannot be the principal formula of any rule.
+	For if \( s = t , Γ ⇒ Δ \) is not initial, then there are sequents \( \setof{ Γ_i ⇒ Δ_i}[i<ω] \)
+	and ordinals \( \setof{α_i}[i<ω] \) such that
+	\begin{enumerate}[label=(\alph*)]
+		\item \( \prv{α_i}k s=t , Γ_i ⇒ Δ_i \) for each \( i < ω \),
+		\item \( α_i < α \) for all \( i \),
+		\item \( \setof{ Γ_i ⇒ Δ_i}[i<ω] \) enumerate all premises of an inference of \( \PAo \) whose conclusion is \( Γ ⇒ Δ \).
+	\end{enumerate}
+	In the case of unary or binary rules, \( Γ_i = Γ_{i+1} \) and \( Δ_{i} = Δ_{i+1} \) for all \( i > 0 \) or \( 1 \). But in the case of either of the two \( ω \)-rules, the sequents enumerate the infinitely many premises.
+	By (a)--(c) and the induction hypothesis, \( \prv{α}k Γ ⇒ Δ \) holds as desired.
+	
+	\ref{oa-inversion-fa}. The argument is a direct generalisation of the finitary inversion lemma. Suppose \( \prv{α}k Γ ⇒ Δ , ∀x F(x) \). If this sequent is initial, then so is \( Γ ⇒ Δ , F(s) \) for every closed term \( s \).
+	The rest of the argument proceeds, essentially, as above by a case distinction on the inferences through which \( \prv{α}k Γ ⇒ Δ , ∀x F(x) \) can be derived.
+	The case of \( \faR \) with \( ∀x F(x) \) principal bears treatment.
+	The premises of this inference can be assumed to have the form \( Γ ⇒ Δ , ∀x F(x) , F(\nm n) \). An application of the induction hypothesis (to each premise) yields \( \prv{α}k Γ ⇒ Δ , F(\nm n) \) for every \( n \). If the desired closed term \( s \) is a numeral, this case is complete. Otherwise, let \( n \) be the value of \( s \), i.e., \( n ∈ ℕ \) is such that \( ℕ ⊨ \nm n = s \).
+	The substitution lemma then yields \( \prv{α}k Γ ⇒ Δ , F(s) \).
+\end{proof}
+
+%---------------------------------
+\section{Infinitary cut elimination}\label{s-oa-cutelim}
+%---------------------------------
+
+I begin with the transfinite version of the reduction lemma.
+Recall, this is statement that borderline cuts can be simulated at the cost of increasing the depth of the proof by a controlled amount.
+In the finitary case the depth increase was, in the case of classical logic, \( m + n \) where \( m \) and \( n \) bounded the depth of the two cut premises.
+
+Lifting the statement of the reduction lemma to the transfinite realm is reasonably straightforward.
+Given premises of a borderline cut of height \( α \) and \( β \) respectively, the cut can be simulated by a height of \( α \nsum β \).
+The use of natural sum is crucial to the argument: the lifting of the finitary argument requires the resulting bound to be order-preserving in both arguments, a property we know fails for traditional ordinal sum \( α + β \).
+
+%In fact, I will give two proofs of the reduction lemma.
+%The first is the version just described: a direct lifting of the finitary argument to \( ω \)-proofs. 
+%Some steps of the proof clearly require new insights, such as passing cuts through \( ω \)-rules and the new initial sequents with equations.
+%But, by and large, the design of \( \PAo \) is such that the transfinite element is straightforward once one knows what to expect.
+%
+%Thus, the reduction lemma I will prove will be:
+
+\begin{lemma}[Reduction lemma for \( \PAo \)]\label{oa-red-lem-PAo}
+	Suppose \( \prv{α}k Γ ⇒ Δ , C \) and \( \prv{β}k C , Σ ⇒ Λ \).
+	If \( \rk C ≤ k \) then \( \prv{α\nsum β }k Γ, Σ ⇒ Δ, Λ \).
+\end{lemma}
+
+The reader may surprised to know that there is a great deal of flexibility in proofs of the reduction lemma, which I will demonstrate by presenting a slightly different strategy than we used for in the analysis of classical predicate logic.
+%The statement of the lemma already offers a minor, though insignificant, departure from previously by allowing \( \rk C < k \). 
+%Provided that \( α , β \) are non-zero, \( \max\setof{ α , β } + 1 ≤ α \nsum β \), so whether.
+
+%The second formulation will be presented after the proof of the above \namecref{oa-red-lem-PAo}.
+%In short, it mitigates a shortcoming of the reduction lemma as described in its exaggeration of the complexity of cut elimination.
+%The transfinite reduction lemma is optimal in the same way as the finitary form: Sequents can be readily chosen whose shortest cut-free proofs require a jump in ordinal height matching that expressed by the reduction lemma and its immediate corollaries.
+%But by treating each logical connective as equally ‘expensive’, the reduction lemma ignores the true source of ‘large’ proofs: \emph{alternation} between \emph{positive} and \emph{negative} statements.
+%
+%This alternative version of the reduction lemma is closely related to the form proved in exercise~\ref{ex-red-lem-special}.
+
+\begin{proof}%[of \cref{oa-red-lem-PAo}]
+%	Suppose:
+%	\begin{enumerate}
+%		\item \( \prv{α}k Γ ⇒ Δ , C \).
+%		\item \( \prv{β}k C , Σ ⇒ Λ \).
+%	\end{enumerate}
+%
+	The proof branches into cases depending on the form of \( C \).
+	In each case I will establish \( \prv{α \nsum β} k Γ, Σ ⇒ Δ, Λ \) but the induction will proceed over either \( α \) or \( β \) (depending on the case) rather than on the sum \( α \nsum β \).
+	If the principal connective of \( C \) is among \( \setof{ ⊥ , ∀ ,  ∧ , → } \) I will refer to \( C \) as \emph{locally negative} (cf.~Canvas assignment no.~4).
+	Otherwise, \( C \) will be \emph{locally positive}.
+	
+%	\paragraph{Case I: \( C \) is \( ⊥ \) or an equation.} This case can be dispensed with directly. If \( C = ⊥ \) or a false equation then \( \prv{α}k Γ ⇒ Δ \) is a consequence of the inversion lemma;  otherwise \( \prv{β}k Σ ⇒ Λ \).
+%	In any case, weakening yields \( \prv{α\nsum β }k Γ, Σ ⇒ Δ , Λ \).
+	
+	\paragraph{Case I: \( C \) is atomic or locally negative.}
+	Here I proceed by induction on \( β \) and show that \( \prv{ α \nsum β }k Γ, Σ ⇒ Δ , Λ \).
+	I present two subcases:
+	
+	\( C = ∀x D(x) \). If \( C , Σ ⇒ Λ \) is initial then \( Σ ⇒ Λ \) is also initial and the claim holds by weakening.
+	Otherwise, consider the rule that derives \( \prv{β}k C , Σ ⇒ Λ \).
+	If the principal formula of the rule is \emph{not} \( C \) then the induction hypothesis can be applied directly to its premises and the rule re-applied to derive the desired sequent with correct bounds.
+	If, however, the rule is \( \faL \) with \( C \) principal, the above argument does not work. But in this case there is \( γ < β \) and term \( t \) such that 
+	\[
+	  \prv{γ}k D(t) , C , Σ ⇒ Λ .
+	\]
+	The induction hypothesis yields
+	\[
+		\prv{α \nsum γ}k D(t) , Γ , Σ ⇒ Δ , Λ .
+	\]
+	From the inversion lemma (part \ref{oa-inversion-fa}) I know also that \( \prv{α}k Γ ⇒ Δ , D(t) \). Since \( \rk {D(t)} < \rk{ C} = k \), an application of cut yields 
+	\( \prv{ α \nsum β }k Γ, Σ ⇒ Δ, Λ \).
+	
+	\( C = D → E \). I employ a similar argument as above but with a subtle difference in how the induction hypothesis is applied to account for the binary connectives. 
+	By the previous argument I can jump directly to the case that \( C \) is principal in the derivation of \( \prv{β}k C , Σ ⇒ Λ \), for which there exist \( γ , δ < β \) and \( Λ = Λ_0 ∪ Λ_1 \) satisfying
+	\begin{enumerate}
+		\item \( \prv{γ}k C , Σ ⇒ Λ_0, D \).
+		\item \( \prv{δ}k C , E , Σ ⇒ Λ_1 \).
+	\end{enumerate}
+	I start by applying the inversion lemma to my three hypotheses:
+	\begin{enumerate}[resume]
+		\item \( \prv{α}k D , Γ ⇒ Δ , E \).
+		\item \( \prv{γ}k Σ ⇒ Λ_0, D \).
+		\item \( \prv{δ}k E , Σ ⇒ Λ_1 \).
+	\end{enumerate}
+	Then I apply the induction hypothesis between the sequents in 3 and 5 (using ‘cut’ formula \( E \)):
+	\begin{enumerate}[resume]
+%		\item \( \prv{α+γ}k Γ , Σ ⇒ Δ ,Λ_0, D \).
+		\item \( \prv{α \nsum δ}k D , Γ, Σ ⇒ Δ , Λ_1 \).
+	\end{enumerate}
+	I can now combine 6 and 3 with a (standard) cut:
+	\[
+		\prv{α \nsum β}k Γ , Σ ⇒ Δ ,Λ.
+	\]
+	The conjunction subcase is left to the reader.
+	
+	Case II: \( C \) is locally positive.
+	This case is symmetric to the previous and left to the reader.
+\end{proof}
+
+%The observant reader will have noticed that the argument for the implication case could be simplified by applying the inversion lemma
+% ------------------
+\begin{figure}
+	\centering
+	\begin{prooftree}
+%		\hypo{\prv{α}k Γ ⇒ Δ , C }
+		\hypo{\prv{γ}k C , Σ ⇒ Λ_0, D}
+		\infer[dashed]1[IL]{\prv{γ}k Σ ⇒ Λ_0, D}
+%		\infer[dashed]2[IH]{\prv{α+γ}k Γ , Σ ⇒ Δ, Λ_0, D}
+			
+		\hypo{\prv{α}k Γ ⇒ Δ , C }
+		\infer[dashed]1[IL]{\prv{α}k D , Γ ⇒ Δ , E }
+			\hypo{\prv{δ}k C , E , Σ ⇒ Λ_1 }
+			\infer[dashed]1[IL]{\prv{δ}k E , Σ ⇒ Λ_1 }
+		\infer[dashed]2[IH]{\prv{α \nsum δ}k D , Γ , Σ ⇒ Δ , Λ_1 }
+		\infer2[\Cut]{\prv{α \nsum β}k Γ , Σ ⇒ Δ , Λ }
+	\end{prooftree}
+	\caption{Illustration of the proof method in the reduction lemma for the case \( C = D → E \); IL = ‘inversion lemma’ and IH = ‘induction hypothesis’.}
+	\label{f-oa-PAo}
+\end{figure}
+% ------------------
+
+\begin{exercise}
+	Complete the preceding proof.
+\end{exercise}
+
+\begin{exercise}
+	Formulate and prove a reduction lemma for \( \HAo \) following the proof scheme above.
+\end{exercise}
+
+\begin{exercise}
+	Give an alternative proof of \cref{oa-red-lem-PAo} using the proof strategy from the reduction lemma for \( \Gc \) (\cref{ce-red-lem-C}).
+\end{exercise}
+
+In the implication subcase of case II in the proof above, I used the induction hypothesis to simulate a cut on the formula \( E \)
+
+\begin{theorem}[Reduction theorem for \( \PAo \)]\label{oa-red-thm-PAo}
+	If \( \prv {α}{k+1} Γ ⇒ Δ  \) then \( \prv{ω^α}k Γ ⇒ Δ \).
+\end{theorem}
+\begin{proof}
+	Induction on \( α \). If \( Γ ⇒ Δ \) is initial, the claim holds trivially.
+	So suppose \( \prv {α}{k+1} Γ ⇒ Δ  \) is derived via a rule
+	\[
+	  \Infer{Γ_i ⇒ Δ_i \; \text{for } i ∈ I}[\( * \)]{ Γ ⇒ Δ }
+	\]
+	and for each \( i \) there is \( α_i < α  \) such that \( \prv{α_i}{k+1} Γ_i ⇒ Δ_i \).
+	The induction hypothesis implies that \( \prv{ω^{α_i}}{k} Γ_i ⇒ Δ_i \) for each \( i \). So, if \( * \) is not cut, then 
+	\[ \prv{ω^α}k Γ⇒ Δ \]
+	obtains by re-applying the rule and observing that \( \supof{ ω^η }[η< α] ≤ ω^α \).
+	Now suppose that the rule is cut, with cut formula \( C \). If \( \rk C < k \) the same argument as above applies.
+	Otherwise \( \rk C = k \) and the reduction lemma is applicable, yielding
+	\[
+		\prv{ω^{α_0} \nsum ω^{α_1}}k Γ ⇒ Δ 
+	\]
+	Since \( ω^{α_0} \nsum ω^{α_1} < ω^α  \), the proof is complete.
+\end{proof}
+
+The bound in the reduction theorem can be improved fairly easily.
+For the give proof strategy to work, it suffices to find an order-preserving function \( f \colon \Ord → \Ord \) such that \( f(α) ≥ \supof{ f(ξ) \nsum f(η) }[ξ,η<α] \).
+An obvious candidate is \( f \colon α ↦ 2^α \) (see exercise~\ref{ex-ord-base-2}) and, indeed, \cref{oa-red-lem-PAo} can be strengthened by replacing \( ω^α \) with \( 2^α \).
+Certainly, \( 2^α ≤ ω^α \) for all \( α \), so working with this bound seems a significant improvement. 
+But given that for every additive principal ordinal \( α ≥ ω^ω \) in fact \( 2^α = ω^α \) (cf.\ exercise~\ref{ex-ord-cnf-2o}), the distinction between exponentiation in the two bases does little in reducing the complexity of cut elimination.
+
+In the next section I will present a strict refinement of the cut elimination theorem in which ordinal exponentiation is directly tied to the \emph{quantifier} rank of the cut formula rather than the full rank.
+
+Let \( ω_0^α ≔ α \) and \( ω_{k+1}^α ≔ ω^{ω_k^α} \).
+
+\begin{theorem}[Cut elimination theorem]\label{oa-ce-PAo}
+	If \( \prv{α}k Γ⇒ Δ \) then \( \prv{ω_k^α}0 Γ⇒ Δ \).
+\end{theorem}
+\begin{proof}
+	Consequence of \cref{oa-red-thm-PAo}.
+\end{proof}
+
+\begin{exercise}
+	Formulate and prove a corresponding reduction lemma and cut elimination theorem for \( \HAo \).
+\end{exercise}
+
+\begin{theorem}[Embedding theorem]
+	\label{oa-embed-PA-ce}
+	If \( \PA ⊢ Γ ⇒ Δ \) and this a closed sequent, then there exists \( α < ε_0 \) such that
+	\[
+		\PAo \prv{α}0 Γ ⇒ Δ.
+	\]
+	In addition, \( α \) is effectively computable from the given \( \PA \)-proof.
+\end{theorem}
+%
+\begin{proof}
+	Suppose \( \PA ⊢ Γ ⇒ Δ \).
+	By the embedding lemma (\cref{oa-embed-PAo-w-bounds}) there is are \( n, k \) such that 
+	\[
+	  \PAo \prv{ω.n}k Γ ⇒ Δ .
+	\]
+	Let \( α = ω_k^{ω.n} \). Then \( α < ε_0 \) (by \cref{d-epsilon0}) and
+	\[
+	  \PAo \prv{α}0 Γ ⇒ Δ 
+	\]
+	by \cref{oa-ce-PAo}.
+\end{proof}
+
+On the basis of cut elimination, a few observations can be already made.
+
+\begin{corollary}
+	\label{PA-consis-weak}
+	\( \PA \) and, hence, \( \HA \), are consistent.
+\end{corollary}
+%
+\begin{proof}
+	There can be no cut-free proof of the empty sequent.
+\end{proof}
+
+An inspection of the various proofs leading up to \cref{PA-consis-weak} can strengthen the result by clarifying what mathematical principles suffice to derive the consistency of arithmetic.
+%
+\begin{corollary}
+	\label{PA-consis}
+	Consistency of \( \PA \) can be deduced using only finitary reasoning plus the principle of transfinite induction for ordinals \( {≤} ε_0 \).
+\end{corollary}
+%
+By ‘finitary reasoning’ I mean the ‘finite’ mathematics that can be carried out using only finite objects (such as natural numbers) and primitive recursive functions.
+Examples include deciding whether one formula is a subformula of another, whether a given primitive recursive function enumerates the premises of an \( ω \)-rule (or Gödel codes of sequents) and what the concluding sequent is.
+It is beyond the scope of these lecture notes to attempt to make the statement more precise, but the following proof ‘sketch’ hopefully elucidates how this could be achieved and proven.
+
+\begin{proof}[sketch]
+	Suppose there is a finite \( \PA \)-proof of the empty sequent. The embedding of \( \PA \) in \( \PAo \) (\cref{oa-embed-PAo-w-bounds}) provides an explicit number \( n < ω \) such that
+	\[
+		\PAo \prv{ω.n}n {} ⇒ {} .
+	\]
+	The existence of a cut-free proof of the empty sequent, along with the various results on which \cref{oa-ce-PAo} depends, can now be established by via finitary reasoning plus transfinite induction up to an ordinal strictly smaller than \( ε_0 \), for instance the ordinal \( ω_{n+2} \) suffices.
+	
+	As there can be no cut-free proof of the empty sequent, there is no derivation of the empty sequent in \( \PA \).
+\end{proof}
+
+\begin{corollary}
+	If \( Γ \) is a set of \( Π^0_1 \) sentences and \( Δ \) a set of \( Σ^0_1 \) sentences, then \( \PAo ⊢ Γ ⇒ Δ \) iff there is a cut-free \( \PAo \) derivation of finite height.
+\end{corollary}
 %
 \begin{proof}
 	Exercise.
 \end{proof}
-%
-The next lemma hints at the usefulness of the \( ω \)-rule. We will have need of this result in \cref{s-oa-upper}.
-%
-\begin{proposition}\label{p-PAo-S1}
-	Let \( A(x_1,…, x_k) \) be a \( Σ_1 \) formula. There exists \( m < ω \) such that for all \( n_1, …, n_k ∈ \Nat \), if\, \( \Nat ⊨ A(\nm {n_1}, …, \nm {n_k} ) \) then \( \PAo \prv m0 {⇒ A(\nm {n_1}, …, \nm {n_k})} \).
-\end{proposition}
-%
-\begin{proof}
-	By induction on \( A \).
-\end{proof}
 
-Admissibility of weakening becomes 
-%
-\begin{namedlemma}[Weakening Lemma]
-	If \( \PAo \prv{α}k Γ ⇒ Δ \) and \( A \) is closed, then \( \PAo \prv{α}k A , Γ ⇒ Δ \) and \( \PAo \prv{α}k Γ ⇒ Δ , A \).
-\end{namedlemma}
-%
-\begin{proof}
-	By (transfinite) induction on \( α \).
-\end{proof}
-%
-\begin{namedlemma}[Substitution Lemma]
-	Let \( Γ ⇒ Δ \) be a sequent with at most \( x \) free, and \( s \) and \( t \) be closed terms such that \( \Nat ⊨ s = t \). Then \( \PAo \prv{α}k Γ[s/x] ⇒ Δ[s/x] \) implies \( \PAo \prv{α}k Γ[t/x] ⇒ Δ[t/x] \).
-\end{namedlemma}
-%
-\begin{proof}
-	a
-\end{proof}
+% ----------------------
+\section{Subtheories of Peano arithmetic}
+\label{s-oa-ISigma}
+% ----------------------
 
-\begin{namedlemma}[Contraction Lemma]
-	If \( \PAo \prv{α}k A , A , Γ ⇒ Δ \) then \( \PAo \prv{α}k A , Γ ⇒ Δ \).
-	If \( \PAo \prv{α}k Γ ⇒ Δ , A , A \) then \( \PAo \prv{α}k Γ ⇒ Δ , A \).
-\end{namedlemma}
-%
-\begin{proof}
-	b
-\end{proof}
+\tbw To cover
+\begin{itemize}
+	\item PRA
+	\item \( \IS_n \)
+\end{itemize}
 
-%---------------------------------
-\section{Provable transfinite induction}\label{s-oa-lower}
-%---------------------------------
-Let \( ≺ \) be a well-founded ordering of \( \Nat \). We define
+The final part of this chapter will explore some important subtheories of \( \PA \) through the lens of \( ω \)-proofs.
+As I will cover only classical theories, I take the opportunity to remove some (classically) definable connectives.
+
+For the purpose of this section, the logical connectives are \( ⊥ \), \( ∧ \), \( → \) and \( ∀ \). Note, I am including implication rather than primitive negation as a matter of convenience.
+
+The \emph{negation rank} (\emph{n-rank}) of a formula, \( \nrk F \), counts the nesting depth on the negative side of implications:
 \begin{align*}
-	\otin n &= \sup\setof{ \otin m + 1 }[m ≺ n]
+	\nrk{A} &= 0 \quad(\text{$A$ prime})
+	&
+	\nrk{F ∧ G} &= \max\setof{ \nrk F , \nrk G }
 	\\
-	\ot &= \sup \setof{ \otin n + 1 }[ n ∈ \Nat ]
+	\nrk{∀x F(x)} &= \nrk{F(a)}
+	&
+	\nrk{F → G} &= \max\setof{ \nrk F +1 , \nrk G }
 \end{align*}
-%
-\begin{example}
-For the standard ordering \( 0 < 1 < 2 < ⋯ \) we have
-\begin{align*}
-	\otin[<]{n} &= n \quad \text{for every \( n ∈ \Nat \)}
-	\\
-	\ot[<] &= \sup\setof{ n + 1 }[n ∈ \Nat] = ω .
-\end{align*}
-%
 
-The ordering \( <_1 \) was given by \( {<_1} = \setof{(m,n)}[m < n \text{ and } m≠0 ] ∪ \setof{(n,0)}[n ∈ \Nat] \), well-ordering \( \Nat \) as \( 1 <_1 2 <_1 3 <_1 ⋯ <_1 0 \).
-For this well-ordering we have
-\begin{align*}
-	\otin[<_1]{n+1} &= n 
-	\\
-	\otin[<_1]{0} &=  ω
-	\\
-	\ot[<_1] &= ω + 1 .
-\end{align*}
-%
+Compare with the quantifier hierarchy for this language fragment.
 
-The well-ordering \( <_2 \) satisfies
-\begin{align*}
-	\otin[<_2]{2n} &= n 
-	\\
-	\otin[<_2]{2n+1} &= ω + n
-	\\
-	\ot[<_2] &= ω + ω = ω .2.
-\end{align*}
-\end{example}
-%
+\begin{definition}
+	The \( Π_{n}^P \) formulas (the \( ^P \) expresses that the predicate \( P \) is permitted, in contrast to our earlier definition of \( Π_1 \)) is the smallest set of formulas that contains
+	\begin{enumerate}
+		\item all prime formulas
+		\item \( F ∧ G \) if \( F , G ∈ Π_{n}^P \),
+		\item \( ∀x F(x) \) if \( F(a) ∈ Π_{n}^P \) and \( n > 0 \),
+		\item \( F → G \) if \( F ∈ Π_{n-1}^P ∪ Π_0^P \) and \( G ∈ \Pi_{n}^P \).
+	\end{enumerate}
+\end{definition}
+
+Since \( Π_0^P \) is closed under negation, there is no a priori bound on the negation depth of formulas in \( Π_n^P \).
+
 \begin{lemma}
-	If \( ≺ \) is a well-founded relation on \( \Nat \) then for every \( α < \ot \) there exists \( n ∈ \Nat \) such that \( \otin n = α \).
-	If \( ≺ \) is a well-ordering then \( n \) is unique.
+	Every \( Π_n^P \) formula is equivalent, over weak arithmetic, to a formula with n-rank \( n+1 \).
 \end{lemma}
-%
-\begin{definition}
-	For each primitive recursive ordering \( ≺ \) and formula \( A(x) \) we define formulas:
-	\begin{align*}
-		\Prog {A} &= ∀x( ∀ y ≺ x \, A(y) → A(x) )
-		\\
-		\TI {A} &= \Prog {A} → ∀ x\, A(x)
-	\end{align*}
-\end{definition}
-%
-In the case \( {≺} = {<} \) is the standard ordering on \( \Nat \), the formula \( \Prog A \) expresses that \( A(x) \) is \emph{inductive}.
-%
-\begin{definition}
-	Let \( \Theory{T} \) be a theory in the language \( \La \). The \emph{proof theoretic ordinal} of\, \( \Theory{T} \) is the ordinal \( \pto{\Theory T} \) defined by
-	\[
-	  \pto{\Theory T} = \sup \setof{\ot }[\text{\( ≺ \) is a pr.~rec.~well-ordering and \( \Theory{T} ⊢ \TI{P} \)}]
+By \emph{weak arithmetic}, I have in mind the theory known as Robinson's \( Q \) (see~\cite[ch.~18]{LogThe}) but primitive recursive arithmetic or, equivalently, the theory known as ‘$\IS_1$’ suffices.
+
+\begin{proof}
+	Using the full logical language, express \( F ∈ Π_n^P \) in prefix normal form as
+	\begin{gather}
+		\label{oa-eqn-PNF}\tag{\dag}
+		∀\vec x_1 ∃\vec x_2 ⋯ ∃ \vec x_{m} G
+	\end{gather}
+	where \( G \) is quantifier-free.
+	We can choose \( m ∈ \setof{ n , n+1 } \) and \( G \) can be assumed to be \( Π_0^P \) because over weak arithmetic a disjunction \( E ∨ F \) is provably equivalent to 
+	\[ 
+		∃x ∃ y ( x + y = \suc \0 ∧ ( x = \0 → E ) ∧ ( x = \suc\0 → F )).
 	\]
-	Equivalently, \( \pto{\Theory T} \) is the least primitive recursive ordinal for which the principal transfinite induction up to this ordinal for the predicate \( P \) is not derivable.
-\end{definition}
-%
-\begin{theorem}\label{pto-lower-bound}
-	\( \pto \PA ≥ \pto \HA ≥ ε_0 \).
-\end{theorem}
-%
-To show \autoref{pto-lower-bound} we are required to present a sequence of well-orderings \( \{ ≺_i \}_i \) such that \( \supseq \ot[≺_i] = ε_0 \) and \( \HA ⊢ \TI[≺_i] P \) for each \( i \).
+	and the leading existential quantifiers can be incorporated into the '$∃\vec x_m$' sequence of quantifiers.
+	It is now straightforward to witness \eqref{oa-eqn-PNF} as an equivalent \( Π_{m}^P \)-formula whose negation rank is \( m \).
+\end{proof}
 
 
-%---------------------------------
-\section{Bounding provable transfinite induction}\label{s-oa-upper}
-%---------------------------------
-
-The goal of the remainder of the section is the converse to \cref{pto-lower-bound}:
+I will jump the gun somewhat now.
 %
-\begin{theorem}\label{pto-upper-bound}
-	\( \pto{\PA} ≤ ε_0 \).
-\end{theorem}
-%
-The proof strategy is as follows. We fix a primitive recursive well-ordering \( ≺ \) and suppose that \( \TI P \) is provable in \( \PA \). The embedding theorem for \( \PAo \) implies that
-\begin{equation}
-	\PAo \prv{α}0 {\Prog P ⇒ ∀x Px} \text{ for some \( α < ε_0 \)}. \tag{\dag}\label{eqn-oa-TI}
-\end{equation}
-The goal of this section is to establish that from \eqref{eqn-oa-TI} we can infer that \( \ot  < ε_0 \).
-We introduce an extension of \( \PAo \), called \( \PAop \), such that \eqref{eqn-oa-TI} implies
-\begin{equation}
-	\PAop \prv{α}0 { ⇒ ∀x Px} \text{ for some \( α < ε_0 \)}. \tag{\ddag}\label{eqn-oa-TI2}
-\end{equation}
-%
-The transfer from \eqref{eqn-oa-TI} to \eqref{eqn-oa-TI2} will depend on a cut elimination theorem for \( \PAop \).
-An analysis of cut-free provability in \( \PAop \) will lead us to deduce from \eqref{eqn-oa-TI2} that \( \ot ≤ α \), i.e., \( \ot < ε_0 \).
-\smallskip
-
-We start with introducing the extension of \( \PAo \) in \eqref{eqn-oa-TI2} for analysing proofs of \( \TI P \).
-Henceforth, let \( ≺ \) be a fixed primitive recursive well-ordering on \( \Nat \).
-%
-\begin{definition}
-	Let \( ≺ \) be a well-ordering on \( \Nat \). We introduce the inference rule \( (≺) \):
-	\[
-	  \Infer{Γ \sa Δ , Ps , P \nm n \quad\text{for every \( n ≺ s^\Nat \)}}[ \prec]{ Γ \sa Δ , Ps }
-	\]
-	The infinitary sequent calculus \( \PAop \) extends the axioms and rules of \( \PAo \) by the inference \( (≺) \) above. The relation \( \PAop \prv{α}k Γ ⇒ Δ \) is defined in \cref{d-bound-omega-logic}.
-\end{definition}
-
-In general, the rule \( (≺) \) will have infinitely many premises like the \( ω \)-rules.
-For instance, if there is an element \( m \) with order-type \( ω \), then an instance of the rule
+A sequent is an expression \( Γ ⇒ Δ \) without free variables using the logical language isolated at the beginning of this section.
+Let \( \prv{α}k Γ ⇒ Δ \) denote derivability in \( \PAo \) for such sequents in the usual way but with a more liberal cut rule bounded by negation rank:
 \[
-  \Infer{X⇒Y \text{ for all Z}}[≺]{X ⇒ Y , P \nm m}
+  \begin{prooftree}
+	\hypo{\prv {α} k Γ ⇒ Δ , C }\hypo{ \prv{β} k C, Σ ⇒ Λ }
+	\infer2[\Cut]{ \prv{γ}k Γ , Σ ⇒ Δ , Λ }
+\end{prooftree}
+\quad\text{for \( \nrk C < k \) and \( \max\setof{α,β} < γ \).}
 \]
 
+%The complication with adopting the above cut rule is that all transformations on proofs so far considered ‘reduce’
+I assume this variation of \( \PAo \) satisfies weakening, substitution and inversion lemmas with the same bounds.
+%
+Given a finite sequence \( \vec A = (A_i)_{i≤k} \) of formulas, I will write \( \vec A , Γ ⇒ Δ \) for \( A_0 , …, A_n , Γ ⇒ Δ \).
 
-
-The next three lemmas provide the motivation for this extension of \( \PAo \).
 %
-\begin{lemma}\label{l-PAo-in-PAop}
-	If \( \PAo \prv{α}k Γ ⇒ Δ \) then  \( \PAop \prv{α}k Γ ⇒ Δ \).
-\end{lemma}
-\begin{proof}
-	Immediate.
-\end{proof}
-%
-\begin{lemma}\label{l-PAop-Prog}
-	\( \PAop \prv{ω}0 {⇒ \Prog P} \).
-\end{lemma}
-%
-\begin{proof}
-	Recall that \( \Prog P = ∀ x ( ∀ y ( y ≺ x → Py ) → P x ) \). 
-	Let \( K \) be the constant given by \cref{p-PAo-S1} such that \( \PAo \prv K 0 { ⇒ \nm m ≺ \nm n }\) for all \( m ≺ n \). 
-	For every \( n ∈ \Nat \) we have the following derivation in \( \PAo \) (with implicit application of weakening):
-	\begin{prooftree*}
-	  \hypo{ \prv00 P\nm m ⇒ P \nm m }
-	  \hypo{}\ellipsis{}{\prv K0 {}⇒ \nm m \prec \nm n \text{ for all \( m ≺ n \)} }
-	  \infer[separation=3em]2[\impL]{\prv{K+1}0 \nm m ≺ \nm n → P \nm m  &⇒ P\nm m \text{ for all \( m ≺ n \)} }
-	  \infer1[\faL]{\prv{K+2}0 ∀y ( y ≺ \nm n → Py ) &⇒ P \nm m \text{ for all \( m ≺ n \)} }
-	\end{prooftree*}
-	By weakening and \cref{l-PAo-in-PAop} we have, for every \( m ≺ n ∈ \Nat \), \[ \PAo \prv{K+2}0 ∀y ( y ≺ \nm n → Py ) &⇒ P \nm n , P \nm m .\]
-	Continuing the derivation in \( \PAop \):
-	\begin{prooftree*}
-		\hypo{\prv{K+2}0 ∀y ( y ≺ \nm n → Py ) ⇒ P \nm m \text{ for all \( m ≺ n \)} }
-		\infer1[\( ≺ \)]{\prv{K+3}0 ∀y ( y ≺ \nm n → Py ) ⇒ P\nm n }
-		\infer1[\impR]{\prv{K+4}0 {} ⇒ ∀y ( y ≺ \nm n → Py ) → P\nm n }
-	\end{prooftree*}
-	An application of the \( ω \)-rule completes the proof.
-\end{proof}
-%
-\begin{lemma}\label{l-PAop-embedding}
-	If\, \( \PA ⊢ \TI P \) then\, \( \PAop \prv{ω^2}k {⇒ ∀ x \, P x} \) for some \( k < ω \).
+\begin{lemma}[Refined reduction lemma]
+	Suppose \( \prv{α}k Γ_i ⇒ Δ_i, C_i \) and \( \nrk {C_i} = k \) for each \( i ≤ n \). If \( \prv{β}k \vec C , Σ ⇒ Λ \), then
+	\begin{gather}
+		\label{oa-eqn-spec-red-lem}\tag{\dag}
+		\prv{α + β} k Γ_0 , …, Γ_n , Σ ⇒ Δ_0 , …, Δ_n , Λ .
+	\end{gather}
 \end{lemma}
 %
+Applications of the refined reduction lemma, however, will also be to simulate an ordinary two-premise cut rule.
+The significance of allowing multiple premises is hidden in the proof.
+The multi-premise ‘cut’ can be visualised as either a generalisation of the binary cut rule:
+\begin{prooftree*}
+  \hypo{ Γ_0 ⇒ Δ_0, C_0 }
+  \hypod 
+  \hypo{ Γ_n ⇒ Δ_n, C_n }
+  \hypo{ \vec C , Σ ⇒ Λ }
+  \infer4[$n$-\Cut]{ Γ_0 , …, Γ_n , Σ ⇒ Δ_0 , …, Δ_n , Λ }
+\end{prooftree*}
+Or as sequence of binary cuts
+\begin{prooftree*}
+  \hypo{ Γ_n ⇒ Δ_n, C_n }
+  \hypo{ Γ_1 ⇒ Δ_1, C_1 }
+  \hypo{ Γ_0 ⇒ Δ_0, C_0 }
+  \hypo{ \vec C , Σ ⇒ Λ }
+  \infer2[\Cut]{ C_1 , …, C_{n} , Γ_0 , Σ ⇒ Δ_0 , Λ }
+  \infer2[\Cut]{ }
+  \ellipsis{}{ C_n, Γ_0 , …, Γ_{n-1} , Σ ⇒ Δ_0 , …, Δ_{n-1} , Λ }
+  \infer2[\Cut]{ Γ_0 , …, Γ_n , Σ ⇒ Δ_0 , …, Δ_n , Λ }
+\end{prooftree*}
+The advantage of the former presentation is that the ‘size’ of the derivation does not depend on the order of the sequents.
+This allows the application of an induction hypothesis in cases that the binary cut view grows too large.
+
+%
 \begin{proof}
-	From the embedding lemma for \( \PAo \) (lemma~\ref{l-embedding-PAo-w-bounds}), from \( \PA ⊢ \TI P \) we obtain \( \PAo \prv{ω.k}k {⇒ \TI P} \) for some \( k < ω \).
-	\Cref{l-PAop-Prog} and a pair of cuts yields the desired result.
+	The overall structure of the proof will be recognisable as the strategy used in the proof of \cref{oa-red-lem-PAo}.
+	I proceed by induction on \( β \).
+	Suppose
+	\begin{enumerate}
+		\item \( \prv{α}k Γ_i ⇒ Δ_i, C_i \) and \( \nrk {C_i} = k \) for each \( i ≤ n \), and
+		\item \( \prv{β}k \vec C , Σ ⇒ Λ \).
+	\end{enumerate}
+	I refer to \( \vec C \) as the \emph{cut} formulas.
+	First, suppose no cut formula is principle in the final rule of assumption 2.
+	If the sequent is initial, then \( Σ ⇒ Λ \) is initial and \eqref{oa-eqn-spec-red-lem} follows by weakening.
+	Therefore, assume \( C_n \) is the principal formula in 2.
+	There is a case distinction based on the form of \( C_n \).
+	The focus will therefore be on assumption 2 above and
+	\begin{gather}
+		\label{oa-eqn-spec-red-lem-2}\tag{\ddag}
+		\prv{α } k  Γ_n ⇒ Δ_n , C_n .
+	\end{gather}
+
+	If \( C_n = ⊥ \) or is a false equation then \eqref{oa-eqn-spec-red-lem} results from applying the inversion lemma to \eqref{oa-eqn-spec-red-lem-2}.
+	If \( C_n = P s \), then \( P t ∈ Λ \) for some \( ℕ ⊨ s = t \) and \eqref{oa-eqn-spec-red-lem} also follows from \eqref{oa-eqn-spec-red-lem-2} via substitution.
+	The final case is that \( C_n \) is a true equation. But it is not possible for such an atomic formula to be principal in \eqref{oa-eqn-spec-red-lem}.
+	
+	Moving on to the non-atomic case suppose, to begin, that \( C_n = D ∧ E \).
+	From 2 I obtain \( γ < β \) and \( F ∈ \setof{ D, E} \) such that
+	\begin{enumerate}[resume]
+%		\label{oa-eqn-spec-red-lem}\tag{\dag}
+		\item \( \prv{γ} k \vec C , F , Σ ⇒  Λ  \).
+	\end{enumerate}
+	Applying the inversion lemma to \eqref{oa-eqn-spec-red-lem-2} yields
+	\begin{enumerate}[resume]
+%		\label{oa-eqn-spec-red-lem}\tag{\dag}
+		\item \( \prv{α } k  Γ_n ⇒ Δ_n , F  \).
+	\end{enumerate}
+	Adding this final sequent to the list of hypotheses in 1 above, and using 3 in place of 2, I can apply the induction hypothesis (as \( γ < β \)), which derives \eqref{oa-eqn-spec-red-lem}.
+	
+	The quantifier case, \( C_n = ∀x D(x) \) is essentially the same argument.
+	From principality of \( C_n \) and the inversion lemma I know
+	\begin{enumerate}[start=3,label=\arabic*'.]
+		\item \( \prv{γ} k \vec C , D(s) , Σ ⇒  Λ \) for some \( γ < β \) and term \( s \).
+		\item \( \prv{α } k  Γ_n ⇒ Δ_n , D(s) \).
+	\end{enumerate}	
+	I can then deduce \eqref{oa-eqn-spec-red-lem} from the induction hypothesis by adding 4' to the list in 1 and 3' in place of 2.
+	
+	The final case is involves a different in the argument.
+	Suppose \( C_n = D → E \).
+	Hypothesis 2 and the inversion lemma yields three derivations to work from:
+	\begin{enumerate}[start=3,label=\arabic*''.]
+		\item \( \prv{γ}k \vec C , E , Σ ⇒ Λ \),
+		\item \( \prv{δ}k \vec C , Σ ⇒ Λ , D \),
+		\item \( \prv{α}k D , Γ_n ⇒ Δ_n, E \),
+	\end{enumerate}
+	for \( γ, δ < β \).
+	The first and third of these can be used with the induction hypothesis, obtaining as conclusion,
+	\begin{enumerate}[resume,label=\arabic*''.]
+		\item \( \prv{α + γ } k D , Γ_0 , …, Γ_n , Σ ⇒ Δ_0 , …, Δ_n , Λ \).
+	\end{enumerate}
+	To derive \eqref{oa-eqn-spec-red-lem}, I need to remove the formula \( D \) in 6'' I apply a cut against a second application of the induction hypothesis, this time using 4'' (and not expanding the list in 2):
+	\begin{enumerate}[resume,label=\arabic*''.]
+		\item \( \prv{ α + δ } k Γ_0 , …, Γ_n , Σ ⇒ Δ_0 , …, Δ_n , Λ , D \).
+	\end{enumerate}
+	As \( \nrk D < k \) a standard cut can be used between sequents 4'' and 6'', the conclusion being \eqref{oa-eqn-spec-red-lem}.
 \end{proof}
 
-Once paired with cut elimination for \( \PAop \), which we tend to next, the final lemma above gives the claim in \eqref{eqn-oa-TI2}.
+As the focus is on better bounds on cut elimination, I will switch to base-$2$ exponentiation for the reduction theorem:
 
-%---------------------------------
-\section{Cut elimination, revisited}
-%---------------------------------
-
-The proof of the following admissibility lemmas is left as an exercise.
-%
-\begin{namedlemma}[Weakening Lemma]
-	If \( \PAop \prv{α}k Γ ⇒ Δ \) and \( A \) is closed, then \( \PAop \prv{α}k A , Γ ⇒ Δ \) and \( \PAop \prv{α}k Γ ⇒ Δ , A \).
-\end{namedlemma}
-%
-\begin{namedlemma}[Substitution Lemma]
-	Let \( Γ ⇒ Δ \) be a sequent with at most \( x \) free, and \( s \) and \( t \) be closed terms such that \( \Nat ⊨ s = t \). Then \( \PAop \prv{α}k Γ[s/x] ⇒ Δ[s/x] \) implies \( \PAop \prv{α}k Γ[t/x] ⇒ Δ[t/x] \).
-\end{namedlemma}
-%
-\begin{namedlemma}[Contraction Lemma]
-	If \( \PAop \prv{α}k A , A , Γ ⇒ Δ \) then \( \PAop \prv{α}k A , Γ ⇒ Δ \).
-	If \( \PAop \prv{α}k Γ ⇒ Δ , A , A \) then \( \PAop \prv{α}k Γ ⇒ Δ , A \).
-\end{namedlemma}
-%
-
-Cut elimination for \( \PAop \) can be deduced from the proof we gave ….
-%
-\begin{namedlemma}[Reduction lemma]
-	As expected
-\end{namedlemma}
-%
-\begin{theorem}[Cut elimination for \( \PAop \)]
-	\tbw
+\begin{theorem}[Refined reduction theorem]
+	Suppose \( \prv{α}{k+1} Γ ⇒ Δ \). Then \( \prv{2^α}{k} Γ ⇒ Δ \).
 \end{theorem}
- 
-We require one further result on cut free proofs in this calculus before we can conclude our main result.
-%
-\begin{lemma}
-	Suppose \( \PAop \prv{β}0 P\cd{α_1}, … , P\cd{α_k} ⇒ P\cd{γ_1} , …, P\cd{γ_l} \).
-	Then \note{make sure \( \cd{α} \) is defined.}
-	\begin{equation}\label{eqn-bounding-lemma}
-		 \min\setof{γ_1, …, γ_l } ≤ \max \setof{α_1, …, α_k } + β  . 
-	\end{equation}
-\end{lemma}
-%
 \begin{proof}
-	Induction on \( β \).
-	If \( P\cd{α_1}, … , P\cd{α_k} ⇒ P\cd{γ_1} , …, P\cd{γ_l} \) is an axiom, then \( α_i = γ_j \) for some \( i \) and \( j \) and \eqref{eqn-bounding-lemma} is immediate.
-	If, however, the sequent is not an axiom, then it is necessarily the conclusion of an instance of \( (≺) \) for which we may assume, without loss of generality, that the principal formula is \( P \cd{γ_l} \).
-	Therefore, for every \( δ < γ_l \) there is \( β_δ < β \) such that
+	This argument proceeds just as usual.
+	Jumping to the main case, suppose \( \prv{α}{k+1} Γ ⇒ Δ \) is derived via cut:
+	\[
+		\prv{β}{k+1} Γ ⇒ Δ , C
+		\qquad
+		\prv{γ}{k+1} C, Σ ⇒ Λ 
+	\]
+	where \( β , γ < α \) and \( \nrk C ≤ k \).
+	The induction hypothesis yields
+	\[
+		\prv{2^β}{k} Γ ⇒ Δ , C
+		\qquad
+		\prv{2^γ}{k} C, Σ ⇒ Λ 
+	\]
+	and the refined reduction lemma implies \( \prv{2^α}k Γ ⇒ Δ \).
 \end{proof}
-%
-%---------------------------------
-\section{Characterisation of provable transfinite induction}
-%---------------------------------
 
-Combining \cref{pto-lower-bound,pto-upper-bound} is
-%
-\begin{theorem}[Proof-theoretic characterisation theorem]
-	The proof-the\-oretic ordinal of Peano and Heyting arithmetic is \( ε_0 \).
+\begin{theorem}[Refined cut elimination]
+	If \( \prv{α}k Γ ⇒ Δ \) then \( \prv{γ}0 Γ ⇒ Δ \) where \( γ = 2_k^α \).
+\end{theorem}
+
+\tbw
+
+\begin{theorem}
+	If \( \IS_n ⊢ A \) then \( \PAo \prv{α}0 Γ ⇒ Δ \) for some \( α < ω_{n+1} \).
 \end{theorem}
 %
+\note{Check this.}
 %
-\begin{corollary}[Independence of transfinite induction]
-	There is a primitive recursive well-ordering \( ≺ \) on \( \Nat \) with ordertype \( ε_0 \) and a formula \( A \) in the language of arithmetic such that \( \PA ⊬ \TI A \).
-\end{corollary}
+\begin{proof}[sketch]
+	From \( \IS_n ⊢ {} ⇒ A \) we deduce that \( \PA \prv k {n+1} {} ⇒ A \).
+	The reason is that the induction rule is only applied to formulas with n-rank \( ≤ n \) and finitary cut elimination is available in \( \PA \) to reduce the cut rank to formulas of the same n-rank as uses of induction.
+	The embedding lemma of \( \PA \) into \( \PAo \) yields
+	\( \PAo \prv{ω.k}{n} {}⇒ A \), so \( \PAo \prv{γ}0 {}⇒ A \) where
+	\[
+		γ = 2_{n}^{ω.k} .
+	\]
+	Recall that \( 2^{ω.k} = ω^k \), whence
+	\[
+		γ ≤ ω_{n}^{k} < ω_{n+1} .
+	\]
+\end{proof}
 

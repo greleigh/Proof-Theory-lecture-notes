@@ -27,12 +27,16 @@
 %
 %---------------------------------
 % ELEMENTS
-\NewDocumentCommand{\SeqCal}{m}{\mathsf{#1}}
+\NewDocumentCommand{\Logic}{m}{\mathsf{#1}}
 \NewDocumentCommand{\Theory}{m}{\mathsf{#1}}
 \NewDocumentCommand{\Set}{m}{\mathrm{#1}}
 \NewDocumentCommand{\Frml}{m}{\mathsf{#1}} % Why not working?
 \NewDocumentCommand{\Symbol}{m}{\mathsf{#1}}
 \NewDocumentCommand{\Lang}{m}{\mathcal{#1}}
+% Rule names
+\NewDocumentCommand{\Rule}{m}{\ensuremath{\mathsf{#1}}}
+\NewDocumentCommand{\LeftRule}{m}{\Rule{L{#1}}}
+\NewDocumentCommand{\RightRule}{m}{\Rule{R{#1}}}
 %---------------------------------
 % Disposition
 % Part:
@@ -48,11 +52,13 @@
 \setkomafont{section}{\rmfamily\mdseries\sffamily\large}
 \setkomafont{subsection}{\centering\rmfamily\mdseries\itshape}
 % Paragraph
-% \renewcommand{\raggedsection}{\centering}
+% - Normal (par-)spacing with emphasis leading
 \setkomafont{paragraph}{\rmfamily\mdseries\itshape}
+\def\ParIndent{\the\parindent}
 \RedeclareSectionCommands[
-  beforeskip=-1.5ex plus -.5ex minus -0.2ex,
-  afterskip=1.5ex plus .5ex minus 0.2ex,
+	beforeskip=\parskip,
+	indent=\ParIndent,
+%	afterskip=1.5ex plus .5ex minus 0.2ex,
   ]{paragraph}
 \addtokomafont{paragraph}{\raggedright} 
 % Remove reference to chapter from section.
@@ -75,7 +81,7 @@
 \ohead{\upshape\thepage} % Outer side of pages
 \rehead{\leftmark} % Right side of even pages
 \lohead{\rightmark} % Left side of odd pages
-\ofoot{\small\itshape version: \today}
+\ofoot{\small\itshape G.E.~Leigh, version: \today}
 \ifoot{}
 \cfoot{}
 \pagestyle{scrheadings}

@@ -2,18 +2,28 @@
 %---------------------------------
 % Note-making
 \NewDocumentCommand{\marginnote}{m}{\marginpar{\scriptsize #1}}
-\newcommand{\note}[1]{\marginnote{\emph{NB.~#1}}}
-\newcommand{\tbw}{To be written.\marginnote{TBW}}
+\providecommand{\note}[1]{\marginnote{\textcolor{magenta}{#1}}}
+\providecommand{\tbw}{\textcolor{magenta}{To be written.}}
 %---------------------------------
 % LOGICS & THEORIES
-\newcommand{\Gip}{\SeqCal{IP}}
-\newcommand{\Gcp}{\SeqCal{CP}}
-\newcommand{\Gmp}{\SeqCal{M}}
-\newcommand{\Gi}{\SeqCal{I}}
-\newcommand{\Gc}{\SeqCal{C}}
+\newcommand{\NDc}{\Logic{Nc}}
+\newcommand{\NDi}{\Logic{Ni}}
+\newcommand{\NDceq}{\Logic{Nc_=}}
+\newcommand{\NDieq}{\Logic{Ni_=}}
+
+\newcommand{\Gip}{\Logic{IP}}
+\newcommand{\Gcp}{\Logic{CP}}
+\newcommand{\Gmp}{\Logic{M}}
+\newcommand{\Gi}{\Logic{I}}
+\newcommand{\Gc}{\Logic{C}}
+\newcommand{\Gieq}{\Logic{I}_=}
+\newcommand{\Gceq}{\Logic{C}_=}
 
 \newcommand{\PA}{\Theory{PA}}
 \newcommand{\HA}{\Theory{HA}}
+%
+\newcommand{\IS}{\Theory{I}\Sigma}
+%\newcommand{\HA}{\Theory{HA}}
 
 \newcommand{\PAo}{\Theory{PAω}}
 \newcommand{\HAo}{\Theory{HAω}}
@@ -22,32 +32,51 @@
 % SEQUENTS
 \newcommand{\sa}{\Rightarrow}
 
-\newcommand{\prv}[2]{\vdash^{#1}_{#2}}
+\newcommand{\prv}[2]{\vdash^{\smash{#1}}_{\smash{#2}}}
 %---------------------------------
 % INFERENCES
-\NewDocumentCommand{\LeftRule}{m}{\ensuremath{{#1}\mathrm{L}}}
-\NewDocumentCommand{\RightRule}{m}{\ensuremath{{#1}\mathrm{R}}}
+% \Rule, \LeftRule, \RightRule
+% are defined in styling.tex
 %
-\newcommand{\axiom}{\mathrm{ax}}
+\newcommand{\Cut}{\Rule{cut}}
 %
-\newcommand{\faL}{\LeftRule{∀}}
+\newcommand{\idRule}{\Rule{id}}
+\newcommand{\botL}{\LeftRule{⊥}}
+%
 \newcommand{\faR}{\RightRule{∀}}
-\newcommand{\exL}{\LeftRule{∃}}
+\newcommand{\faL}{\LeftRule{∀}}
 \newcommand{\exR}{\RightRule{∃}}
-\newcommand{\omL}{\LeftRule{ω}}
-\newcommand{\omR}{\RightRule{ω}}
+\newcommand{\exL}{\LeftRule{∃}}
 %
-\newcommand{\impL}{\LeftRule{→}}
 \newcommand{\impR}{\RightRule{→}}
+\newcommand{\impL}{\LeftRule{→}}
 %
-\newcommand{\disL}{\LeftRule{∨}}
-\newcommand{\disR}{\RightRule{∨}}
+\newcommand{\disjR}{\RightRule{∨}}
+\newcommand{\disjL}{\LeftRule{∨}}
 %
-\newcommand{\conL}{\LeftRule{∧}}
-\newcommand{\conR}{\RightRule{∧}}
+\newcommand{\conjR}{\RightRule{∧}}
+\newcommand{\conjL}{\LeftRule{∧}}
+%
+% for equality:
+\newcommand{\refRule}{\Rule{ref}}
+\newcommand{\compRule}{\Rule{comp}}
+%
+% for arithmetic
+\newcommand{\IRule}{\Rule{ir}}
+%
+% for ω-logic:
+\newcommand{\omR}{\RightRule{ω}}
+\newcommand{\omL}{\LeftRule{ω}}
+\newcommand{\eqR}{\RightRule{=}}
+\newcommand{\eqL}{\LeftRule{=}}
+
 %
 %---------------------------------
 % TERMS & FORMULAS
+\newcommand{\rk}[1]{\lvert{#1}\rvert}
+\newcommand{\nrk}[1]{\lvert{#1}\rvert_*}
+\newcommand{\qrk}[1]{\lvert{#1}\rvert_q}
+
 \newcommand{\nm}[1]{\underline{#1}}
 \newcommand{\cd}[1]{\overline{#1}}
 %
@@ -56,10 +85,11 @@
 %\newcommand{\num}[1]{\underline{#1}}
 
 % Shorthands
-\newcommand{\Prog}[2][\prec]{\Frml{Prog}({#1},{#2})}
-\newcommand{\TI}[2][\prec]{\Frml{TI}({#1},{#2})}
+\newcommand{\Prog}[2][\prec]{\Frml{Prog}_{#1}{#2}}
+\newcommand{\TI}[2][\prec]{\Frml{TI}_{#1}({#2})}
 %---------------------------------
 \NewDocumentCommand{\setof}{mo}{\{\,{#1}\IfValueT{#2}{\mid {#2}}\,\}}
+\NewDocumentCommand{\Setof}{mo}{\bigl\{\,{#1}\IfValueT{#2}{\bigm| {#2}}\,\bigr\}}
 \NewDocumentCommand{\supof}{mo}{\sup\{\,{#1}\IfValueT{#2}{\mid {#2}}\,\}}
 \newcommand{\supseq}[1][i]{\sup_i}
 %---------------------------------
@@ -69,6 +99,17 @@
 %---------------------------------
 % SETS
 \newcommand{\Nat}{\mathbb{N}}
+
+\newcommand{\card}[1]{\lvert{#1}\rvert}
+
+%---------------------------------
+% Ordinals
+\newcommand{\Ord}{\mathbb{O}}
+\newcommand{\AP}{\Set{AP}}
+\newcommand{\dom}{\mathop{\mathrm{dom}}}
+\newcommand{\NF}{\textsc{nf}}
+
+\newcommand{\nsum}{\mathbin{\#}}
 %---------------------------------
 % Proof-theoretic tools
 \NewDocumentCommand{\pto}{m}{\lVert{#1}\rVert}
@@ -77,5 +118,5 @@
 
 %---------------------------------
 % Proof-tree shortcuts
-\NewDocumentCommand{\Infer}{omO{}m}{\begin{prooftree}\hypo{#2}\infer1[$#3$]{#4}\end{prooftree}}
+\NewDocumentCommand{\Infer}{omO{}m}{\begin{prooftree}\hypo{#2}\infer1[#3]{#4}\end{prooftree}}
 

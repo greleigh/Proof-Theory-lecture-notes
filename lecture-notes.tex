@@ -1,6 +1,6 @@
 \documentclass[%
 	paper=174mm:247mm,
-	11pt,
+%	11pt,
 	DIV=10,
 	leqno,
 	titlepage,
@@ -17,9 +17,16 @@
 	{scrbook}
 %
 %\usepackage{polyglossia}
+
+
+% Meta
+\title{Lecture Notes in Proof Theory}
+\author{Graham E.\ Leigh}
+
 \usepackage[utf8]{inputenc}
 \usepackage[british]{babel}
 \usepackage{xparse}
+\usepackage{xcolor}
 %
 \input{input/typesetting}
 %
@@ -27,53 +34,74 @@
 \input{input/styling}
 \input{input/environments}
 %
-\input{input/unicodes}
+\usepackage{input/unicode-char}
+%
+% COMMENT THESE TO USE NOTES:
+\newcommand{\note}[1]{}
+%\newcommand{\tbw}{}
 %
 \input{input/macros}
 %
-\usepackage[bookmarks]{hyperref}
+\usepackage[bookmarks,unicode]{hyperref}
+\makeatletter
+\hypersetup{pdftitle={\@title},pdfauthor={\@author}}
+\makeatother
 \usepackage[nameinlink,noabbrev]{cleveref}
 \input{input/cleveref}
 
-% Meta
-\title{Lecture Notes in Proof Theory}
-\author{Graham E.\ Leigh}
-
 \includeonly{
+	module-0/about,
 	module-0/intro,
-	module-1/int-prop-logic,
-	module-1/cla-prop-logic,
-	module-2/FOL,
+	module-1/sequent-calculus,
+	module-1/properties,
+	module-2/ce,
 	module-2/conseq-of-ce,
-	module-3/ord-anal,
+	module-2/equality,
+	module-2/game,
+	module-3/arithmetic,
 	module-3/ordinal-interlude,
 	module-3/ordinal-analysis,
+	module-3/ti-and-pto,
 	}
 
 \begin{document}
+\frontmatter
 \maketitle
+
+\include{module-0/about}
 
 % TOC
 \tableofcontents
 
+\mainmatter
+
 % Intro
 \include{module-0/intro}
 %
-\part{Propositional Logic}
+\part{Two Calculi for Two Logics}
 %
-\include{module-1/int-prop-logic}
-\include{module-1/cla-prop-logic}
+\include{module-1/sequent-calculus}
+\include{module-1/properties}
 
 %
-\part{Predicate Logic}
+\part{Cut elimination}
 %
-\include{module-2/FOL}
+\include{module-2/ce}
 \include{module-2/conseq-of-ce}
+\include{module-2/equality}
+\include{module-2/game}
 %
 \part{An Introduction to Ordinal Analysis}
 %
-\include{module-3/ord-anal}
+\include{module-3/arithmetic}
 \include{module-3/ordinal-interlude}
 \include{module-3/ordinal-analysis}
+\include{module-3/ti-and-pto}
+%
+
+\backmatter
+
+\bibliographystyle{plain}
+\bibliography{bib/references.bib}
 
 \end{document}

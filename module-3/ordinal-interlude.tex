@@ -1,55 +1,535 @@
 %---------------------------------
-\chapter{Ordinal interlude}\label{s-oa-ordinals}
-%---------------------------------
-We need some elementary theory of ordinals.
-
-%---------------------------------
-\section{Transfinite induction}
+\chapter{An ordinal interlude}\label{c-oa-ordinals}
 %---------------------------------
 
-%---------------------------------
-\section{Cantor normal form and \( ε_0 \)}
-%---------------------------------
-Later we will find interest in a very particular ordinal, named \( ε_0 \).
+To present the ordinals it is not necessary to have a set-theoretic definition of ordinals in mind (as, for example, arbitrary transitive sets).
+Indeed, there is no need to consider the question of by what ordinals \emph{are} or from what they are \emph{formed}.
+For a \emph{theory} of ordinals all that is relevant are the order-theoretic properties satisfied by the ordinals and a selection of operations that can be defined on them.
+In short, ordinals are treated analogously to natural numbers: as a posited entity fulfilling specified criteria.
+%
+The material of this chapter draws from lecture notes by Michael Rathjen~\cite{RathjenLectures}.
+
+%
+\begin{definition}\label{d-ordinals}%[Ordinals]
+	The \emph{ordinals} is a class \( \Ord \) equipped with a binary relation \( < \) satisfying three postulates, where \( ≤ \) is the reflexive closure of \( < \):
+	\begin{axioms}[o]
+		\item \( < \) is a strict linear order on \( \Ord \). That is, \( < \) is irreflexive, transitive and linear, where linear means that for all \( α , β ∈ \Ord \) either \( α ≤ β \) or \( β ≤ α \).\label{post-ord-lin}
+		\item Every non-empty class of ordinals has a \( < \)-minimal element (necessarily unique by \ref{post-ord-lin}). That is, if \( O ⊆ \Ord \) is non-empty there exists \( ξ ∈ O \) such that \( ξ ≤ α \) for all \( α ∈ O \).\label{post-ord-wo}
+		\item For every set \( X \) and function \( f \colon X → \Ord \) there exists \( ξ ∈ \Ord \) such that \( f(x) < ξ \) for every \( x ∈ X \).\label{post-ord-unbdd}
+	\end{axioms}
+\end{definition}
+
+Set-theoretic concerns do matter in the language used to discuss ordinals.
+As, for example, the Burali-Forte paradox shows, it is inconsistent  the Zermelo--Fraenkel (or Cantorian) conception of \emph{set} in mind to consider that the collection of (all) ordinals forms a set.
+Hence use of term ‘class’ to refer to arbitrary collections of ordinals/objects and ‘set’ in specific case of \ref{post-ord-unbdd}.
+Familiarity with set theory is not necessary for the elementary theory of ordinals presented here.
+Indeed, it will suffice to replace every term ‘set’ in what follows by ‘countable set’ and ‘class’ by ‘countable or uncountable set’.
+%We have side-stepped this concern by restricting attention to the \emph{countable} ordinals. Over Zermelo set theory, the collection of all countable ordinals, i.e., the collection \( \Ord \) above, forms a set; indeed, it is precisely the first uncountable ordinal.
+%Such a restriction is not important for our later use of ordinals.
+%Ultimately our attention will be constrained to a relatively small collection of (countable) ordinals.
+%Our first lemma confirms that the relation \( <_\Ord \) is a well-order.
+
+In the following, notation \( \setof{ t }[x ∈ X ] \) means the \emph{class} of objects \( t \) as \( x \) ranges over the (class) \( X \).
+Usually a function \( f \colon U → V \) between classes has been specified along with a (sub)class \( X ⊆ U \) whence the notation \( \setof{ f(x) }[x ∈ X ] \) expresses the class of objects \( f(x) \) for \( x ∈ X \). This class will be written \( f[X] \).
+
+\begin{convention}
+	Lowercase Greek letters \( α \), \( β \), etc.\ stand as metavariables for ordinals.
+\end{convention}
+
+
+\begin{lemma}\label{ord-well-order}
+	Postulate \ref{post-ord-wo} is equivalent to the principle of transfinite induction.
+	This is the statement that if \( O \) is progressive in the ordinals then \( \Ord ⊆ O \), where \( O \) is progressive means that for all ordinals \( α \), if \( β \in O \) for every \( β < α \) then \( α ∈ O \).
+%	Let \( O ⊆ \Ord \) be non-empty.
+%	Then \( O \) has a \( <_\Ord \)-minimal element and this is unique.
+\end{lemma}
+%
+\begin{proof}
+	Let \( O \) be progressive.
+	Consider the class \( C = \Ord \setminus O \) of ordinals not in \( O \). If \( C \) is non-empty then, by \ref{post-ord-wo}, \( C \) contains a least ordinal, \( α \) say.
+	As \( α \) is the least ordinal in \( C \), every \( ξ < α \) is element of \( O \). 
+	Progressiveness implies that \( α ∈ O \) contradicting that \( α ∈ C \). 
+	Hence, \( C \) is the empty class, so \( \Ord ⊆ O \).
+	For the converse claim, assume postulate \ref{post-ord-lin} and the principle of transfinite induction (I could also assume \ref{post-ord-unbdd} but this is unnecessary).
+	The aim is to establish \ref{post-ord-wo}. 
+	Thus, let \( O \) be a non-empty class of ordinals and, for want of a contradiction, assume that \( O \) has no least element. 
+	As in the other direction, I consider the complement of \( O \), the class \( C = \Ord \setminus O \).
+	Suppose \( α \) be any ordinal such that \( ξ ∈ C \) for all \( ξ < α \). If \( α ∈ O \) then this is the least element of \( O \). As \( O \) has no least element therefore \( α ∈ C \).
+	So \( C \) is progressive and \( C = \Ord \) by transfinite induction, contradicting the non-emptiness of \( O \).
+\end{proof}
+
+The next \namecref{ord-supremum} provides the primary means to infer the existence of ordinals.
+
+\begin{lemma}
+	\label{ord-supremum}\ 
+	Let \( O \) be a class of ordinals.
+	\begin{enumerate}
+		\item There exists a least upper bound of \( O \). That is, an ordinal \( α \) such that \( ξ ≤ α \) for all \( ξ ∈ O \). This \( ξ \) is referred to as the \emph{supremum} of \( O \) and denoted \( \sup O \).
+		\item There exists a strict least upper bound of \( O \), i.e., \( α \) such that \( ξ < α \) for all \( ξ ∈ O \).
+	\end{enumerate}
+	In each case the proclaimed ordinal is unique.
+\end{lemma}
+%
+\begin{proof}
+	Begin with 1. Let \( O \) be given.
+	Consider the class \( O^≥ \) of all ordinals \( α \) such that \( ξ ≤ α \) for \emph{all} \( ξ ∈ O \).
+	The \( < \)-least element of \( O^≥ \) (if such exists) is clearly the desired ordinal.
+	But in order to apply postulate \ref{post-ord-wo} to this class it is necessary to establish that \( O^≥ \) is non-empty.
+	For this I use the third postulate applied to identity function \( \textsf{id} \colon O → \Ord \colon ξ ↦ ξ \) (which is a function from \( O \) into \( \Ord \)).
+	%
+	For 2, the same argument works with the class \( O^> \) in place of \( O^≥ \) where this is the class of ordinals \emph{strictly} larger than all elements of \( O \).
+	
+	Uniqueness of each case is ensured by \ref{post-ord-lin}.
+\end{proof}
+
+Henceforth, I will not make explicit reference to the postulates.
+
+The least ordinal is denoted \( 0 \). This happens to be the supremum of the empty set: \( 0 ≔ \sup ∅ \).
+Given \( α ∈ \Ord \), the \emph{successor} of \( α \), in symbols \( α' \) or \( α + 1 \), is the least ordinal greater than \( α \), which exists (and is unique) by \cref{ord-supremum}(2) applied to the singleton set \( \setof{α} \).
+That is, \( α' \) is such that \( ξ < α' \) iff \( ξ ≤ α  \).
+The successor of \( 0 \) is denoted \( 1 ( =0') \), its successor \( 2 ( = 0'' ) \), etc.
+
+A \emph{limit ordinal} is any non-zero ordinal \( λ \) such that \( η' < λ \), for all \( η < λ \).
+Define a function \( f\colon ℕ → \Ord \) by \( f(0) = 0 \) and \( f(n+1) = f(n)' \).
+That is, \( f(n) \) is the \emph{ordinal} representing the natural \( n \).
+The supremum of \( \setof{ n }[n ∈ ℕ] \) is called \( ω \), which is a limit by construction and, therefore, the least limit ordinal.
+
+\begin{lemma}
+	\label{ord-suc-lim}
+	Every non-zero ordinal is either a successor or a limit.
+\end{lemma}
+
+\begin{lemma}
+	\label{ord-lim}
+	An ordinal \( λ \) is a limit iff \( λ = \sup O \) for some non-empty set \( O \) closed under successor (meaning that \( ξ ∈ O \) implies \( ξ' ∈ O \)).
+\end{lemma}
+
+\begin{lemma}\label{ord-supremum-unique}
+	Suppose \( O, O' \) are such that for every \( α \in O \) there exists \( β  \in O' \) such that \( α ≤ β \).
+	Then \( \sup O ≤ \sup O' \).
+\end{lemma}
+\begin{exercise}
+	Prove \cref{ord-suc-lim} to \ref{ord-supremum-unique}.
+\end{exercise}
+
+
+I will employ common set-theoretic abbreviations such as \( \sup_{i∈ I} α_i \) for \( \supof {α_i}[i ∈ I] \) and \( \sup_{i} α_i \) for \( \supof {α_i}[i < ω ] \).
+I will also use \( λ \) as a metavariable for limit ordinals.
+
+%--------------------------------------
+\section{Elementary Ordinal Functions}
+%--------------------------------------
+
+A \emph{segment} of \( \Ord \) is any class \( O \) of ordinals which is closed downwards, i.e., if \( α < β ∈ O \) then \( α ∈ O \).
+If \( X \) and \( Y \) are segments then either \( X ⊆ Y \) or \( Y ⊆ X \); in either case \( X ∩ Y \) is a segment.
+
+Let \( O \) be a segment. A function \( f \colon O → \Ord \) is said to be:
+\begin{itemize}
+	\item \emph{order preserving} if \( α < β \) implies \( f(α) < f(β) \) for all \( α , β ∈ O \).
+	\item \emph{continuous} if for all \( U ⊆ O \), if \( \sup U ∈ O \) then \( f( \sup U ) = \sup f[U] \).
+%	\item \emph{normal} if \( O = \Ord \) and \( f \) is order preserving and continuous.
+	\item an \emph{enumeration} (of \( X ⊆ \Ord \)) if \( f \) is order-preserving and \( f[O] = X \).
+\end{itemize}
+
+The identity function \( \mathsf{id} \colon \Ord → \Ord \) is all of the above. In particular, it is an enumeration of \( \Ord \).
+Let \( f \colon ℕ → \Ord \) be given by \( f(0) = ω \) and \( f(n+1) = f(n)' \).
+This function is order preserving and continuous (the latter is trivial). 
+It is %not normal because the domain of \( f \) is not all ordinals, but it is
+also an enumeration of the set \( \setof{ ω , ω' , … } \) because \( ℕ \) is a segment.
+Notice that order preserving functions on ordinals are always injective.
+
+\begin{lemma}\label{ord-o-p}
+	If \( O \) is a segment and \( f \) is order preserving then \( α ≤ f(α) \) for all \( α ∈ O \).
+\end{lemma}
+%
+\begin{exercise}
+	Prove \cref{ord-o-p}.
+\end{exercise}
+
+The main property of ordinal functions I need is the summarised by
+\begin{lemma}
+	\label{ord-normal-exists}
+	Every class of ordinals has a unique enumeration. The enumeration of \( Y ⊆ \Ord \) will be denoted \( E_Y \).
+\end{lemma}
+%
+\begin{proof}
+	\( E_Y \) is determined as the inverse of a particular function \( C_Y \colon Y → \Ord \), called the \emph{collapsing} function for \( Y \), defined by
+	\[
+		C_Y(α) = \sup \setof{ C_Y(ξ) + 1 }[ ξ ∈ Y \text{ and } ξ < α ].
+	\]
+	The collapsing function is clearly unique if it is well-defined. Moreover, \( C_Y \)
+	This function is well-defined: Consider the class \( O \) of ordinals \( α \) for which the collapsing function on \( Y_α ≔ Y ∩ \setof{ ξ }[ξ ≤ α] \) exists.
+	If \( C_{Y_ξ} \colon Y_ξ → \Ord \) is defined for each \( ξ < α \) I claim that \( C\colon Y_α → \Ord \) defined by 
+	\[
+		\begin{aligned}
+			C(α) &= \sup\setof{ C_{Y_{ξ}}(ξ) + 1 }[ ξ < α \text{ and } ξ ∈ Y]
+			\\
+			C(ξ) &= C_{Y_ξ}(ξ) \text{ for \( ξ < α \)}
+		\end{aligned}
+	\]
+	is the collapsing function for \( Y_α \).
+	That this is the follows almost by definition. Indeed, all that is lacking is the observation that \( C_{Y_ξ}(β) = C_{Y_η}(β) \) whenever \( β ≤ ξ < η \).
+	So \( O \) is progressive and transfinite induction implies that class \( Y_α \) has a collapsing function \( C_{Y_α} \). Now define \( C_Y \) as \( α ↦ C_{Y_α}(α) \).
+
+	Clearly, \( C_Y \) is injective. Therefore the function admits a (right) inverse:
+	\[
+		E_Y ≔ C_Y^{-1} \colon C_Y[Y] → Y 
+	\]
+	As \( C_Y[Y ] \) is (clearly) a segment, \( E_Y \) is an enumeration of \( Y \).
+	
+	As to uniqueness of \( E_Y \), let \( O = C_Y[Y] \) and suppose \( f \colon O' → Y \) is any enumeration of \( Y \). In particular, \( O' \) is a segment. Transfinite induction implies that \( f(α) = E_Y(α) \) for all \( α ∈ O ∩ O' \).
+	As both functions are injective and surjective into \( Y \) it follows that \( O = O' \).
+\end{proof}
+
+Two further properties of enumerations will be useful.
+
+\begin{lemma}
+	\label{ord-normal}
+	Let \( f\colon \Ord → \Ord \) be continuous and order preserving (in particular, \( f \) is an enumeration of \( f[\Ord] \)).
+	Then
+	\begin{enumerate}
+		\item For every \( α ≥ f(0) \) there is a unique \( β ≤ α \) such that \( f(β) ≤ α < f(β+1) \).\label{ord-normal-cover}
+		\item For every \( α \) there is a unique \( β ≥ α \) such that \( β = f(β) \).\label{ord-normal-fix}
+	\end{enumerate}
+\end{lemma}
+\begin{proof}
+%	Continuity is implicit in the proof of \cref{ord-normal-exists}.
+%	
+	\ref{ord-normal-cover}. Consider the set \( O = \setof{ ξ }[ f(ξ) ≤ α ]\) and let \( β = \sup O \).
+	Continuity yields
+	\[
+		f(β) = \sup f[O] = \sup \setof{ f(ξ) }[ f(ξ) ≤ α ] ≤ α
+	\]
+	whereas
+	\(
+		f(β+1) > α
+	\)
+	because \( β + 1 ∉ O \).
+	
+	\ref{ord-normal-fix}. Fix \( α \) and define \( O = \setof{ f(α) , f(f(α)) , …, f^n(α) , … } \) (arbitrary finite iterations of \( f \) on \( α \)). 
+	Let \( β = \sup O \).
+	Invoking continuity, \( f(β) = \sup f[O] = \sup O = β \). Moreover, \( α ≤ f(α) ≤ β \).
+\end{proof}
+
+%\begin{lemma}
+%	\label{ord-normal-covers}
+%	Let \( E\colon \Ord → \Ord \) be an enumeration (of \( E[\Ord] \)).
+%	For every \( α ≥ E(0) \) there exists a unique \( β ≤ α \) such that \( E(β) ≤ α < E(β+1) \).
+%\end{lemma}
+%%
+%\begin{proof}
+%	Consider the set \( O = \setof{ ξ }[ E(ξ) ≤ α ]\) and let \( β = \sup O \).
+%	Then 
+%	\[
+%		E(β) = \sup E[O] = \sup \setof{ E(ξ) }[ E(ξ) ≤ α ] ≤ α
+%	\]
+%	whereas
+%	\(
+%		E(β+1) > α
+%	\)
+%	because \( β + 1 ∉ O \).
+%\end{proof}
+%
+%
+%%As enumerations are order preserving it is always the case that \( α ≤ E(α) \). 
+%
+%\begin{lemma}
+%	\label{ord-normal-fix}
+%	Let \( E\colon \Ord → \Ord \) be an enumeration (of \( E[\Ord] \)). 
+%	There exists \( ξ \) such that \( ξ = E(ξ) \).
+%	Moreover, for every \( α \) there exists a unique \( ξ ≥ α \) such that \( ξ = E(ξ) \).
+%\end{lemma}
+%%
+%\begin{proof}
+%	Fix \( α \) and define \( O = \setof{ E(α) , E(E(α)) , …, E^n(α) , … } \) (arbitrary finite iterations of \( E \) on \( α \)). Then \( α ≤ E(α) ≤ \sup O \) and \( E(\sup O) \)
+%\end{proof}
+
+
+%--------------------------------------
+\section{Elementary Ordinal Arithmetic}
+%--------------------------------------
+The basic operations of arithmetic can be extended to ordinals in a straightforward manner.
+Often these are defined by transfinite recursion, but the two operations we desire, addition and exponentiation base \( ω \), can be expressed as enumeration functions.
+I start with addition.
 \begin{definition}
-	\( ε_0 ≔ \supseq ω_i^0 \) where \( ω^α_0 = α \) and \( ω^α_{k+1} = ω^{ω^α_k} \).
+	Let \( α^≥ \) be the class of ordinals \( ≥ α \).
+	\emph{Ordinal addition}, \( α + β \), is defined as \( α + β ≔ E_{α^≥}(β) \). That is, \( α + β \) is defined as the \( β \)-th ordinal in the enumeration of the ordinals \( ≥ α \).
 \end{definition}
 %
-The ordinal \( ω_n^α \) denotes a tower of exponentials base \( ω \) of height \( n \) with `top' exponent \( α \):
-\[
-  ω_1^α = ω^α \quad ω_2^α = ω^{ω^α} \quad ω_3^{α} = ω^{ω^{ω^α}} \quad ⋯
-\]
-\( ε_0 \) is the supremum of this tower for \( α = 0 \):
-\[
-	ε_0 = \supof{0 , ω^0 , ω , ω^ω , ω^{ω^{ω}} , … }
-\]
+The following are direct consequences of this definition and left to the reader.
+
+\begin{lemma}\label{ord-addition}
+	For all \( α \), \( β \) and \( γ \).
+	\begin{enumerate}
+		\item \( α + 0 = α \).
+		\item \( α + β' = ( α + β )' \).
+		\item If \( β \) is a limit then \( α + β = \sup \setof{ α + ξ }[ξ < β ] \).
+		\item \( α + ( β + γ ) = ( α + β ) + γ \).\label{ord-addition-assoc}
+		\item \( α ≤ α + β \) and \( β ≤ α + β \).\label{ord-addition-inc}
+	\end{enumerate}
+\end{lemma}
+
+\begin{example}\label{ex-ord-add}
+	\( α + ω = \sup \setof{ α + n }[n∈ ℕ] = \sup \setof{ α , α' , α'' , …  } \). Thus \( α + ω \) is the least limit ordinal strictly above \( α \).
+	
+	In particular, \( n + ω = ω \) for every \( n < ω \).
+	As \( 1 + ω = ω < ω + 1 \) ordinal addition is not commutative.
+\end{example}
+
+As addition is associative (item \ref{ord-addition-assoc} of the \namecref{ord-addition} above), I will omit brackets when stringing together applications of addition.
+So \( α + β + γ \) can refer to either \( ( α + β ) + γ \) or \( α + ( β + γ ) \).
+
+The next lemma is a consequence of \cref{ord-normal}.
+
+\begin{lemma}
+	For every \( α ≤ β \) there exists a unique \( ξ \) such that \( β = α + ξ \).
+\end{lemma}
+\begin{proof}
+	\Cref{ord-normal} implies a unique \( ξ \) such that \( α + ξ ≤ β < α + ξ' \). Since \( α + ξ' = ( α + ξ ) + 1 \) it follows that \( α + ξ = β \).
+\end{proof}
+
+As \cref{ex-ord-add} demonstrates \( ω \) has the unusual property of being closed under addition: if \( ξ , η < ω \) then \( ξ + η < ω \).
+Ordinals satisfying this condition are called \emph{additive principal} ordinals.
+\begin{definition}
+	\label{d-ord-AP}
+	A ordinal \( α \) is additive principal iff \( α > 0 \) and \( ξ + η < α \) for all \( ξ , η < α \).
+	The class of additive principal ordinals is denoted \( \AP \).
+\end{definition}
+
+The least additive principal ordinal is \( 1 \); the next is clearly \( ω \).
+Most ordinals are \emph{not} additive principal. 
+\( 1 \) is the only additive principal successor ordinal (because \( α + α ≥ α' \) provided \( α ≥ 1 \)).
+Even most limit ordinals not additive principal: If \( α ≥ ω \) then \( α + ω ∉ \AP \) as \( α < α + ω \) but \( α + α ≮ α + ω \).
+
+\begin{lemma}
+	\label{ord-AP-normal}
+	The enumeration function \( E_\AP \) for additive principal ordinals is continuous and has domain \( \Ord \).
+%	The additive principal ordinals are
+%	\begin{enumerate}
+%		\item Closed: for every set \( O ⊆ \AP \), \( \sup O ∈ \AP \).
+%		\item Unbounded in \( \Ord \). For every set \( α ∈ \AP \) there exists \( β > α \) such that \( β ∈ \AP \).
+%	\end{enumerate}
+\end{lemma}
+\begin{proof}
+%	Begin with the domain. By transfinite induction. Suppose \( ξ ∈ \dom E_\AP \) for every \( ξ < α \). I claim that \( α ∈ \dom E_\AP \). It suffices to show that there exists an additive principal ordinal \( β > E_\AP(ξ) \) for every \( ξ < α \).
+%	Let \( O_0 = \setof{ E_\AP(ξ) }[ξ < α] \) and \( O_{n+1} = \setof{ ξ + η }[ξ , η ∈ O_n ] \). Set \(  \)
+	Exercise.
+\end{proof}
+
+\Cref{ord-AP-normal} shows that the function enumerating the additive principal ordinals is defined on all ordinals, is order preserving and continuous.
+
+\begin{lemma}
+	\label{ord-AP}
+	The following are equivalent for all \( α > 0 \):
+	\begin{enumerate}
+		\item \( α \) is additive principal.\label{ord-AP-1}
+		\item \( α = 1 \) or \( α = \sup \setof{ ξ + ξ }[ξ < α ] \).\label{ord-AP-2}
+		\item for all \( β < α \), \( β + α = α \).\label{ord-AP-3}
+	\end{enumerate}
+\end{lemma}
+\begin{proof}
+	\ref{ord-AP-1} $⇒$ \ref{ord-AP-2}. If \( α \) is additive principal then \( \sup \setof{ ξ + ξ }[ξ < α ] ≤ α \) by definition. Also, the additive principal ordinals except \( 1 \) are all limits, so if \( α ≠ 1 \) then \( α = \sup \setof{ ξ }[ξ < α ] ≤ \sup \setof{ ξ + ξ }[ξ < α ] \).
+	
+	\ref{ord-AP-2} $⇒$ \ref{ord-AP-3}. For \( α = 1 \) the claim is trivial. Otherwise, \( α  \) is a limit and \( β + α ≤ \sup \setof{ β + ξ }[ξ < α ] ≤ \sup \setof{ ξ + ξ }[ξ < α ] \). As \( α = \sup \setof{ ξ + ξ }[ξ < α ] \) the claim is established.
+	
+	\ref{ord-AP-3} $⇒$ \ref{ord-AP-1}. Straightforward.
+\end{proof}
+%
+
+As a consequence of part \ref{ord-AP-3}, \( ω^α + ω^β = ω^β \) iff \( α < β \).
+A corollary is the observation made earlier, that \( n + ω = ω \), which now follows from repeated applications of \cref{ord-AP}: \( α' + ω = α + ( ω^0 + ω^1 ) = α + ω^1 \).
+
+Additive principal ordinals are central to the theory of ordinals.
+As with addition, I will introduce more suggestive notation for the enumeration function for additive principal ordinals.
+
+\begin{definition}
+	\( ω^α ≔ E_\AP(α) \).
+\end{definition}
+
+By the definition \( ω^0 = 1 \) and \( ω^1 = ω \).
+The reader can confirm that next additive principal ordinal above \( ω \) is the supremum of \( ω \), \( ω + ω \), \( ω + ω + ω \), …, \( ω + ⋯ + ω , … \) which is denoted \( ω^2 \).
+%I will shortly show that the function \( ξ ↦ ω^ξ \) behaves as one would expect exponentiation (in particular, \( ω^(α + β) \)
+
+\begin{lemma}
+	\label{ord-AP-NF}
+	For every \( α > 0 \) there exists unique \( β \) and \( ξ < α \) such that \( α = ω^β + ξ \).
+\end{lemma}
+\begin{proof}
+	Let \( β \) be such that \( ω^β ≤ α < ω^{β'} \) and \( ξ \) such that \( α = ω^β + ξ \). Both ordinals are given by \cref{ord-normal}.
+	What remains is to show uniqueness of this choice.
+	Thus, suppose \( α = ω^γ + η \) for some \( γ \) and \( η < α \).
+	The choice of \( β \) is clearly such that \( β ≥ γ \).
+	As 
+	\[ ω^β + ω^{γ+1} ≤ α + ω^{γ+1} ≤ ω^γ + η + ω^{γ + 1 } = ω^{γ+1} \]
+	(the first inequality uses \cref{ord-addition}(\ref{ord-addition-inc}); the rest use \cref{ord-AP}(\ref{ord-AP-3})), also \( β ≤ γ \). Given that \( β = γ \), uniqueness of the rest is immediate.
+\end{proof}
+%\begin{lemma}
+%	\label{ord-AP-add}
+%	For all \( α > 0 \), \( α ∉ \AP \) iff \( α = β + γ \) for some \( β , γ < α \).
+%\end{lemma}
+
+%---------------------------------
+\section{Normal forms and natural sum}
+%---------------------------------
+
+\Cref{ord-AP-NF} above provides the basis of a normal form representation of ordinals. This concept is introduced in the next definition.
+
+\begin{definition}
+	I write \( α =_\NF ω^β + γ \) to express that (i) \( α = ω^β + γ \) and (ii) \( γ < α \).
+\end{definition}
+
+Cantor, in 1897,\nocite{Cantor1897} established an expanded version of this normal form decomposition.
+%
+\begin{theorem}[Cantor normal form theorem]\label{t-cantornf}
+	For every ordinal \( α > 0 \) there exists \( n \) and ordinals \( α_n ≤ ⋯ ≤ α_0 \) such that 
+	\[
+		α = ω^{α_0} + ⋯ + ω^{α_n}.
+	\]
+	Moreover, this decomposition is unique. %, and \( α_0 < α \) if \( α < ε_0 \).
+\end{theorem}
+%
+\begin{proof}
+	The theorem is a simple generalisation of \cref{ord-AP-NF}.
+%	The argument is by transfinite induction. Assume that each ordinal \( β < α \) admits a decomposition as described in the theorem. 
+	Let \( α =_\NF ω^{α_0} + ξ_0 \) by \cref{ord-AP-NF}. If \( ξ_0 = 0 \) the decomposition is complete. 
+	Otherwise, apply the \namecref{ord-AP-NF} again to express \( ξ_0 =_\NF ω^{α_1} + ξ_1 \), \( ξ_1 =_\NF ω^{α_2} + ξ_2 \), etc. 
+	As \( α > ξ_0 > ξ_1 > ⋯ \) is a strictly decreasing sequence or ordinals, necessarily \( ξ_n = 0 \) for some \( n \). Thus, 
+	\( α = ω^{α_0} + ⋯ + ω^{α_n} \). 
+	Furthermore, \( α_0 ≥ α_1 ≥ ⋯ ≥ α_n \) because \( ω^{α_{i+1}} ≤ ξ_i < ω^{α_i+1} \) for each \( i \).
+	Uniqueness is also a consequence of these normal forms.
+\end{proof}
+
+
+\begin{definition}
+	The normal form notation is extended in the following way. Writing \( α =_\NF ω^{α_1} + ⋯ + ω^{α_n} \) expresses that (i) \( α = ω^{α_1} + ⋯ + ω^{α_n} \) and (ii) \( α ≥ α_1 ≥ ⋯ ≥ α_n \).
+\end{definition}
+
+\Cref{ord-normal} showed that every continuous order preserving function on the ordinals has fixed points. I.e., for each such function \( f \) there are ordinals \( β \) such that \( β = f(β) \).
+As the function \( ξ ↦ ω^ξ \) (namely \( E_\AP \)) is an example of such a function, there must exist ordinals \( α \) such that \( α = ω^α \).
+The proof of that lemma describes how to construct such an ordinal as the supremum of the sequence \( 0 \), \( 1 \), \( ω \), \( ω^ω \), …, \( α \), \( ω^α \), ….
+This particular ordinal, conventionally denoted \( ε_0 \), will play a central role in the next chapter.
+
+\begin{definition}\label{d-epsilon0}
+	\( ε_0 ≔ \supseq ω_i \) where \( ω_0 = ω \) and \( ω_{k+1} = ω^{ω_k} \).
+\end{definition}
+%
 
 %
 \begin{lemma}
+	\label{ord-e0}
 	\( ε_0 \) is the least fixed point of the ordinal function \( α \mapsto ω^α \). 
 	That is, \( ω^{ε_0} = ε_0 \) and \( α < ω^{α} \) for all \( α < ε_0 \).
 \end{lemma}
 %
 \begin{exercise}
-	Compute the fixed points of exponentiation base-\( 2 \). 
-	That is, characterise the ordinals \( α ≤ ε_0 \) for which \( 2^α = α \).
+	Prove \cref{ord-e0}.
+\end{exercise}
+
+\begin{exercise}\label{ex-ord-mult-pre}
+	Using the Cantor normal form theorem, define a multiplication operation where the first argument is restricted to additive principal ordinals: \( α , β ↦ ω^α.β \).
+	The function should be continuous in \( β \) and satisfy the recursive clauses: \( ω^α.0 = 0 \) and \( ω^α.(β + 1) = ω^α.β + ω^α \).
+\end{exercise}
+
+\begin{exercise}\label{ex-ord-base-2}
+	Define a function \( α ↦ 2^α \) satisfying
+	\begin{align*}
+		2^0 &= 1
+		\\
+		2^{α+1} &= 2^α + 2^α
+		\\
+		2^λ &= \supof{ 2^ξ }[ξ < λ]
+	\end{align*}
+	(You may find it useful to use the Cantor normal form theorem.)
+	Show that this function is order preserving and continuous, and compute all fixed points of the function for ordinals \( α ≤ ε_0 \).
+%	(It is not necessary to prove the existence of this function.)
 \end{exercise}
 %
 \begin{exercise}
-	For each \( α \), defined \( ε_α \) as the least ordinal such that
-	\begin{enumerate}
-		\item \( ε_β < ε_α \) for every \( β < α \),
-		\item \( ω^{ε_α} = ε_α \).
-	\end{enumerate}
-	Prove that \( ε_α \) exists for all \( α \).
+	\label{ex-epsilon-numbers}
+	Let \( α ↦ ε_α \) be the enumerating function of the ordinals \( η \) such that \( η = ω^η \).
+%	For each \( α \), define \( ε_α \) as the least ordinal such that
+%	\begin{enumerate}
+%		\item \( ε_β < ε_α \) for every \( β < α \),
+%		\item \( ω^{ε_α} = ε_α \).
+%	\end{enumerate}
+	Express \( ε_α \) as a supremum of smaller ordinals as per \cref{d-epsilon0} and deduce that the enumerating function is defined for all ordinals.
+\end{exercise}
+%
+
+
+\begin{exercise}
+	\label{ex-ord-cnf-2}
+	Prove the Cantor normal form theorem in base \( 2 \):
+	\emph{For every ordinal \( α > 0 \) there exists unique ordinals \( α_n ≤ ⋯ ≤ α_0 ≤ α \) such that 
+	\[
+		α = 2^{α_0} + ⋯ + 2^{α_n}.
+	\]}
+\end{exercise}
+%
+\begin{exercise}
+	\label{ex-ord-cnf-2o}
+	What are the additive principal ordinals in base-$2$ normal form?
+	Characterise the \( α \) such that \( 2^α = ω^α \).
 \end{exercise}
 
+%---------------------
+%\section{Natural sum}
+%---------------------
 
-%
-\begin{namedtheorem}[Cantor Normal Form Theorem]\label{t-cantornf}
-	For every ordinal \( α < ε_0 \) there exists \( n \) and ordinals \( α > α_1 ≥ α_2 ≥ ⋯ ≥ α_n \) such that 
+This brief foray into ordinals is concluded with another look at addition.
+Recall that addition on ordinals is not commutative: \( 1 + ω ≠ ω + 1 \) for example.
+It is possible to provide a natural notion of addition that \emph{is} commutative.
+This is called the \emph{natural sum} (sometimes \emph{Hessenberg sum} after its originator Gerhard Hessenberg~\cite{Hess1906}). 
+The Cantor normal theorem provides the means to achieve this.
+
+\begin{definition}
+	The natural sum of ordinals \( α \) and \( β \), denoted \( α \nsum β \) is defined by recursion on the two ordinals. \( 0 \nsum α = α \nsum 0 ≔ α \) for all \( α \).
+	For non-zero \( α =_\NF ω^{α_0} + α_1 \) and \( β =_\NF ω^{β_0} + β_1 \)
 	\[
-		α = ω^{α_1} + ⋯ + ω^{α_n}.
+		α \nsum β ≔ 
+		\begin{cases}
+			ω^{α_0} + ( α_1 \nsum β ), &\text{if \( α_0 ≥ β_0 \),}
+			\\
+			ω^{β_0} + ( α \nsum β_1 ), &\text{if \( α_0 ≤ β_0 \).}
+		\end{cases}
 	\]
-	Moreover, this decomposition is unique.
-\end{namedtheorem}
+	The operation of natural sum is well-defined as \( α_1 < α \) and \( β_1 < β \).
+\end{definition}
+
+As an operation on the Cantor normal form, the natural sum  has the following property.
+\begin{lemma}
+	For \( α =_\NF ω^{α_1} + ⋯ + ω^{α_m} \) and \( β =_\NF ω^{β_1} + ⋯ + ω^{β_n} \)
+	\[
+		α \nsum β ≔ ω^{γ_1} + ⋯ + ω^{γ_{m+n}}
+	\]
+	where \( γ_1 ≥ ⋯ ≥ γ_{m+n} \) enumerate the ordinals \( α_1, …, α_m , β_1 , …, β_n \) in descending order (with repetitions).
+\end{lemma}
+
+\begin{lemma}
+	\label{ord-nsum}
+	The natural sum is commutative and strongly increasing in both arguments: For all \( α \), \( β \), \( γ \),
+	\begin{enumerate}
+		\item \( α \nsum β = β \nsum α \);
+		\item \( α < β \) implies \( α \nsum γ < β \nsum γ \).
+	\end{enumerate}
+\end{lemma}
+%\begin{lemma}
+%	\label{ord-nsum-2}
+%	\begin{enumerate}
+%		\item \( α \nsum β \)
+%		\item \( α + β ≤ α \nsum β ≤ \max\setof{ α , β }.2 \).
+%	\end{enumerate}
+%\end{lemma}
+
+\begin{exercise}
+	Prove \cref{ord-nsum}.
+\end{exercise}
+
+\begin{exercise}
+	\label{ex-ord-mult}
+	Using the Cantor normal form theorem define a commutative multiplication \( α . β \) operation on ordinals. It should satisfy the distribution law:
+	\(
+		( α \nsum β ) . γ = (α .γ) \nsum (β .γ ).
+	\)
+	Hint, start from the function in exercise~\ref{ex-ord-mult-pre}.
+\end{exercise}
