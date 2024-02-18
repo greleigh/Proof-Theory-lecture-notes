@@ -407,7 +407,7 @@ It is beyond the scope of these lecture notes to attempt to make the statement m
 \end{proof}
 
 % ----------------------
-\section{Subtheories of Peano arithmetic}
+\section{Refining cut elimination arithmetic}
 \label{s-oa-ISigma}
 % ----------------------
 
@@ -468,7 +468,7 @@ By \emph{weak arithmetic}, I have in mind the theory known as Robinson's \( Q \)
 \end{proof}
 
 
-I will jump the gun somewhat now.
+I will jump the gun somewhat.
 %
 A sequent is an expression \( Γ ⇒ Δ \) without free variables using the logical language isolated at the beginning of this section.
 Let \( \prv{α}k Γ ⇒ Δ \) denote derivability in \( \PAo \) for such sequents in the usual way but with a more liberal cut rule bounded by negation rank:
@@ -487,7 +487,7 @@ Given a finite sequence \( \vec A = (A_i)_{i≤k} \) of formulas, I will write \
 
 %
 \begin{lemma}[Refined reduction lemma]
-	Suppose \( \prv{α}k Γ_i ⇒ Δ_i, C_i \) and \( \nrk {C_i} = k \) for each \( i ≤ n \). If \( \prv{β}k \vec C , Σ ⇒ Λ \), then
+	Suppose \( \prv{α}k Γ_i ⇒ Δ_i, C_i \) and \( \nrk {C_i} ≤ k \) for each \( i ≤ n \). If \( \prv{β}k \vec C , Σ ⇒ Λ \), then
 	\begin{gather}
 		\label{oa-eqn-spec-red-lem}\tag{\dag}
 		\prv{α + β} k Γ_0 , …, Γ_n , Σ ⇒ Δ_0 , …, Δ_n , Λ .
@@ -524,7 +524,7 @@ This allows the application of an induction hypothesis in cases that the binary 
 	I proceed by induction on \( β \).
 	Suppose
 	\begin{enumerate}
-		\item \( \prv{α}k Γ_i ⇒ Δ_i, C_i \) and \( \nrk {C_i} = k \) for each \( i ≤ n \), and
+		\item \( \prv{α}k Γ_i ⇒ Δ_i, C_i \) and \( \nrk {C_i} ≤ k \) for each \( i ≤ n \), and
 		\item \( \prv{β}k \vec C , Σ ⇒ Λ \).
 	\end{enumerate}
 	I refer to \( \vec C \) as the \emph{cut} formulas.
@@ -613,6 +613,7 @@ As the focus is on better bounds on cut elimination, I will switch to base-$2$ e
 \tbw
 
 \begin{theorem}
+	\label{oa-embed-IS-ce}
 	If \( \IS_n ⊢ A \) then \( \PAo \prv{α}0 Γ ⇒ Δ \) for some \( α < ω_{n+1} \).
 \end{theorem}
 %
