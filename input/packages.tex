@@ -2,7 +2,9 @@
 \usepackage{graphicx}
 %
 % Proofs
-\usepackage{ebproof,ebprooffix} % ebprooffix for old versions of ebproof.
+\usepackage{ebproof} % ebprooffix for old versions of ebproof.
+% Poor man's fix for ebproof
+\IfFileExists{ebprooffix.sty}{\usepackage{ebprooffix}}{} %
 
 % Default settings for proof trees
 \ebproofset{

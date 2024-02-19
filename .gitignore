@@ -1,3 +1,6 @@
+## ignore output
+*.pdf
+
 ## Extra
 .DS_Store
 
