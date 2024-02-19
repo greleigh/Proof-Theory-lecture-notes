@@ -2,9 +2,23 @@
 \usepackage{graphicx}
 %
 % Proofs
-\usepackage{ebproof} % ebprooffix for old versions of ebproof.
+%\usepackage{ebproof} % ebprooffix for old versions of ebproof.
+\usepackage{ebproof}
 % Poor man's fix for ebproof
-\IfFileExists{ebprooffix.sty}{\usepackage{ebprooffix}}{} %
+\makeatletter
+\@ifpackagelater{ebproof}{2021/01/01}%
+	{}%
+	{\usepackage{ebprooffix}}
+\makeatother
+%\IfFileExists{ebprooffix.sty}{\usepackage{ebprooffix}}{} %
+%\IfPackageAtLeast{ebproof}{2021/01/01}
+%  {%
+%    % Do something for the newer version
+%  }
+%  {%
+%    % Do something different for the older version
+%    \usepackage{ebprooffix}
+%  }%
 
 % Default settings for proof trees
 \ebproofset{

@@ -42,6 +42,14 @@
 % Part:
 %\renewcommand*{\partname}{Module} % Does not achieve anything!
 \renewcommand*{\partformat}{Module~\thepart\autodot}
+%\renewcommand*{\addparttocentry}[2]{%
+%  \addtocentrydefault{part}{Module\nobreakspace #1}{#2}%
+%	}%
+\newcommand\partentrynumberformat[1]{Module~\ #1}
+\RedeclareSectionCommand[
+  tocentrynumberformat=\partentrynumberformat,
+  tocnumwidth=6em
+]{part}
 % Chapter:
 \renewcommand{\raggedchapter}{\centering}
 \setkomafont{chapter}{\sffamily\mdseries\LARGE}
@@ -69,11 +77,9 @@
 %---------------------------------
 % TABLE OF CONTENTS
 %
-\renewcommand*{\addparttocentry}[2]{%
-  \addtocentrydefault{part}{Module\nobreakspace #1}{#2}%
-}%
-\usepackage[tocindentauto]{tocstyle}
-\usetocstyle{KOMAlike}
+
+%\usepackage[tocindentauto]{tocbasic}
+%\usetocstyle{KOMAlike}
 %---------------------------------
 % Layout
 % Page layouts
