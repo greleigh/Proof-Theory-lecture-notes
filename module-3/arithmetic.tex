@@ -131,6 +131,39 @@ I state the representation theorem for primitive recursive relations.
 \end{theorem}
 %
 
+
+%---------------------------------
+%\section{Subtheories of Peano arithmetic}\label{s-oa-sub-PA}
+%---------------------------------
+
+There are important subtheories of Peano arithmetic that are worth introducing
+As I will cover only classical theories, I take the opportunity to remove some (classically) definable connectives.
+%This is as good a time as any to introduce some important subtheories of arithmetic.
+\tbw
+
+Scope:
+\begin{enumerate}
+	\item PRA.
+	\item \( \IS_n \).
+\end{enumerate}
+
+
+For the purpose of the following, the logical connectives are \( ⊥ \), \( ∧ \), \( → \) and \( ∀ \). Note, I am including implication rather than primitive negation as a matter of convenience.
+
+
+\begin{definition}
+	The \( Π_{n}^P \) formulas (the \( ^P \) expresses that the predicate \( P \) is permitted, in contrast to our earlier definition of \( Π_1 \)) is the smallest set of formulas that contains
+	\begin{enumerate}
+		\item all prime formulas
+		\item \( F ∧ G \) if \( F , G ∈ Π_{n}^P \),
+		\item \( ∀x F(x) \) if \( F(a) ∈ Π_{n}^P \) and \( n > 0 \),
+		\item \( F → G \) if \( F ∈ Π_{n-1}^P ∪ Π_0^P \) and \( G ∈ \Pi_{n}^P \).
+	\end{enumerate}
+\end{definition}
+
+
+
+
 %---------------------------------
 \section{Sequent calculi for arithmetic}\label{s-oa-omega-logic}
 %---------------------------------
@@ -181,6 +214,17 @@ Define \( \HA ⊢ Γ ⇒ Δ \) as there exists a sequent calculus derivation wit
 \begin{exercise}
 	Show that \( \PA \) derives the same sequents as the calculus with induction axioms as initial sequents (along with the basic axioms) and no induction rule.
 \end{exercise}
+
+\tbw:
+\begin{itemize}
+	\item SC for subtheories
+	\item Partial CE
+\end{itemize}
+
+%---------------------------------
+\section{Small proofs and big proofs}
+\label{s-oa-o-proofs}
+%---------------------------------
 
 By \cref{oa-PA-as-SC}, \( \PA \) is consistent iff the empty sequent is not derivable.
 As with the sequent calculi from previous chapters, it is clear that there can be no cut-free derivation of the empty sequent, neither in \( \PA \) nor \( \HA \).
@@ -353,19 +397,4 @@ The answer to this conundrum is in the title of this module: \emph{ordinals}.
 
 %Currently we have no means to measure the size of \( \PAo \)-proofs.
 %For this we will use ordinals.
-
-
-%---------------------------------
-\section{Subtheories of Peano arithmetic}\label{s-oa-sub-PA}
-%---------------------------------
-
-Before the excursion into ordinals, this is a good time to introduce some important subtheories of arithmetic.
-\tbw
-Scope:
-\begin{enumerate}
-	\item PRA.
-	\item \( \IS_n \).
-	\item Partial cut elimination.
-\end{enumerate}
-
 

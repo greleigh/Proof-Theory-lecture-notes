@@ -408,19 +408,11 @@ It is beyond the scope of these lecture notes to attempt to make the statement m
 
 % ----------------------
 \section{Refining cut elimination arithmetic}
-\label{s-oa-ISigma}
+\label{s-oa-refined}
 % ----------------------
 
-\tbw To cover
-\begin{itemize}
-	\item PRA
-	\item \( \IS_n \)
-\end{itemize}
-
-The final part of this chapter will explore some important subtheories of \( \PA \) through the lens of \( ω \)-proofs.
-As I will cover only classical theories, I take the opportunity to remove some (classically) definable connectives.
-
-For the purpose of this section, the logical connectives are \( ⊥ \), \( ∧ \), \( → \) and \( ∀ \). Note, I am including implication rather than primitive negation as a matter of convenience.
+\tbw
+I will jump the gun somewhat.
 
 The \emph{negation rank} (\emph{n-rank}) of a formula, \( \nrk F \), counts the nesting depth on the negative side of implications:
 \begin{align*}
@@ -433,24 +425,15 @@ The \emph{negation rank} (\emph{n-rank}) of a formula, \( \nrk F \), counts the 
 	\nrk{F → G} &= \max\setof{ \nrk F +1 , \nrk G }
 \end{align*}
 
+
 Compare with the quantifier hierarchy for this language fragment.
-
-\begin{definition}
-	The \( Π_{n}^P \) formulas (the \( ^P \) expresses that the predicate \( P \) is permitted, in contrast to our earlier definition of \( Π_1 \)) is the smallest set of formulas that contains
-	\begin{enumerate}
-		\item all prime formulas
-		\item \( F ∧ G \) if \( F , G ∈ Π_{n}^P \),
-		\item \( ∀x F(x) \) if \( F(a) ∈ Π_{n}^P \) and \( n > 0 \),
-		\item \( F → G \) if \( F ∈ Π_{n-1}^P ∪ Π_0^P \) and \( G ∈ \Pi_{n}^P \).
-	\end{enumerate}
-\end{definition}
-
+%
 Since \( Π_0^P \) is closed under negation, there is no a priori bound on the negation depth of formulas in \( Π_n^P \).
 
 \begin{lemma}
 	Every \( Π_n^P \) formula is equivalent, over weak arithmetic, to a formula with n-rank \( n+1 \).
 \end{lemma}
-By \emph{weak arithmetic}, I have in mind the theory known as Robinson's \( Q \) (see~\cite[ch.~18]{LogThe}) but primitive recursive arithmetic or, equivalently, the theory known as ‘$\IS_1$’ suffices.
+By \emph{weak arithmetic}, I have in mind the theory known as Robinson's \( Q \) (see~\cite[ch.~18]{LogThe}) but primitive recursive arithmetic or, equivalently, the theory known as ‘$\IS_1$’ suffices (cf.~\cref{s-oa-arithmetic}).
 
 \begin{proof}
 	Using the full logical language, express \( F ∈ Π_n^P \) in prefix normal form as
@@ -467,15 +450,13 @@ By \emph{weak arithmetic}, I have in mind the theory known as Robinson's \( Q \)
 	It is now straightforward to witness \eqref{oa-eqn-PNF} as an equivalent \( Π_{m}^P \)-formula whose negation rank is \( m \).
 \end{proof}
 
-
-I will jump the gun somewhat.
 %
 A sequent is an expression \( Γ ⇒ Δ \) without free variables using the logical language isolated at the beginning of this section.
-Let \( \prv{α}k Γ ⇒ Δ \) denote derivability in \( \PAo \) for such sequents in the usual way but with a more liberal cut rule bounded by negation rank:
+Let \( \prvs{α}k Γ ⇒ Δ \) denote derivability in \( \PAo \) for such sequents in the usual way but with a more liberal cut rule bounded by negation rank:
 \[
   \begin{prooftree}
-	\hypo{\prv {α} k Γ ⇒ Δ , C }\hypo{ \prv{β} k C, Σ ⇒ Λ }
-	\infer2[\Cut]{ \prv{γ}k Γ , Σ ⇒ Δ , Λ }
+	\hypo{\prvs {α} k Γ ⇒ Δ , C }\hypo{ \prvs{β} k C, Σ ⇒ Λ }
+	\infer2[\Cut]{ \prvs{γ}k Γ , Σ ⇒ Δ , Λ }
 \end{prooftree}
 \quad\text{for \( \nrk C < k \) and \( \max\setof{α,β} < γ \).}
 \]
@@ -487,10 +468,10 @@ Given a finite sequence \( \vec A = (A_i)_{i≤k} \) of formulas, I will write \
 
 %
 \begin{lemma}[Refined reduction lemma]
-	Suppose \( \prv{α}k Γ_i ⇒ Δ_i, C_i \) and \( \nrk {C_i} ≤ k \) for each \( i ≤ n \). If \( \prv{β}k \vec C , Σ ⇒ Λ \), then
+	Suppose \( \prvs{α}k Γ_i ⇒ Δ_i, C_i \) and \( \nrk {C_i} ≤ k \) for each \( i ≤ n \). If \( \prvs{β}k \vec C , Σ ⇒ Λ \), then
 	\begin{gather}
 		\label{oa-eqn-spec-red-lem}\tag{\dag}
-		\prv{α + β} k Γ_0 , …, Γ_n , Σ ⇒ Δ_0 , …, Δ_n , Λ .
+		\prvs{α + β} k Γ_0 , …, Γ_n , Σ ⇒ Δ_0 , …, Δ_n , Λ .
 	\end{gather}
 \end{lemma}
 %
@@ -524,8 +505,8 @@ This allows the application of an induction hypothesis in cases that the binary 
 	I proceed by induction on \( β \).
 	Suppose
 	\begin{enumerate}
-		\item \( \prv{α}k Γ_i ⇒ Δ_i, C_i \) and \( \nrk {C_i} ≤ k \) for each \( i ≤ n \), and
-		\item \( \prv{β}k \vec C , Σ ⇒ Λ \).
+		\item \( \prvs{α}k Γ_i ⇒ Δ_i, C_i \) and \( \nrk {C_i} ≤ k \) for each \( i ≤ n \), and
+		\item \( \prvs{β}k \vec C , Σ ⇒ Λ \).
 	\end{enumerate}
 	I refer to \( \vec C \) as the \emph{cut} formulas.
 	First, suppose no cut formula is principle in the final rule of assumption 2.
@@ -535,7 +516,7 @@ This allows the application of an induction hypothesis in cases that the binary 
 	The focus will therefore be on assumption 2 above and
 	\begin{gather}
 		\label{oa-eqn-spec-red-lem-2}\tag{\ddag}
-		\prv{α } k  Γ_n ⇒ Δ_n , C_n .
+		\prvs{α } k  Γ_n ⇒ Δ_n , C_n .
 	\end{gather}
 
 	If \( C_n = ⊥ \) or is a false equation then \eqref{oa-eqn-spec-red-lem} results from applying the inversion lemma to \eqref{oa-eqn-spec-red-lem-2}.
@@ -546,20 +527,20 @@ This allows the application of an induction hypothesis in cases that the binary 
 	From 2 I obtain \( γ < β \) and \( F ∈ \setof{ D, E} \) such that
 	\begin{enumerate}[resume]
 %		\label{oa-eqn-spec-red-lem}\tag{\dag}
-		\item \( \prv{γ} k \vec C , F , Σ ⇒  Λ  \).
+		\item \( \prvs{γ} k \vec C , F , Σ ⇒  Λ  \).
 	\end{enumerate}
 	Applying the inversion lemma to \eqref{oa-eqn-spec-red-lem-2} yields
 	\begin{enumerate}[resume]
 %		\label{oa-eqn-spec-red-lem}\tag{\dag}
-		\item \( \prv{α } k  Γ_n ⇒ Δ_n , F  \).
+		\item \( \prvs{α } k  Γ_n ⇒ Δ_n , F  \).
 	\end{enumerate}
 	Adding this final sequent to the list of hypotheses in 1 above, and using 3 in place of 2, I can apply the induction hypothesis (as \( γ < β \)), which derives \eqref{oa-eqn-spec-red-lem}.
 	
 	The quantifier case, \( C_n = ∀x D(x) \) is essentially the same argument.
 	From principality of \( C_n \) and the inversion lemma I know
 	\begin{enumerate}[start=3,label=\arabic*'.]
-		\item \( \prv{γ} k \vec C , D(s) , Σ ⇒  Λ \) for some \( γ < β \) and term \( s \).
-		\item \( \prv{α } k  Γ_n ⇒ Δ_n , D(s) \).
+		\item \( \prvs{γ} k \vec C , D(s) , Σ ⇒  Λ \) for some \( γ < β \) and term \( s \).
+		\item \( \prvs{α } k  Γ_n ⇒ Δ_n , D(s) \).
 	\end{enumerate}	
 	I can then deduce \eqref{oa-eqn-spec-red-lem} from the induction hypothesis by adding 4' to the list in 1 and 3' in place of 2.
 	
@@ -567,18 +548,18 @@ This allows the application of an induction hypothesis in cases that the binary 
 	Suppose \( C_n = D → E \).
 	Hypothesis 2 and the inversion lemma yields three derivations to work from:
 	\begin{enumerate}[start=3,label=\arabic*''.]
-		\item \( \prv{γ}k \vec C , E , Σ ⇒ Λ \),
-		\item \( \prv{δ}k \vec C , Σ ⇒ Λ , D \),
-		\item \( \prv{α}k D , Γ_n ⇒ Δ_n, E \),
+		\item \( \prvs{γ}k \vec C , E , Σ ⇒ Λ \),
+		\item \( \prvs{δ}k \vec C , Σ ⇒ Λ , D \),
+		\item \( \prvs{α}k D , Γ_n ⇒ Δ_n, E \),
 	\end{enumerate}
 	for \( γ, δ < β \).
 	The first and third of these can be used with the induction hypothesis, obtaining as conclusion,
 	\begin{enumerate}[resume,label=\arabic*''.]
-		\item \( \prv{α + γ } k D , Γ_0 , …, Γ_n , Σ ⇒ Δ_0 , …, Δ_n , Λ \).
+		\item \( \prvs{α + γ } k D , Γ_0 , …, Γ_n , Σ ⇒ Δ_0 , …, Δ_n , Λ \).
 	\end{enumerate}
 	To derive \eqref{oa-eqn-spec-red-lem}, I need to remove the formula \( D \) in 6'' I apply a cut against a second application of the induction hypothesis, this time using 4'' (and not expanding the list in 2):
 	\begin{enumerate}[resume,label=\arabic*''.]
-		\item \( \prv{ α + δ } k Γ_0 , …, Γ_n , Σ ⇒ Δ_0 , …, Δ_n , Λ , D \).
+		\item \( \prvs{ α + δ } k Γ_0 , …, Γ_n , Σ ⇒ Δ_0 , …, Δ_n , Λ , D \).
 	\end{enumerate}
 	As \( \nrk D < k \) a standard cut can be used between sequents 4'' and 6'', the conclusion being \eqref{oa-eqn-spec-red-lem}.
 \end{proof}
@@ -586,15 +567,15 @@ This allows the application of an induction hypothesis in cases that the binary 
 As the focus is on better bounds on cut elimination, I will switch to base-$2$ exponentiation for the reduction theorem:
 
 \begin{theorem}[Refined reduction theorem]
-	Suppose \( \prv{α}{k+1} Γ ⇒ Δ \). Then \( \prv{2^α}{k} Γ ⇒ Δ \).
+	Suppose \( \prvs{α}{k+1} Γ ⇒ Δ \). Then \( \prvs{2^α}{k} Γ ⇒ Δ \).
 \end{theorem}
 \begin{proof}
 	This argument proceeds just as usual.
-	Jumping to the main case, suppose \( \prv{α}{k+1} Γ ⇒ Δ \) is derived via cut:
+	Jumping to the main case, suppose \( \prvs{α}{k+1} Γ ⇒ Δ \) is derived via cut:
 	\[
-		\prv{β}{k+1} Γ ⇒ Δ , C
+		\prvs{β}{k+1} Γ ⇒ Δ , C
 		\qquad
-		\prv{γ}{k+1} C, Σ ⇒ Λ 
+		\prvs{γ}{k+1} C, Σ ⇒ Λ 
 	\]
 	where \( β , γ < α \) and \( \nrk C ≤ k \).
 	The induction hypothesis yields
@@ -603,11 +584,11 @@ As the focus is on better bounds on cut elimination, I will switch to base-$2$ e
 		\qquad
 		\prv{2^γ}{k} C, Σ ⇒ Λ 
 	\]
-	and the refined reduction lemma implies \( \prv{2^α}k Γ ⇒ Δ \).
+	and the refined reduction lemma implies \( \prvs{2^α}k Γ ⇒ Δ \).
 \end{proof}
 
 \begin{theorem}[Refined cut elimination]
-	If \( \prv{α}k Γ ⇒ Δ \) then \( \prv{γ}0 Γ ⇒ Δ \) where \( γ = 2_k^α \).
+	If \( \prvs{α}k Γ ⇒ Δ \) then \( \prvs{γ}0 Γ ⇒ Δ \) where \( γ = 2_k^α \).
 \end{theorem}
 
 \tbw
@@ -620,10 +601,10 @@ As the focus is on better bounds on cut elimination, I will switch to base-$2$ e
 \note{Check this.}
 %
 \begin{proof}[sketch]
-	From \( \IS_n ⊢ {} ⇒ A \) we deduce that \( \PA \prv k {n+1} {} ⇒ A \).
+	From \( \IS_n ⊢ A \) we deduce that \( \PA ⊢ {} ⇒ A \) with a proof in which all cuts have n-rank \( ≤ n \).
 	The reason is that the induction rule is only applied to formulas with n-rank \( ≤ n \) and finitary cut elimination is available in \( \PA \) to reduce the cut rank to formulas of the same n-rank as uses of induction.
 	The embedding lemma of \( \PA \) into \( \PAo \) yields
-	\( \PAo \prv{ω.k}{n} {}⇒ A \), so \( \PAo \prv{γ}0 {}⇒ A \) where
+	\( \PAo \prvs{ω.k}{n} {}⇒ A \), so \( \PAo \prv{γ}0 {}⇒ A \) where
 	\[
 		γ = 2_{n}^{ω.k} .
 	\]
