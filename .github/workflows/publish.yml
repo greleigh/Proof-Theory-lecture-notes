@@ -1,4 +1,4 @@
-name: Build LaTeX document
+name: Build and release
 
 on:
   push:
@@ -24,7 +24,7 @@ jobs:
         uses: xu-cheng/latex-action@v3
         with:
           root_file: proof-theory.tex
-          
+
       - name: Release
         uses: softprops/action-gh-release@v1
         with:
