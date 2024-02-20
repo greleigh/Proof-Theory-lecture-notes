@@ -1,5 +1,5 @@
 ## ignore output
-*.pdf
+# *.pdf
 
 ## Extra
 .DS_Store
