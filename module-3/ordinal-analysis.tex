@@ -83,7 +83,7 @@ So the relation \( \prv{α}k \) is monotone in \( α \) and \( k \):
 Revisiting the Embedding lemma (lemma \ref{oa-embed-weak}) it is possible provide ordinal bounds on the size of the resulting \( ω \)-proof.
 Let \( α.k = \underbrace{α + ⋯ + α }_k \).
 
-\begin{lemma}[Refined embedding lemma]\label{oa-embed-PAo-w-bounds}
+\begin{lemma}[Refined embedding]\label{oa-embed-PAo-w-bounds}
 	Suppose \( \PA ⊢ Γ ⇒ Δ \) and \( Γ ⇒ Δ \) is closed. Then there is \( n,k < ω \) such that \( \PAo \prv{ω.n}k Γ ⇒ Δ \) where \( ω .n = ω + ⋯ + ω \) (\( n \) times).
 	Likewise, \( \HA \) into \( \HAo \).
 \end{lemma}
@@ -110,7 +110,7 @@ Henceforth, I will omit explicit mention of \( \PAo \) and write \( \prv{α}k Γ
 The following results are stated only for \( \PAo \) but apply equally to \( \HAo \) in the expected way.
 Admissibility of weakening becomes 
 %
-\begin{lemma}[Weakening Lemma]
+\begin{lemma}[Weakening]
 	If \( \prv{α}k Γ ⇒ Δ \) and \( Γ' ⇒ Δ' \) is closed then \( \prv{α}k Γ' , Γ ⇒ Δ, Δ' \).
 %	Likewise for \( \HAo \).
 \end{lemma}
@@ -125,7 +125,7 @@ Admissibility of weakening becomes
 The substitution lemma for \( \PAo \) takes a different formulation from previously. 
 As sequents are closed, the correct formulation for \( ω \)-proofs is that provability depends on the \emph{value} of terms, not their \emph{form}.
 
-\begin{lemma}[Substitution Lemma]
+\begin{lemma}[Substitution]
 	Let \( Γ(a) ⇒ Δ(a) \) be a sequent and \( s \) and \( t \) be closed terms such that \( \Nat ⊨ s = t \). If \( \prv{α}k Γ(s) ⇒ Δ(s) \) implies \( \prv{α}k Γ(t) ⇒ Δ(t) \).
 \end{lemma}
 %
@@ -139,7 +139,7 @@ As sequents are closed, the correct formulation for \( ω \)-proofs is that prov
 
 The final ingredient is the inversion lemma, the statement of which has the same form as before with two new cases treating equality.
 
-\begin{lemma}[Inversion lemma]
+\begin{lemma}[Inversion]
 	\label{oa-inversion}\ 
 	\begin{enumerate}
 		\item If \( \prv{α}k Γ ⇒ Δ , ⊥ \) then \( \prv{α}k Γ ⇒ Δ \).
@@ -333,7 +333,7 @@ In the next section I will present a strict refinement of the cut elimination th
 
 Let \( ω_0^α ≔ α \) and \( ω_{k+1}^α ≔ ω^{ω_k^α} \).
 
-\begin{theorem}[Cut elimination theorem]\label{oa-ce-PAo}
+\begin{theorem}[Cut elimination]\label{oa-ce-PAo}
 	If \( \prv{α}k Γ⇒ Δ \) then \( \prv{ω_k^α}0 Γ⇒ Δ \).
 \end{theorem}
 \begin{proof}
@@ -344,7 +344,7 @@ Let \( ω_0^α ≔ α \) and \( ω_{k+1}^α ≔ ω^{ω_k^α} \).
 	Formulate and prove a corresponding reduction lemma and cut elimination theorem for \( \HAo \).
 \end{exercise}
 
-\begin{theorem}[Embedding theorem]
+\begin{theorem}[Embedding]
 	\label{oa-embed-PA-ce}
 	If \( \PA ⊢ Γ ⇒ Δ \) and this a closed sequent, then there exists \( α < ε_0 \) such that
 	\[
@@ -407,11 +407,11 @@ It is beyond the scope of these lecture notes to attempt to make the statement m
 \end{proof}
 
 % ----------------------
-\section{Refining cut elimination arithmetic}
+\section{On fragments of Peano arithmetic}
 \label{s-oa-refined}
 % ----------------------
 
-\tbw
+%\tbw
 I will jump the gun somewhat.
 
 The \emph{negation rank} (\emph{n-rank}) of a formula, \( \nrk F \), counts the nesting depth on the negative side of implications:
@@ -467,7 +467,7 @@ I assume this variation of \( \PAo \) satisfies weakening, substitution and inve
 Given a finite sequence \( \vec A = (A_i)_{i≤k} \) of formulas, I will write \( \vec A , Γ ⇒ Δ \) for \( A_0 , …, A_n , Γ ⇒ Δ \).
 
 %
-\begin{lemma}[Refined reduction lemma]
+\begin{lemma}[Refined reduction]
 	Suppose \( \prvs{α}k Γ_i ⇒ Δ_i, C_i \) and \( \nrk {C_i} ≤ k \) for each \( i ≤ n \). If \( \prvs{β}k \vec C , Σ ⇒ Λ \), then
 	\begin{gather}
 		\label{oa-eqn-spec-red-lem}\tag{\dag}
@@ -566,7 +566,7 @@ This allows the application of an induction hypothesis in cases that the binary 
 
 As the focus is on better bounds on cut elimination, I will switch to base-$2$ exponentiation for the reduction theorem:
 
-\begin{theorem}[Refined reduction theorem]
+\begin{theorem}[Refined reduction]
 	Suppose \( \prvs{α}{k+1} Γ ⇒ Δ \). Then \( \prvs{2^α}{k} Γ ⇒ Δ \).
 \end{theorem}
 \begin{proof}

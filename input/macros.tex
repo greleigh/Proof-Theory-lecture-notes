@@ -5,24 +5,29 @@
 \providecommand{\note}[1]{\marginnote{\textcolor{magenta}{#1}}}
 \providecommand{\tbw}{\textcolor{magenta}{To be written.}}
 %---------------------------------
+% LANGUAGES
+\newcommand{\La}{\Lang{L}_{\mathrm{A}}}
+\newcommand{\Lpra}{\Lang{L}_{\mathrm{PRA}}}
+%---------------------------------
 % LOGICS & THEORIES
 \newcommand{\NDc}{\Logic{Nc}}
 \newcommand{\NDi}{\Logic{Ni}}
 \newcommand{\NDceq}{\Logic{Nc_=}}
 \newcommand{\NDieq}{\Logic{Ni_=}}
 
-\newcommand{\Gip}{\Logic{IP}}
-\newcommand{\Gcp}{\Logic{CP}}
-\newcommand{\Gmp}{\Logic{M}}
-\newcommand{\Gi}{\Logic{I}}
-\newcommand{\Gc}{\Logic{C}}
-\newcommand{\Gieq}{\Logic{I}_=}
-\newcommand{\Gceq}{\Logic{C}_=}
+\newcommand{\Gip}{\Logic{IPL}}
+\newcommand{\Gcp}{\Logic{CPL}}
+\newcommand{\Gmp}{\Logic{ML}}
+\newcommand{\Gi}{\Logic{IL}}
+\newcommand{\Gc}{\Logic{CL}}
+\newcommand{\Gieq}{\Logic{IL}_=}
+\newcommand{\Gceq}{\Logic{CL}_=}
 
 \newcommand{\PA}{\Theory{PA}}
 \newcommand{\HA}{\Theory{HA}}
 %
 \newcommand{\IS}{\Theory{I}\Sigma}
+\newcommand{\PRA}{\Theory{PRA}}
 %\newcommand{\HA}{\Theory{HA}}
 
 \newcommand{\PAo}{\Theory{PAω}}
@@ -40,6 +45,7 @@
 % are defined in styling.tex
 %
 \newcommand{\Cut}{\Rule{cut}}
+\newcommand{\mCut}{\Rule{mcut}}
 %
 \newcommand{\idRule}{\Rule{id}}
 \newcommand{\botL}{\LeftRule{⊥}}
@@ -85,6 +91,12 @@
 \newcommand{\suc}{\Symbol{s}}
 %\newcommand{\num}[1]{\underline{#1}}
 
+% Under dot
+\NewDocumentCommand{\subdot}{m}{\textup{\oalign{$#1$\cr\hfil.\hfil}}}%
+\providecommand*{\subdot}[1]{\dot{#1}}
+%  \ssubdot (for use in sub/supscript)
+\newcommand*\ssubdot[1]{\oalign{${\scriptstyle #1}$\cr\hfil.\hfil}}%
+
 % Shorthands
 \newcommand{\Prog}[2][\prec]{\Frml{Prog}_{#1}{#2}}
 \newcommand{\TI}[2][\prec]{\Frml{TI}_{#1}({#2})}
@@ -93,9 +105,6 @@
 \NewDocumentCommand{\Setof}{mo}{\bigl\{\,{#1}\IfValueT{#2}{\bigm| {#2}}\,\bigr\}}
 \NewDocumentCommand{\supof}{mo}{\sup\{\,{#1}\IfValueT{#2}{\mid {#2}}\,\}}
 \newcommand{\supseq}[1][i]{\sup_i}
-%---------------------------------
-% LANGUAGES
-\newcommand{\La}{\Lang{L}_{\mathrm{A}}}
 
 %---------------------------------
 % SETS

@@ -1,57 +1,63 @@
 % Packages
 \usepackage{graphicx}
-%
-% Proofs
-%\usepackage{ebproof} % ebprooffix for old versions of ebproof.
+
+% frame (figures)
+\usepackage{mdframed}
+
+% Package: ebproof
+% typeset proof trees
 \usepackage{ebproof}
-% Poor man's fix for ebproof
+
+% Old versions of class contain a bug.
+% Include style file with fix in case
 \makeatletter
-\@ifpackagelater{ebproof}{2021/01/01}%
+\@ifpackagelater{ebproof}{2020/01/01}%
 	{}%
 	{\usepackage{ebprooffix}}
 \makeatother
-%\IfFileExists{ebprooffix.sty}{\usepackage{ebprooffix}}{} %
-%\IfPackageAtLeast{ebproof}{2021/01/01}
-%  {%
-%    % Do something for the newer version
-%  }
-%  {%
-%    % Do something different for the older version
-%    \usepackage{ebprooffix}
-%  }%
+
 
 % Default settings for proof trees
 \ebproofset{
 	left label template={\normalfont\small (\inserttext)},
 	right label template={\small \inserttext},
-	rule margin=.5ex,% default .7ex
+%	rule margin=.5ex,% default .7ex
 %	rule separation=1pt,% default 2pt % gap between double-rules
 	separation=1.5em,% default 1.5em
 	label separation=.5ex,% default .5ex
 }
+
+% New proof tags:
+
 % Small size
 \ebproofnewstyle{small}{
   template = \small$\inserttext$,
   left label template = \footnotesize{\inserttext},
   right label template = \footnotesize{\inserttext} }
+
 % Footnote size
 \ebproofnewstyle{smaller}{
   template = \footnotesize$\inserttext$,
   left label template = \scriptsize{\inserttext},
   right label template = \scriptsize{\inserttext} }
+
 % Compact
 \ebproofnewstyle{compact}{
   separation = 1.5ex, rule margin = .25ex,}
+
 % tight
 \ebproofnewstyle{tight}{
   separation = 1em, rule margin = .4ex,
   }
-% Some additions to ebproof:
-% for lists of premises 
+
+% Additional commands for ebproof:
+% for \hypo{⋯}
 \newcommand{\hypod}{\hypo{\dotsm}}
-% axiom
+
+% for \overline{hypothesis}
 \newcommand{\axiom}[2][]{\hypo{}\infer1[#1]{#2}}
-% Sub-proof
+
+% for implicit subproof
 \NewDocumentCommand{\subproof}{sO{}m}{%
 	\IfBooleanTF{#1}{%
 		\hypo{#2}\infer[no rule]1{#3}

@@ -319,7 +319,7 @@ The next three lemmas provide the motivation for this extension of \( \PAo \).
 	An application of bound weakening completes the proof.
 \end{proof}
 %
-\begin{lemma}[Refined embedding lemma]\label{oa-PAop-embedding}
+\begin{lemma}[Refined embedding]\label{oa-PAop-embedding}
 	If\, \( \PA ⊢ \TI P \) then there exists \( k < ω \) such that for all \( n ∈ ℕ \), 
 	\[ \PAop \prv{ω^2}k {{}⇒ ∀ y ≺ \nm n \, P y }. \]
 \end{lemma}
@@ -338,7 +338,7 @@ This is the lemma below.
 
 Since \( ≺ \) is a fixed well-ordering, for \( α < \ot \) I will write \( \cd{α} \) for the numeral \( \nm n \) such that \( α = \otin n \).
 %
-\begin{lemma}[Bounding lemma]
+\begin{lemma}[Bounding]
 	\label{oa-bounding-lemma}
 	Let \( α_1 , …, α_m , β_0, …, β_n < \ot \). If
 	\[ \PAop \prv{γ}0 P\cd{α_1}, … , P\cd{α_m} ⇒ P\cd{β_0} , …, P\cd{β_n} \]
@@ -413,15 +413,15 @@ Since \( ≺ \) is a fixed well-ordering, for \( α < \ot \) I will write \( \cd
 What remains is to confirm cut elimination for the extended calculus \( \PAop \).
 The reader can confirm that weakening and substitution remain admissible in this extension.
 %
-\begin{lemma}[Weakening Lemma]
+\begin{lemma}[Weakening]
 	If \( \PAop \prv{α}k Γ ⇒ Δ \) and \( Γ'⇒Δ' \) is closed then \( \PAop \prv{α}k Γ' , Γ ⇒ Δ, Δ' \).
 \end{lemma}
 %
-\begin{lemma}[Substitution Lemma]
+\begin{lemma}[Substitution]
 	Let \( Γ(a) ⇒ Δ(a) \) be a sequent with \( a \) the only free variable, and let \( s \) and \( t \) be closed terms such that \( \Nat ⊨ s = t \). If \( \PAop \prv{α}k Γ(s) ⇒ Δ(s) \) then \( \PAop \prv{α}k Γ(t) ⇒ Δ(t) \).
 \end{lemma}
 %
-%\begin{lemma}[Contraction Lemma]
+%\begin{lemma}[Contraction]
 %	If \( \PAop \prv{α}k A , A , Γ ⇒ Δ \) then \( \PAop \prv{α}k A , Γ ⇒ Δ \).
 %	If \( \PAop \prv{α}k Γ ⇒ Δ , A , A \) then \( \PAop \prv{α}k Γ ⇒ Δ , A \).
 %\end{lemma}
@@ -435,7 +435,7 @@ Precisely the same formulation of the reduction lemma also holds, but here there
 %
 I present only the ‘simple’ version of this result and leave the quantifier-relevant form for the reader.
 %
-\begin{lemma}[Reduction lemma]
+\begin{lemma}[Reduction]
 	Suppose \( \PAop \prv{α}k Γ ⇒ Δ , C \) and \( \PAop \prv{β}k C, Γ ⇒ Λ \).
 	If \( \rk C = k \) then \( \PAop \prv{α\nsum β}k Γ ⇒ Δ,Λ \).
 \end{lemma}
@@ -485,7 +485,7 @@ I present only the ‘simple’ version of this result and leave the quantifier-
 
 Combining the results in this chapter:
 %
-\begin{theorem}[Proof-theoretic characterisation theorem]
+\begin{theorem}[Proof-theoretic characterisation]
 	The proof-the\-oretic ordinal of Peano and Heyting arithmetic is \( ε_0 \).
 \end{theorem}
 %

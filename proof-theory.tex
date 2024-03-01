@@ -1,7 +1,7 @@
 \documentclass[%
 	paper=174mm:247mm,
 %	11pt,
-	DIV=10,
+	DIV=11,
 	leqno,
 	titlepage,
 	headsepline,
@@ -67,6 +67,10 @@
 	module-3/ordinal-interlude,
 	module-3/ordinal-analysis,
 	module-3/ti-and-pto,
+	%
+%	solutions/part-1,
+%	solutions/part-2,
+%	solutions/part-3,
 	}
 
 \begin{document}
@@ -80,29 +84,34 @@
 
 \mainmatter
 
-% Intro
+% Module 1
 \include{module-0/intro}
-%
 \part{Two Calculi for Two Logics}
-%
+\label{module-1}
 \include{module-1/sequent-calculus}
 \include{module-1/properties}
 
-%
+% Module 2
 \part{Cut elimination}
-%
+\label{module-2}
 \include{module-2/ce}
 \include{module-2/conseq-of-ce}
 \include{module-2/equality}
 \include{module-2/game}
-%
+
+% Module 3
 \part{An Introduction to Ordinal Analysis}
-%
+\label{module-3}
 \include{module-3/arithmetic}
 \include{module-3/ordinal-interlude}
 \include{module-3/ordinal-analysis}
 \include{module-3/ti-and-pto}
-%
+
+% Solutions
+%\part{Selected solutions}
+%\include{solutions/part-1}
+%\include{solutions/part-2}
+%\include{solutions/part-3}
 
 \backmatter
 

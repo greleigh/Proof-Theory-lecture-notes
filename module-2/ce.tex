@@ -6,7 +6,7 @@ Here we present cut elimination for the calculi.
 Cut rank,
 Inversion lemma and the like
 
-\begin{lemma}[First inversion lemma]\label{ce-inversion-lemma}
+\begin{lemma}[First inversion]\label{ce-inversion-lemma}
 	Let \( ⊢ \) denoted provability in either \( \Gc \) or \( \Gi \).
 	The following hold for all sequents and all \( n \), \( k \):
 	\begin{enumerate}
@@ -20,33 +20,360 @@ Inversion lemma and the like
 	\end{enumerate}
 \end{lemma}
 
-\begin{lemma}[Second inversion lemma]\ 
-	\begin{enumerate}
+\begin{exercise}
+	Prove that the rules \( \exR \) and \( \faL \) are not invertible in the above sense.
+	That is, show the following two statements are \emph{false}:
+	\begin{itemize}
+		\item If \( \prv n k ∀x F(x) , Γ ⇒ Δ , ∀x F(x) \) then \( \prv n k F(s) , Γ ⇒ Δ \) for some term \( s \).
+		\item If \( \prv n k Γ ⇒ Δ , ∃x F(x) \) then \( \prv n k Γ ⇒ Δ  , F(s) \) for some term \( s \).
+	\end{itemize}
+\end{exercise}
+
+For the classical sequent calculus two additional ‘inversion’ principles hold.
+
+\begin{lemma}[Second inversion] 
+	In addition, classical predicate logic admits the inversions:
+	\begin{enumerate}[start=8]
 		\item If \( \Gc \prv n k Γ ⇒ Δ , F ∨ G \) then \( \Gc \prv n k Γ ⇒ Δ , F , G \).
 		\item If \( \Gc \prv n k F → G , Γ ⇒ Δ \) then \( \Gc \prv n k G ,Γ ⇒ Δ \) and \( \Gc \prv n k Γ ⇒ Δ , F \).
 	\end{enumerate}
 \end{lemma}
 
-\begin{lemma}[Third inversion lemma]
-	If \( \Gi \prv n k F → G , Γ ⇒ Δ \) then \( \Gi \prv n k G , Γ ⇒ Δ \).
-\end{lemma}
+The intuitionistic sequent calculus supports just one part of the classical inversions.
 
-% ---
-\section{For classical logic}
-
-\begin{lemma}[Reduction lemma for \( \Gc \)]
-	\label{ce-red-lem-C}
-	Suppose \( \prv m k Γ ⇒ Δ , C \) and \( \prv n k C , Σ ⇒ Λ  \).
-	If \( \rk C = k \) then \( \prv {m+n}k Γ,Σ⇒ D,Λ  \).
+\begin{lemma}[Third inversion]
+	In addition to \cref{ce-inversion-lemma}, intuitionistic predicate logic admits the inversion
+	\begin{enumerate}[start=8]
+		\item If \( \Gi \prv n k F → G , Γ ⇒ Δ \) then \( \Gi \prv n k G , Γ ⇒ Δ \).
+	\end{enumerate}
 \end{lemma}
 
 \begin{exercise}
-	\label{ex-red-lem-special}
-	In this exercise you will prove a strengthening of the reduction lemma and, as a consequence, obtain more precise bounds on the cost of cut elimination in classical logic.
-	
-	See Canvas assign 4.
+	Show that the ‘missing’ inversions for intuitionistic logic are false:
+	\begin{enumerate}[start=8,label=\arabic*'.]
+		\item If \( \Gi \prv n k Γ ⇒ F ∨ G \) then either \( \Gi \prv n k Γ ⇒ F \) or \( \Gi \prv n k Γ ⇒ G \).
+		\item If \( \Gi \prv n k F → G , Γ ⇒ Δ \) then \( \Gi \prv n k Γ ⇒ Δ , F \).
+	\end{enumerate}
 \end{exercise}
 
+% ----------------------------------
+\section{Classical logic}
+% ----------------------------------
 
-% ---
-\section{For intuitionistic logic}
+For this section, I treat the classical sequent calculus \( \Gc \).
+Thus, \( \prv n k \) means \( \Gc \prv n k \) throughout.
+
+\begin{lemma}[Reduction]
+	\label{ce-red-lem-C}
+	Suppose \( \prv m k Γ ⇒ Δ , C \) and \( \prv n k C , Σ ⇒ Λ  \).
+	If \( \rk C = k \) then \( \prv {m+n}k Γ,Σ ⇒ Δ,Λ  \).
+\end{lemma}
+%
+\begin{proof}
+	See lectures.
+
+	One case for reference. (Induction is on \( m + n \).)
+	Suppose \( C = D ∨ E \) and
+	\begin{enumerate}
+		\item \( \prv m k Γ ⇒ Δ , C \) \label{itm-ce-reduct-a}
+		\item \( \prv n k C , Σ ⇒ Λ  \) \label{itm-ce-reduct-b}
+	\end{enumerate}
+	arise from
+	\begin{enumerate}[resume]
+		\item \( \prv {m'} k Γ ⇒ Δ , C , D \) \label{itm-ce-reduct-1}
+		\item \( \prv {n'} k D , C, Σ ⇒ Λ  \), and\label{itm-ce-reduct-2}
+		\item \( \prv {n''} k E , C , Σ ⇒ Λ  \) \label{itm-ce-reduct-3}
+	\end{enumerate}
+	by the rules \( \disjR \) and \( \disjL \) respectively, where \( m' < m \) and \( n' , n'' < n \).
+	\Cref{f-ce-CL} provides an illustration of the argument in this case.
+	As \( m' + n < m + n \), the induction hypothesis can be applied to the pair \eqref{itm-ce-reduct-1} and \eqref{itm-ce-reduct-b}, yielding
+	\begin{enumerate}[resume]
+		\item \( \prv {m'+n} k Γ , Σ ⇒ Δ , Λ , D \).
+	\end{enumerate}
+
+	I also apply the inversion lemma to \eqref{itm-ce-reduct-2}, deducing
+	\begin{enumerate}[resume]
+		\item \( \prv {n'} k D , Σ ⇒ Λ  \).
+	\end{enumerate}
+	As \( \rk D < \rk C \), it is possible to cut the final pair of sequents, resulting in
+	\begin{enumerate}[resume]
+		\item \( \prv {h} k Γ ,  Σ ⇒ Δ , Λ  \) for \( h = \max \setof{ m' + n , n' } + 1 \).
+	\end{enumerate}
+	As \( h ≤ m + n \), this case is complete.
+\end{proof}
+
+% ------------------
+\begin{figure}
+	\begin{mdframed}
+	\centering
+	\begin{prooftree}
+		\subproof*[\eqref{itm-ce-reduct-1}]{\prv{m'}k Γ ⇒ Δ , C , D }
+			\subproof*[\eqref{itm-ce-reduct-b}]{\prv{n}k C , Σ ⇒ Λ }
+		\infer[dashed]2[IH]{\prv{ m' + n } k Γ , Σ ⇒ Δ , Λ , D }
+		
+		\subproof*[\eqref{itm-ce-reduct-2}]{\prv{n'}k D , C , Σ ⇒ Λ }
+		\infer[dashed]1[IL]{\prv{n'}k D , Σ ⇒ Λ }
+			
+		\infer2[\Cut]{\prv{m + n}k Γ , Σ ⇒ Δ , Λ }
+	\end{prooftree}
+	\caption{Illustration of the proof method in the reduction lemma for the case \( C = D ∨ E \). Numbering refers to the proof; IL = ‘inversion lemma’ and IH = ‘induction hypothesis’.}
+	\label{f-ce-CL}
+	\end{mdframed}
+\end{figure}
+% ------------------
+
+\begin{theorem}[Reduction]
+	If \( \prv m {k+1} Γ ⇒ Δ  \) then \( \prv {2^m} k Γ ⇒ Δ \).
+\end{theorem}
+%
+\begin{proof}
+	In lectures.
+\end{proof}
+
+%\begin{exercise}
+%	\label{ex-red-lem-special}
+%	In this exercise you will prove a strengthening of the reduction lemma and, as a consequence, obtain more precise bounds on the cost of cut elimination in classical logic.
+%	
+%	See Canvas assign 4.
+%\end{exercise}
+
+Iterating the reduction lemma induces a cut-free proof.
+Define \( 2_k^n \) as \( 2^n_0 = n \) and \( 2^n_{k+1} = 2^{2^n_k} \).
+The following result is due to Gerhard Gentzen and often referred to as \emph{Genzten’s Hauptsatz}.
+
+\begin{theorem}[Cut elimination]
+	Every sequent provable in classical predicate logic is provable without cut.
+	In particular, if \( \Gc \prv n k Γ ⇒ Δ  \) then \( \Gc \prv m 0 Γ ⇒ Δ \) for some \( m ≤ 2^n_k \).
+\end{theorem}
+%
+\begin{proof}
+	Induction on the cut rank. Recall, \( \prv {} 0 \) is synonymous with ‘cut-free provable’.
+\end{proof}
+
+
+% ----------------------------------
+\section{Intuitionistic logic}
+% ----------------------------------
+
+The rule of cut is also admissible in intuitionistic sequent calculus with essentially the same bounds.
+The failure of inversion creates some complications while the restriction to intuitionistic logic simplifies other cases.
+
+\begin{lemma}[Reduction]
+	\label{ce-red-lem-C}
+	Suppose \( \Gi \prv m k Γ ⇒ C \) and \( \Gi \prv n k C , Σ ⇒ Λ  \).
+	If \( \rk C = k \) then \( \Gi \prv {(m+n).2}k Γ,Σ⇒ Λ  \).
+\end{lemma}
+%
+\begin{proof}
+	See lectures.
+\end{proof}
+
+\begin{theorem}[Reduction]
+	If \( \Gi \prv m {k+1} Γ ⇒ Δ  \) then \( \Gi \prv {4^m} k Γ ⇒ Δ \).
+\end{theorem}
+%
+\begin{proof}
+	In lectures.
+\end{proof}
+
+%\begin{exercise}
+%	\label{ex-red-lem-special}
+%	In this exercise you will prove a strengthening of the reduction lemma and, as a consequence, obtain more precise bounds on the cost of cut elimination in classical logic.
+%	
+%	See Canvas assign 4.
+%\end{exercise}
+
+Iterating the reduction lemma induces a cut-free proof.
+Define \( 4_k^n \) as \( 4^n_0 = n \) and \( 4^n_{k+1} = 4^{4^n_k} \).
+
+\begin{theorem}[Cut elimination]
+	Every sequent provable in intuitionistic predicate logic is provable in the same calculus without cut.
+	In particular, if \( \Gi \prv n k Γ ⇒ Δ  \) then \( \Gi \prv m 0 Γ ⇒ Δ \) for some \( m ≤ 4^n_k \).
+\end{theorem}
+
+As a comparison, the reader can verify that \( 4^n_k ≤ 2^n_{2k} \) for all \( n \) and \( k \).
+
+The next section looks more closely at the structure of cut-free proofs to derive a variety of structural results about classical and intuitionistic logic.
+Before that, I present a strengthening of the cut elimination bounds that can be achieved by a more careful proof of the reduction lemma.
+The proof of the following results are exercises.
+
+% -----------------------------
+\section{Refining cut elimination}
+% -----------------------------
+
+As formulated, the cut elimination theorem suggests that every logical connective contributes an exponential in the size of a proof.
+A careful examination of some cases show that many connectives can be dispensed ‘cheaply’, that is to say without inducing an exponential blow-up in proof height.
+As an example, consider the reduction lemma for a conjunction (classical or intuitionistic sequent calculus --- they behave equally in this particular example):
+\begin{enumerate}
+	\item \( \prv m k Γ ⇒ Δ , D ∧ E \),
+	\item \( \prv n k D ∧ E , Σ ⇒ Λ \).
+%	\item \( k = \rk { D ∧ E } \).
+\end{enumerate}
+The reduction lemma states that if \( k = \rk { D ∧ E } \) then \( \prv { m+n} k Γ , Σ ⇒ Δ , Λ \).
+However, the inversion lemma presents a different strategy to derive the same sequent. I ‘invert’ the sequents above to obtain
+\begin{enumerate}
+	\item \( \prv m k Γ ⇒ Δ , D \),
+	\item \( \prv m k Γ ⇒ Δ , E \),
+	\item \( \prv n k D , E , Σ ⇒ Λ \),
+\end{enumerate}
+and recombine as a sequence of two cuts of rank \(  < k \):
+\begin{prooftree*}
+	\hypo{\prv m k Γ ⇒ Δ , D }
+	\hypo{\prv m k Γ ⇒ Δ , E }
+	\hypo{\prv n k D , E , Σ ⇒ Λ }
+	\infer2[\Cut]{\prv {\max\setof{ m, n }+1} k D , Γ, Σ ⇒ Δ ,  Λ }
+	\infer2[\Cut]{\prv {\max\setof{ m, n } +2} k Γ , Σ ⇒ Δ , Λ }
+\end{prooftree*}
+%
+If \( m, n > 1 \) then \( \max\setof{ m, n } + 2 < m + n \).
+
+The same trick can be applied to the other propositional connectives (\( ∨ \) and \( → \)) for the classical sequent calculus:
+\begin{exercise}
+	\label{ex-ce-refined-cpl}
+	Using the method outlined above, state and prove an improved reduction lemma for \emph{classical propositional} logic. Use your results to show that \( \Gcp \prv n k Γ ⇒ Δ \) implies \( \Gcp \prv h 0 Γ ⇒ Δ \) for \( h = 2^{n. 2^k} \).
+\end{exercise}
+
+\begin{exercise}
+	\label{ex-ce-refined-cl}
+	Generalise the previous exercise to deduce more efficient bounds on cut elimination for classical predicate logic.
+\end{exercise}
+
+The inversion method does not apply to intuitionistic logic in the same way because that logic lacks the requisite inversions.
+%
+Still, there is another way to structure the reduction lemma that works smoothly for intuitionistic logic.
+The idea is to rely on the asymmetry of the intuitionistic sequent calculus and the observation that in this calculus the main complexity of cut elimination arises when cut formulas ‘switch’ sides of the sequent arrow.
+To show this, I introduce a new complexity measure on formulas, called the implication depth, that counts the ‘nesting’ of implications. 
+Let \( \nrk A \) be the implication rank of \( A \), defined by:
+\begin{itemize}
+	\item \( \nrk A = 0 \) for \( A \) prime.
+	\item \( \nrk {QxA} = \nrk A \) for \( Q ∈ \{ ∀ , ∃ \} \).
+	\item \( \nrk {A ∘ B} = \max\setof{ \nrk A , \nrk B }\) for \( ∘ ∈ \{ ∧ , ∨ \} \).
+	\item \( \nrk {A → B} = \max \setof{ \nrk A + 1 , \nrk B } \).
+\end{itemize}
+
+It will be necessary to restrict attention to the fragment without \( ∃ \) and \( ∨ \) as these add a level of complexity to the process that is  beyond the scope of this course.
+
+\begin{definition}
+	Let \( \prvs n q \) express derivability in the intuitionistic sequent calculus by a proof with height \( ≤ n \) in which all cut formulas have \emph{implication rank} \( < q \) and do not contain \( ∨ \) or \( ∃ \).
+\end{definition}
+%
+So the version of the cut rule used in \( \prvs{}{} \) is
+\[ 
+\begin{prooftree}
+	\hypo{ \prvs n q Γ ⇒ C }
+	\hypo{ \prvs m q C , Λ ⇒ B }
+	\infer2[\Cut]{\prvs h q Γ, Λ ⇒ B}
+\end{prooftree}
+\quad\text{provided } \nrk C < q  \text{ and } h > \max\setof{ m, n }.
+\]
+
+You will prove:
+
+\begin{theorem}[Refined cut elimination]\label{ce-refined}
+	If \( \prvs n q Γ ⇒ A \) then \( \prvs m 0 Γ ⇒ A \) for some \( m ≤ 2^{n}_{q} \).
+\end{theorem}
+
+
+The reduction lemma that leads to the above result shifts the focus from reducing a single cut to reducing a batch of cuts as a single operation.
+Such a collection of cuts will have a specific form that can be expressed as a lifting of the standard two-premise cut rule to a multi-premise version, called the \emph{multi-cut}: 
+%(and also originating from Gentzen), compresses a sequence of \( k \) cuts into a single \( k+1 \)-premise rule:
+\[ 
+\begin{prooftree}
+	\hypo{ Γ_0 ⇒ C_0 }
+	\hypod
+	\hypo{ Γ_k ⇒ C_k }
+	\hypo{ C_0 , …, C_k , Λ ⇒ B }
+	\infer4[\mCut]{ Γ_0 , …, Γ_k , Λ ⇒ B }
+\end{prooftree}
+%\quad\text{provided } \nrk {C_i} < q \text{for } .
+\]
+%
+The multi-cut has is origins in Gentzen's original proof of the \emph{Haupsatz} and can be viewed as abbreviating the sequence of binary cuts:
+\[ 
+\begin{prooftree}
+	\hypo{ Γ_0 ⇒ C_0 }
+	\hypo{ Γ_{k-1} ⇒ C_{k-1} }
+	\hypo{ Γ_k ⇒ C_k }
+	\hypo{ C_0 , …, C_k , Λ ⇒ B }
+	\infer2[\Cut]{ C_0 , …, C_{k-1} , Γ_k , Λ ⇒ B }
+	\infer2[\Cut]{}
+	\ellipsis{}{ C_0 , Γ_1 , …, Γ_k , Λ ⇒ B }
+	\infer2[\Cut]{ Γ_0 , …, Γ_k , Λ ⇒ B }
+\end{prooftree}
+\]
+The purpose of the multi-cut, however, is to hold together (in a single inference) the many individual cuts that are to be ‘eliminated’ at the once.
+A typical example of when the multi-cut rule is useful is in the reduction process attached to a binary cut with a conjunctive cut formula (see \cref{f-ce-mcut-IL}).
+If using the implication rank of formulas, cuts on the formulas \( A \) and \( B \) are considered as complex as on the conjunction \( A ∧ B \) itself.
+% ------------------
+\begin{figure}
+	\begin{mdframed}
+	\raggedright
+	\begin{prooftree}
+		\subproof{ Γ ⇒ A }
+			\subproof{ Γ ⇒ B }
+		\infer2[\conjR]{ Γ ⇒ A ∧ B }
+		
+		\subproof{ A , B , Σ ⇒ D }
+		\infer1[\conjL]{ A ∧ B , Σ ⇒ D }
+			
+		\infer2[\Cut]{ Γ , Σ ⇒ D }
+	\end{prooftree}
+	\\[1ex]\raggedleft
+	reduces to\quad
+	\begin{prooftree}
+		\subproof{ Γ ⇒ A }
+			\subproof{ Γ ⇒ B }
+		
+		\subproof{ A , B , Σ ⇒ D }
+			
+		\infer3[\mCut]{ Γ , Σ ⇒ D }
+	\end{prooftree}
+	\caption{Illustration of the \emph{multi-cut} reduction for a conjunctive cut formula. According to the implication rank, cut formulas in the second inference are as complex as in the first.}
+	\label{f-ce-mcut-IL}
+	\end{mdframed}
+\end{figure}
+% ------------------
+
+The reduction lemma for \( \prvs{}{} \) is the following:
+%
+\begin{lemma}[Multi-cut reduction]\label{ce-reduct-mcut}
+	The following applies to \( \Gi \).
+	Suppose \( m_0 , …, m_k \), \( n \) and \( q \) are such that 
+	\begin{itemize}
+		\item \( \prvs {m} q Γ_i ⇒ C_i \) for each \( i ≤ k \),
+		\item \( \prvs n {q} C_0,…, C_k , Σ ⇒ D \).
+%		\item \( \nrk {C_i} = q \) for all \( i \).
+	\end{itemize}
+	If \( \nrk{C_i} = q \) for all \( i ≤ k \), then 
+	\( \prvs {m + n} q Γ_0 , …, Γ_k , Σ ⇒ D \).
+%	where \( m = \textstyle\sum_i m_i \) and \( f(n) = 2^{2^n} \).
+\end{lemma}
+%
+In the special case of the standard ‘two-premise’ cut (where \( k = 0 \) above), the multi-cut reduction lemma states
+\begin{center}
+	If \( \prvs {m} q Γ ⇒ C \)
+	and \( \prvs n {q} C , Σ ⇒ D \) where \( \nrk C = q \),
+	then \( \prvs { m + n} q Γ , Σ ⇒ D \).
+\end{center}
+%
+The bound provided by the multi-cut reduction lemma is almost identical to the usual reduction lemma (the reduction lemma for intuitionistic logic employs the bound \( (m+n).2 \) rather than \( m+n \)).
+But, crucially, the lemma claims that this bound is sufficient for reducing the \emph{implication rank} of the cut, not only the traditional rank.
+
+\begin{exercise}
+	Prove the multi-cut reduction lemma.
+	You will find the inversion lemma is needed to obtain the desired bound which you can assume holds for \( \prvs{}{} \) with the same bounds.
+\end{exercise}
+
+\begin{exercise}
+	Using \cref{ce-reduct-mcut} and any other observations to prove the refined cut elimination theorem (\cref{ce-refined}).
+\end{exercise}
+
+\begin{exercise}
+	Using an appropriate negation translation of \( \Gc \) into \( \Gi \), deduce a refined cut elimination theorem for classical logic.
+%	What is the derived complexity measure in place of implication depth, and what is the appropriate ‘multi-cut’ reduction lemma? 
+\end{exercise}
+
+\begin{exercise}
+	Propose a refined cut elimination theorem for classical predicate logic. What is the appropriate measure in place of implication depth, and what is the appropriate ‘multi-cut’ reduction lemma? 
+\end{exercise}
+
