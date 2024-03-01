@@ -12,10 +12,10 @@
 % \end{axioms}
 %
 \newlist{axiomlist}{enumerate}{1}
-\setlist[axiomlist]{label={\textsc{ax\arabic*}.},ref={\textsc{ax\arabic*}}]}
+\setlist[axiomlist]{format=\scshape ax,label=\arabic*,ref={\scshape ax\arabic*}}
 %
 \NewDocumentEnvironment{axioms}{O{ax}O{}}%
-	{\begin{axiomlist}[label={\textsc{#1\arabic*}.},ref={\textsc{#1\arabic*}},#2]}
+	{\begin{axiomlist}[format=\scshape #1,ref={\scshape #1\arabic*},#2]}
 	{\end{axiomlist}}
 
 
@@ -23,7 +23,7 @@
 % Theorem Styles
 % 	- default : [num] [opt] [type] 
 %	- nameonly: [num] [opt]
-%	- typed   :	[num] [type] · [opt] 
+%	- definition  :	[num] [type] · [opt] 
 %	- proof   : Proof [opt] 
 %	- plain   : [type] [num] · [opt]
 %
@@ -49,16 +49,16 @@
 \newtheoremstyle{nonumbernameonly}%
 	{\item[\rlap{\vbox{\hbox{\hskip\labelsep \theorem@headerfont ##1\theorem@separator}\hbox{\strut}}}]}%
 	{\item[\rlap{\vbox{\hbox{\hskip\labelsep \theorem@headerfont ##3\theorem@separator}\hbox{\strut}}}]}
-	
-% typed :
-\newtheoremstyle{typed}%
-    {\item[\hskip\labelsep \theorem@headerfont ##2\ ##1\theorem@separator]}%
-    {\item[\hskip\labelsep \theorem@headerfont ##2\ ##1\ \textperiodcentered\ ##3\theorem@separator]}
 
-% typed w/o number:
-\newtheoremstyle{nonumbertyped}% 
-    {\item[\hskip\labelsep \theorem@headerfont ##1\theorem@separator]}%
-    {\item[\hskip\labelsep \theorem@headerfont ##1\ \textperiodcentered\ ##3\theorem@separator]}
+% convent(ion):
+\newtheoremstyle{definition}
+	{\item[\rlap{\vbox{\hbox{\hskip\labelsep \theorem@headerfont ##2\ ##1\theorem@separator}\hbox{\strut}}}]}%
+	{\item[\rlap{\vbox{\hbox{\hskip\labelsep \theorem@headerfont ##2\ ##1\ \textperiodcentered\ ##3\theorem@separator}\hbox{\strut}}}]}
+
+% convent(ion) w/o number:
+\newtheoremstyle{nonumberdefinition}%
+	{\item[\rlap{\vbox{\hbox{\hskip\labelsep \theorem@headerfont ##1\theorem@separator}\hbox{\strut}}}]}%
+	{\item[\rlap{\vbox{\hbox{\hskip\labelsep \theorem@headerfont ##1\ \textperiodcentered\ ##3\theorem@separator}\hbox{\strut}}}]}
 
 % proof :
 \newtheoremstyle{proof}%
@@ -74,6 +74,7 @@
 \renewtheoremstyle{nonumberplain}
     {\item[\hskip\labelsep \theorem@headerfont ##1\theorem@separator]}%
     {\item[\hskip\labelsep \theorem@headerfont ##1\ \textperiodcentered\ ##3\theorem@separator]}
+
 %%%
 \makeatother
 %
@@ -92,26 +93,22 @@
 \newtheorem {example}[theorem]	{Example}
 
 %% W/O numbers
+\theoremstyle{definition}
 \newtheorem* {remark}{Remark}
-%\newtheorem* {theoremno} {Theorem}
-%\newtheorem* {thing} {Lemma}
-%\newtheorem* {definitionno} {Definition}
 
 % nameonly
 \theoremstyle{nameonly}
 \newtheorem*{thing}{THIS HAS NO TITLE}
 
 % typed
-\theoremstyle{typed}
+\theoremstyle{definition}
 % upright mode
 \theorembodyfont{\upshape}
-\newtheorem{definition}[theorem] {Definition}
-\newtheorem{convention}{Convention}[part]
+\theoremsymbol{\ensuremath{\triangle}}
+\newtheorem{definition}[theorem]{Definition}
+\theoremsymbol{}
+\newtheorem{convention}[theorem]{Convention}
 
-% Exercises:
-\theoremstyle{plain}
-\theorembodyfont{\upshape}
-\newtheorem{exercise}{Exercise}[chapter]
 
 % Proof
 \theoremstyle{proof}
@@ -120,5 +117,33 @@
 \theoremsymbol{\ensuremath{\dashv}}
 \newtheorem {proof} {Proof}
 
+\theoremsymbol{}
+
+% Exercises:
+\theoremstyle{plain}
+\theorembodyfont{\upshape}
+\newtheorem{exercise}{Exercise}[chapter]
+
+% Conventions
+%\theoremstyle{definition}
+%\theoremnumbering{Alph}
+%\newtheorem{convention}{Convention}%[part]
+
+% list (of conventions)
+\makeatletter
+\def\theoremlistoptname{% 
+\let\thm@@thmlstart=\relax 
+\let\thm@@thmlend=\relax 
+\def\thm@@thmline##1##2##3##4##5{%
+	\ifx\empty ##3% 
+	\@dottedtocline{-2}{0em}{0em}%
+		{\hyper@linkstart{link}{##5}{{##1}\ {##2} \protect\numberline{}}\hyper@linkend}% 
+		{{##4}}% 
+	\else%
+	\@dottedtocline{-2}{0em}{0em}%
+		{\hyper@linkstart{link}{##5}{{##3}\protect\numberline{}}\hyper@linkend}% 
+		{{##4}}% 
+	\fi}}
+\makeatother
 %
 %% END

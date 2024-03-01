@@ -159,7 +159,7 @@ The rule of cut is also admissible in intuitionistic sequent calculus with essen
 The failure of inversion creates some complications while the restriction to intuitionistic logic simplifies other cases.
 
 \begin{lemma}[Reduction]
-	\label{ce-red-lem-C}
+	\label{ce-red-lem-I}
 	Suppose \( \Gi \prv m k Γ ⇒ C \) and \( \Gi \prv n k C , Σ ⇒ Λ  \).
 	If \( \rk C = k \) then \( \Gi \prv {(m+n).2}k Γ,Σ⇒ Λ  \).
 \end{lemma}
@@ -199,6 +199,7 @@ The proof of the following results are exercises.
 
 % -----------------------------
 \section{Refining cut elimination}
+\label{s-ce-refined}
 % -----------------------------
 
 As formulated, the cut elimination theorem suggests that every logical connective contributes an exponential in the size of a proof.
@@ -228,21 +229,27 @@ and recombine as a sequence of two cuts of rank \(  < k \):
 If \( m, n > 1 \) then \( \max\setof{ m, n } + 2 < m + n \).
 
 The same trick can be applied to the other propositional connectives (\( ∨ \) and \( → \)) for the classical sequent calculus:
+
 \begin{exercise}
 	\label{ex-ce-refined-cpl}
 	Using the method outlined above, state and prove an improved reduction lemma for \emph{classical propositional} logic. Use your results to show that \( \Gcp \prv n k Γ ⇒ Δ \) implies \( \Gcp \prv h 0 Γ ⇒ Δ \) for \( h = 2^{n. 2^k} \).
 \end{exercise}
 
+As the quantifiers are not fully invertible (\( ∃ \) on the right or \( ∀ \) on the left) it is not possible to reduce quantified cuts via inversion alone. 
+In that situation the bounds given by the standard reduction lemma become relevant.
+
 \begin{exercise}
-	\label{ex-ce-refined-cl}
+	\label{ex-ce-refined-cl-ugly}
 	Generalise the previous exercise to deduce more efficient bounds on cut elimination for classical predicate logic.
 \end{exercise}
 
-The inversion method does not apply to intuitionistic logic in the same way because that logic lacks the requisite inversions.
+The inversion technique works well enough for classical logic because the propositional connectives are invertible on both sides of the sequent arrow.
+This method cannot apply to intuitionistic logic, however, due to lack of necessary inversions.
 %
-Still, there is another way to structure the reduction lemma that works smoothly for intuitionistic logic.
-The idea is to rely on the asymmetry of the intuitionistic sequent calculus and the observation that in this calculus the main complexity of cut elimination arises when cut formulas ‘switch’ sides of the sequent arrow.
-To show this, I introduce a new complexity measure on formulas, called the implication depth, that counts the ‘nesting’ of implications. 
+Still, there is another way to structure the reduction lemma that works smoothly for both logics.
+The idea is to use the sides of the sequent arrow as the control on complexity.
+The complexity of cut elimination arises can be constrained to the case in which cut formulas ‘switch’ sides of the sequent arrow in reductions.
+To demonstrate this, I introduce a new complexity measure on formulas, called the implication depth, that counts the ‘nesting’ of implications. 
 Let \( \nrk A \) be the implication rank of \( A \), defined by:
 \begin{itemize}
 	\item \( \nrk A = 0 \) for \( A \) prime.
@@ -252,22 +259,24 @@ Let \( \nrk A \) be the implication rank of \( A \), defined by:
 \end{itemize}
 
 It will be necessary to restrict attention to the fragment without \( ∃ \) and \( ∨ \) as these add a level of complexity to the process that is  beyond the scope of this course.
+%
+I will also focus on intuitionistic logic; the reader can check that the statements below also apply to classical logic.
 
 \begin{definition}
 	Let \( \prvs n q \) express derivability in the intuitionistic sequent calculus by a proof with height \( ≤ n \) in which all cut formulas have \emph{implication rank} \( < q \) and do not contain \( ∨ \) or \( ∃ \).
 \end{definition}
 %
-So the version of the cut rule used in \( \prvs{}{} \) is
+So the version of the cut rule used employed in \( \prvs{}{} \) is
 \[ 
 \begin{prooftree}
 	\hypo{ \prvs n q Γ ⇒ C }
 	\hypo{ \prvs m q C , Λ ⇒ B }
 	\infer2[\Cut]{\prvs h q Γ, Λ ⇒ B}
 \end{prooftree}
-\quad\text{provided } \nrk C < q  \text{ and } h > \max\setof{ m, n }.
+\quad\text{for } \nrk C < q  \text{ and } h > \max\setof{ m, n }.
 \]
-
-You will prove:
+%
+The goal is to establish the following theorem.
 
 \begin{theorem}[Refined cut elimination]\label{ce-refined}
 	If \( \prvs n q Γ ⇒ A \) then \( \prvs m 0 Γ ⇒ A \) for some \( m ≤ 2^{n}_{q} \).
@@ -356,7 +365,7 @@ In the special case of the standard ‘two-premise’ cut (where \( k = 0 \) abo
 	then \( \prvs { m + n} q Γ , Σ ⇒ D \).
 \end{center}
 %
-The bound provided by the multi-cut reduction lemma is almost identical to the usual reduction lemma (the reduction lemma for intuitionistic logic employs the bound \( (m+n).2 \) rather than \( m+n \)).
+The bound provided by the multi-cut reduction lemma is almost identical to the usual reduction lemma (which actually used the larger bound \( (m+n).2 \)).
 But, crucially, the lemma claims that this bound is sufficient for reducing the \emph{implication rank} of the cut, not only the traditional rank.
 
 \begin{exercise}
@@ -369,11 +378,17 @@ But, crucially, the lemma claims that this bound is sufficient for reducing the 
 \end{exercise}
 
 \begin{exercise}
+	\label{ex-ce-refined-cl}
 	Using an appropriate negation translation of \( \Gc \) into \( \Gi \), deduce a refined cut elimination theorem for classical logic.
-%	What is the derived complexity measure in place of implication depth, and what is the appropriate ‘multi-cut’ reduction lemma? 
 \end{exercise}
 
 \begin{exercise}
-	Propose a refined cut elimination theorem for classical predicate logic. What is the appropriate measure in place of implication depth, and what is the appropriate ‘multi-cut’ reduction lemma? 
+	State and prove the above claims for the classical sequent calculus.
+	How does you result compare with the indirect argument in exercise~\ref{ex-ce-refined-cl}?
 \end{exercise}
+
+
+%\begin{exercise}
+%	Propose a refined cut elimination theorem for classical predicate logic. What is the appropriate measure in place of implication depth, and what is the appropriate ‘multi-cut’ reduction lemma? 
+%\end{exercise}
 

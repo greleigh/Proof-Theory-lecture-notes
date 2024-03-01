@@ -3,29 +3,35 @@
 \chapter{Ordinal analysis of arithmetic}\label{c-oa-PAo}
 %---------------------------------
 Ordinals will now be used to measure the \emph{height} of \( ω \)-proofs.
-I begin by recalling the infinitary sequent calculi for arithmetic from the end of \cref{c-oa-arith}.
+I begin by formalising the infinitary sequent calculi for arithmetic described at the end of \cref{c-oa-arith}.
+Building on that definition, it will prove convenient to view Peano arithmetic as extending primitive recursive arithmetic.
 %
 \begin{definition}%\label{d-PAomega}
 	\( \PAo \) is the sequent calculus given by the following:
+	Sequents comprise closed formulas in the language of primitive recursive arithmetic \( \Lpra \).
+	
+	Initial sequents are \emph{closed} sequents of the form
 	\begin{itemize}
-		\item sequents comprise formulas in the language of arithmetic (with equality).
-		\item Initial sequents are \emph{closed} sequents of the form
-		\begin{itemize}
-			\item[(\botL)] \( ⊥, Γ ⇒ Δ \)
-			\item[(\idRule)] \( Ps, Γ ⇒ Δ , Pt \) if \( ℕ ⊨ s = t \)
-			\item[(\eqR)] \( Γ ⇒ Δ , s = t \) if \( ℕ ⊨ s = t \)
-			\item[(\eqL)] \( s = t , Γ ⇒ Δ \) if \( ℕ ⊭ s = t \)
-		\end{itemize}
-		\item Inference rules are rules of \( \Gc \) but restricted to closed sequents and with \( \faR \) and \( \exL \) replaced by the two \( ω \)-rules:\note{\( \Gc \) or more general \( \Logic{G3} \)?}
+		\item[(\botL)] \( ⊥, Γ ⇒ Δ \).
+		\item[(\idRule)] \( Ps, Γ ⇒ Δ , Pt \) if \( ℕ ⊨ s = t \).
+		\item[(\eqR)] \( Γ ⇒ Δ , s = t \) if \( ℕ ⊨ s = t \).
+		\item[(\eqL)] \( s = t , Γ ⇒ Δ \) if \( ℕ ⊭ s = t \).
+	\end{itemize}
+		
+	Inference rules are rules of \( \Gc \) but restricted to closed sequents and with \( \faR \) and \( \exL \) replaced by the two \( ω \)-rules:\note{\( \Gc \) or more general \( \Logic{G3} \)?}
 		\begin{itemize}
 			\item[(\omR)] \begin{prooftree} \hypo{ Γ ⇒ Δ , F(\nm n) \ \text{for every } n ∈ ℕ } \infer1{ Γ ⇒ Δ , ∀x F(x) }\end{prooftree}
 			\item[(\omL)] \begin{prooftree} \hypo{ F(\nm n) , Γ ⇒ Δ \ \text{for every } n ∈ ℕ } \infer1{ ∃x F(x) , Γ ⇒ Δ }\end{prooftree}
 		\end{itemize}
-	\end{itemize}
-%	Writing \( \PAo ⊢ Γ ⇒ Δ \) expresses that there is an \( ω \)-proof of \( Γ ⇒ Δ \) according to the above rules. In other words, there exists a well-founded tree labelled by sequents such that each leaf is an initial sequent and that each inner vertex together with its immediate successors in the tree forms a correct application of a rule of the calculus listed above.
-%	
+	%	
 	\( \HAo \) is the same calculus but restricted to intuitionistic sequents.
 \end{definition}
+%
+
+It is important to note that the property of being an initial sequent of \( \PAo \) is decidable.
+This is precisely because sequents do not contain free variables, whereby it is decidable whether an equation between primitive recursive terms is true (or not).
+Likewise, for each of the rules of \( \PAo \): The property of being the \( n \)-th premise of a rule whose conclusion is \( Γ ⇒ Δ \) with specified principle formula is decidable.
+
 %
 \begin{definition}\label{d-bound-omega-logic}
 	Let \( \Theory{T} \) be \( \PAo \), \( \HAo \) or an extension of either calculus by rules that are at most \( ω \)-branching.
@@ -140,7 +146,7 @@ As sequents are closed, the correct formulation for \( ω \)-proofs is that prov
 The final ingredient is the inversion lemma, the statement of which has the same form as before with two new cases treating equality.
 
 \begin{lemma}[Inversion]
-	\label{oa-inversion}\ 
+	\label{oa-inversion} The following hold for all parameters.
 	\begin{enumerate}
 		\item If \( \prv{α}k Γ ⇒ Δ , ⊥ \) then \( \prv{α}k Γ ⇒ Δ \).
 		\item If \( \prv{α}k s = t , Γ ⇒ Δ \) and \( ℕ ⊨ s = t \) then \( \prv{α}k Γ ⇒ Δ \).\label{oa-inversion-eq1}
@@ -411,93 +417,37 @@ It is beyond the scope of these lecture notes to attempt to make the statement m
 \label{s-oa-refined}
 % ----------------------
 
-%\tbw
-I will jump the gun somewhat.
-
-The \emph{negation rank} (\emph{n-rank}) of a formula, \( \nrk F \), counts the nesting depth on the negative side of implications:
-\begin{align*}
-	\nrk{A} &= 0 \quad(\text{$A$ prime})
-	&
-	\nrk{F ∧ G} &= \max\setof{ \nrk F , \nrk G }
-	\\
-	\nrk{∀x F(x)} &= \nrk{F(a)}
-	&
-	\nrk{F → G} &= \max\setof{ \nrk F +1 , \nrk G }
-\end{align*}
-
-
-Compare with the quantifier hierarchy for this language fragment.
-%
-Since \( Π_0^P \) is closed under negation, there is no a priori bound on the negation depth of formulas in \( Π_n^P \).
-
-\begin{lemma}
-	Every \( Π_n^P \) formula is equivalent, over weak arithmetic, to a formula with n-rank \( n+1 \).
-\end{lemma}
-By \emph{weak arithmetic}, I have in mind the theory known as Robinson's \( Q \) (see~\cite[ch.~18]{LogThe}) but primitive recursive arithmetic or, equivalently, the theory known as ‘$\IS_1$’ suffices (cf.~\cref{s-oa-arithmetic}).
-
-\begin{proof}
-	Using the full logical language, express \( F ∈ Π_n^P \) in prefix normal form as
-	\begin{gather}
-		\label{oa-eqn-PNF}\tag{\dag}
-		∀\vec x_1 ∃\vec x_2 ⋯ ∃ \vec x_{m} G
-	\end{gather}
-	where \( G \) is quantifier-free.
-	We can choose \( m ∈ \setof{ n , n+1 } \) and \( G \) can be assumed to be \( Π_0^P \) because over weak arithmetic a disjunction \( E ∨ F \) is provably equivalent to 
-	\[ 
-		∃x ∃ y ( x + y = \suc \0 ∧ ( x = \0 → E ) ∧ ( x = \suc\0 → F )).
-	\]
-	and the leading existential quantifiers can be incorporated into the '$∃\vec x_m$' sequence of quantifiers.
-	It is now straightforward to witness \eqref{oa-eqn-PNF} as an equivalent \( Π_{m}^P \)-formula whose negation rank is \( m \).
-\end{proof}
+It is worth considering the cut elimination theorem in the context of fragments of arithmetic, namely the theories \( \PA_n \) from \cref{s-oa-sub-PA}.
+Recall the convention that formulas in these calculi are expressed without \( ∨ \) or \( ∃ \).
 
 %
-A sequent is an expression \( Γ ⇒ Δ \) without free variables using the logical language isolated at the beginning of this section.
-Let \( \prvs{α}k Γ ⇒ Δ \) denote derivability in \( \PAo \) for such sequents in the usual way but with a more liberal cut rule bounded by negation rank:
+%A sequent is an expression \( Γ ⇒ Δ \) without free variables using the logical language isolated at the beginning of this section.
+Let \( \PAo \prvs{α}q Γ ⇒ Δ \) denote derivability in \( \PAo \) for such sequents in the usual way but with the cut referring to implication depth:
 \[
   \begin{prooftree}
-	\hypo{\prvs {α} k Γ ⇒ Δ , C }\hypo{ \prvs{β} k C, Σ ⇒ Λ }
-	\infer2[\Cut]{ \prvs{γ}k Γ , Σ ⇒ Δ , Λ }
+	\hypo{\prvs {α} q Γ ⇒ Δ , C }\hypo{ \prvs{β} q C, Σ ⇒ Λ }
+	\infer2[\Cut]{ \prvs{γ}q Γ , Σ ⇒ Δ , Λ }
 \end{prooftree}
 \quad\text{for \( \nrk C < k \) and \( \max\setof{α,β} < γ \).}
 \]
 
 %The complication with adopting the above cut rule is that all transformations on proofs so far considered ‘reduce’
-I assume this variation of \( \PAo \) satisfies weakening, substitution and inversion lemmas with the same bounds.
+%I assume this variation of \( \PAo \) satisfies weakening, substitution and inversion lemmas with the same bounds.
+\begin{exercise}
+	Verify that the above version of \( \PAo \) satisfies weakening, substitution and inversion lemmas with the same bounds
+\end{exercise}
 %
-Given a finite sequence \( \vec A = (A_i)_{i≤k} \) of formulas, I will write \( \vec A , Γ ⇒ Δ \) for \( A_0 , …, A_n , Γ ⇒ Δ \).
+%Given a finite sequence \( \vec A = (A_i)_{i≤k} \) of formulas, I will write \( \vec A , Γ ⇒ Δ \) for \( A_0 , …, A_n , Γ ⇒ Δ \).
 
 %
 \begin{lemma}[Refined reduction]
-	Suppose \( \prvs{α}k Γ_i ⇒ Δ_i, C_i \) and \( \nrk {C_i} ≤ k \) for each \( i ≤ n \). If \( \prvs{β}k \vec C , Σ ⇒ Λ \), then
+	Suppose \( \prvs{α}k Γ_i ⇒ Δ_i, C_i \) and \( \nrk {C_i} ≤ k \) for each \( i ≤ n \). If \( \prvs{β}k C_0 , …, C_k , Σ ⇒ Λ \), then
 	\begin{gather}
 		\label{oa-eqn-spec-red-lem}\tag{\dag}
 		\prvs{α + β} k Γ_0 , …, Γ_n , Σ ⇒ Δ_0 , …, Δ_n , Λ .
 	\end{gather}
 \end{lemma}
 %
-Applications of the refined reduction lemma, however, will also be to simulate an ordinary two-premise cut rule.
-The significance of allowing multiple premises is hidden in the proof.
-The multi-premise ‘cut’ can be visualised as either a generalisation of the binary cut rule:
-\begin{prooftree*}
-  \hypo{ Γ_0 ⇒ Δ_0, C_0 }
-  \hypod 
-  \hypo{ Γ_n ⇒ Δ_n, C_n }
-  \hypo{ \vec C , Σ ⇒ Λ }
-  \infer4[$n$-\Cut]{ Γ_0 , …, Γ_n , Σ ⇒ Δ_0 , …, Δ_n , Λ }
-\end{prooftree*}
-Or as sequence of binary cuts
-\begin{prooftree*}
-  \hypo{ Γ_n ⇒ Δ_n, C_n }
-  \hypo{ Γ_1 ⇒ Δ_1, C_1 }
-  \hypo{ Γ_0 ⇒ Δ_0, C_0 }
-  \hypo{ \vec C , Σ ⇒ Λ }
-  \infer2[\Cut]{ C_1 , …, C_{n} , Γ_0 , Σ ⇒ Δ_0 , Λ }
-  \infer2[\Cut]{ }
-  \ellipsis{}{ C_n, Γ_0 , …, Γ_{n-1} , Σ ⇒ Δ_0 , …, Δ_{n-1} , Λ }
-  \infer2[\Cut]{ Γ_0 , …, Γ_n , Σ ⇒ Δ_0 , …, Δ_n , Λ }
-\end{prooftree*}
-The advantage of the former presentation is that the ‘size’ of the derivation does not depend on the order of the sequents.
-This allows the application of an induction hypothesis in cases that the binary cut view grows too large.
 
 %
 \begin{proof}
@@ -506,9 +456,9 @@ This allows the application of an induction hypothesis in cases that the binary 
 	Suppose
 	\begin{enumerate}
 		\item \( \prvs{α}k Γ_i ⇒ Δ_i, C_i \) and \( \nrk {C_i} ≤ k \) for each \( i ≤ n \), and
-		\item \( \prvs{β}k \vec C , Σ ⇒ Λ \).
+		\item \( \prvs{β}k C_0 , …, C_k , Σ ⇒ Λ \).
 	\end{enumerate}
-	I refer to \( \vec C \) as the \emph{cut} formulas.
+	I refer to the \( C_i \) as the \emph{cut} formulas and will henceforth write \( \vec C \) in place of \( \setof{ C_0 , …, C_k} \).
 	First, suppose no cut formula is principle in the final rule of assumption 2.
 	If the sequent is initial, then \( Σ ⇒ Λ \) is initial and \eqref{oa-eqn-spec-red-lem} follows by weakening.
 	Therefore, assume \( C_n \) is the principal formula in 2.
@@ -591,18 +541,16 @@ As the focus is on better bounds on cut elimination, I will switch to base-$2$ e
 	If \( \prvs{α}k Γ ⇒ Δ \) then \( \prvs{γ}0 Γ ⇒ Δ \) where \( γ = 2_k^α \).
 \end{theorem}
 
-\tbw
 
 \begin{theorem}
 	\label{oa-embed-IS-ce}
-	If \( \IS_n ⊢ A \) then \( \PAo \prv{α}0 Γ ⇒ Δ \) for some \( α < ω_{n+1} \).
+	If \( \PA_n ⊢ Γ ⇒ Δ \) is closed, then \( \PAo \prv{α}0 Γ ⇒ Δ \) for some \( α < ω_{n+1} \).
 \end{theorem}
 %
-\note{Check this.}
 %
 \begin{proof}[sketch]
-	From \( \IS_n ⊢ A \) we deduce that \( \PA ⊢ {} ⇒ A \) with a proof in which all cuts have n-rank \( ≤ n \).
-	The reason is that the induction rule is only applied to formulas with n-rank \( ≤ n \) and finitary cut elimination is available in \( \PA \) to reduce the cut rank to formulas of the same n-rank as uses of induction.
+	From \( \PA_n ⊢ A \) we deduce that \( \PA ⊢ {} ⇒ A \) with a proof in which all cut formulas have implication rank \( < n \) (\cref{oa-partial-ce}).
+%	The reason is that the induction rule is only applied to formulas with n-rank \( ≤ n \) and finitary cut elimination is available in \( \PA \) to reduce the cut rank to formulas of the same n-rank as uses of induction.
 	The embedding lemma of \( \PA \) into \( \PAo \) yields
 	\( \PAo \prvs{ω.k}{n} {}⇒ A \), so \( \PAo \prv{γ}0 {}⇒ A \) where
 	\[
