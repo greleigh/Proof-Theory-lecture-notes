@@ -30,13 +30,17 @@
 \NewDocumentCommand{\Logic}{m}{\mathsf{#1}}
 \NewDocumentCommand{\Theory}{m}{\mathsf{#1}}
 \NewDocumentCommand{\Set}{m}{\mathrm{#1}}
+\NewDocumentCommand{\Coll}{m}{\mathcal{#1}}
 \NewDocumentCommand{\Frml}{m}{\mathsf{#1}} % Why not working?
 \NewDocumentCommand{\Symbol}{m}{\mathsf{#1}}
-\NewDocumentCommand{\Lang}{m}{\mathcal{#1}}
+\NewDocumentCommand{\Func}{m}{\mathit{#1}}
+\NewDocumentCommand{\Lang}{m}{\mathscr{#1}}
 % Rule names
 \NewDocumentCommand{\Rule}{m}{\ensuremath{\mathsf{#1}}}
 \NewDocumentCommand{\LeftRule}{m}{\Rule{L{#1}}}
 \NewDocumentCommand{\RightRule}{m}{\Rule{R{#1}}}
+\NewDocumentCommand{\IntroRule}{m}{\Rule{{#1}I}}
+\NewDocumentCommand{\ElimRule}{m}{\Rule{{#1}E}}
 %---------------------------------
 % Disposition
 % Part:
@@ -48,27 +52,31 @@
 \newcommand\partentrynumberformat[1]{Module~\ #1}
 \RedeclareSectionCommand[
   tocentrynumberformat=\partentrynumberformat,
-  tocnumwidth=6em
+  tocnumwidth=6em,
 ]{part}
+
 % Chapter:
 \renewcommand{\raggedchapter}{\centering}
 \setkomafont{chapter}{\sffamily\mdseries\LARGE}
 \addtokomafont{chapterentry}{\rmfamily\mdseries}
 \addtokomafont{chapterprefix}{\normalsize}
+
 % (Sub)section
 \renewcommand{\raggedsection}{\centering}
 \setkomafont{section}{\rmfamily\mdseries\sffamily\large}
 \setkomafont{subsection}{\centering\rmfamily\mdseries\itshape}
+
 % Paragraph
 % - Normal (par-)spacing with emphasis leading
 \setkomafont{paragraph}{\rmfamily\mdseries\itshape}
 \def\ParIndent{\the\parindent}
 \RedeclareSectionCommands[
-	beforeskip=\parskip,
-	indent=\ParIndent,
+%	beforeskip=\parsep,
+%	indent=\ParIndent,
 %	afterskip=1.5ex plus .5ex minus 0.2ex,
   ]{paragraph}
 \addtokomafont{paragraph}{\raggedright} 
+
 % Remove reference to chapter from section.
 % \RedeclareSectionCommand[%
 %   counterwithout=chapter,
@@ -85,6 +93,7 @@
 % Page layouts
 \setkomafont{pagehead}{\itshape}
 \ohead{\upshape\thepage} % Outer side of pages
+\chead{}
 \rehead{\leftmark} % Right side of even pages
 \lohead{\rightmark} % Left side of odd pages
 \ofoot{\small\itshape G.E.~Leigh, version: \today}
@@ -92,11 +101,20 @@
 \cfoot{}
 \pagestyle{scrheadings}
 %---------------------------------
-% Control over lists:
+
+
+
+% Lists
+%
 \usepackage{enumitem}
-% New defaults for enumerate & itemize:
+
+% Alter spacing:
 \setlist{itemsep=0pt,topsep=\parsep}
-%%   Label should be upright
+
+% Description format
+\setlist[description]{format=\normalfont\scshape}
+
+% Label should be upright
 \setlist[enumerate,itemize]{format=\normalfont}
 %%   Label #1: roman (i), (ii), etc
 %\setlist[enumerate,1]{label=(\roman*)}

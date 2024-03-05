@@ -16,6 +16,8 @@
 	toc=chapterentrywithoutdots,
 	% enabledeprecatedfontcommands,
 	% final,
+	oneside,
+	bookmark,
 	unicode
 	]%
 	{scrbook}
@@ -36,6 +38,10 @@
 \input{input/typesetting}
 %
 \input{input/packages}
+\usepackage[round]{natbib}
+\bibliographystyle{plainnat}
+\defcitealias{LogThe}{\emph{Logical Theory}}
+
 \input{input/styling}
 \input{input/environments}
 %
@@ -57,6 +63,7 @@
 \includeonly{
 	module-0/about,
 	module-0/intro,
+	module-1/natural-deduction,
 	module-1/sequent-calculus,
 	module-1/properties,
 	module-2/ce,
@@ -89,6 +96,7 @@
 % Module 1
 \part{Two Calculi for Two Logics}
 \label{module-1}
+\include{module-1/natural-deduction}
 \include{module-1/sequent-calculus}
 \include{module-1/properties}
 
@@ -122,7 +130,6 @@
 \theoremlisttype{optname}
 \listtheorems{convention}
 
-\bibliographystyle{plain}
 \bibliography{bib/references.bib}
 
 \end{document}

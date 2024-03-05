@@ -19,7 +19,6 @@
 	{\end{axiomlist}}
 
 
-
 % Theorem Styles
 % 	- default : [num] [opt] [type] 
 %	- nameonly: [num] [opt]
@@ -79,8 +78,8 @@
 \makeatother
 %
 % Global theorem settings:
-\theorempreskip{\topsep}
-\theorempostskip{\topsep}
+%\theorempreskip{\parsep}
+\theorempostskip{\parsep}
 
 % 'default' presentation
 \theoremstyle{default}
@@ -136,9 +135,9 @@
 \let\thm@@thmlend=\relax 
 \def\thm@@thmline##1##2##3##4##5{%
 	\ifx\empty ##3% 
-	\@dottedtocline{-2}{0em}{0em}%
-		{\hyper@linkstart{link}{##5}{{##1}\ {##2} \protect\numberline{}}\hyper@linkend}% 
-		{{##4}}% 
+%	\@dottedtocline{-2}{0em}{0em}%
+%		{\hyper@linkstart{link}{##5}{{##1}\ {##2} \protect\numberline{}}\hyper@linkend}% 
+%		{{##4}}% 
 	\else%
 	\@dottedtocline{-2}{0em}{0em}%
 		{\hyper@linkstart{link}{##5}{{##3}\protect\numberline{}}\hyper@linkend}% 

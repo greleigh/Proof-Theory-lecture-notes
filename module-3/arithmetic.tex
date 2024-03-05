@@ -7,7 +7,7 @@ A corollary of the analysis will be a characterisation of the non-finite mathema
 
 The proof I present has its origins in Gentzen's 1938 consistency proof\nocite{Gen-1938} but employs a simplification due to Kurt Schütte (1950)\nocite{Schu1950} whereby arithmetic is treated as a fragment of infinitary logic and a corresponding infinitary notion of sequent calculus proof.
 
-Elementary results about this theory covered in the pre-requisite course \emph{Logical Theory} will be stated without proof; see corresponding chapters of \cite{LogThe} for details.
+Elementary results about this theory covered in the pre-requisite course \emph{Logical Theory} will be stated without proof; see corresponding chapters of \citetalias{LogThe} for details.
 
 %---------------------------------
 \section{Peano and Heyting arithmetic}\label{s-oa-arithmetic}
@@ -22,7 +22,7 @@ Elementary results about this theory covered in the pre-requisite course \emph{L
 \end{definition}
 %
 The theory of arithmetic is formulated over predicate logic \emph{with equality}. 
-I will first present theory with logic given by the classical natural deduction calculus with equality \( \NDceq \) before presenting an equivalent presentation based on the sequent calculus \( \Gceq \).
+I will first present theory with logic given by the classical natural deduction calculus with equality \( \Nceq \) before presenting an equivalent presentation based on the sequent calculus \( \Gceq \).
 Both logics were introduced in \cref{c-equality}; see also~\cite[§6.5]{Negri_von_Plato}.
 
 Henceforth, \emph{formula} will always refer to the language of arithmetic.
@@ -48,8 +48,8 @@ Henceforth, \emph{formula} will always refer to the language of arithmetic.
 %
 \begin{definition}
 	\emph{Peano arithmetic} (\( \PA \)) is theory over classical predicate logic axiomatised by the Peano axioms.
-	I will write \( \PA \vdash A \) to express that \( A \) is a theorem of Peano arithmetic, that is, \( \Set{PA} ⊢_\NDceq A \) where \( \Set{PA} \) is the set of Peano axioms.
-	\emph{Heyting arithmetic} (\( \HA \)) is the corresponding \emph{intuitionistic} theory, i.e., \( \HA ⊢ A \) expresses \( \Set{PA} ⊢_\NDieq A \).
+	I will write \( \PA \vdash A \) to express that \( A \) is a theorem of Peano arithmetic, that is, \( \Set{PA} ⊢_\Nceq A \) where \( \Set{PA} \) is the set of Peano axioms.
+	\emph{Heyting arithmetic} (\( \HA \)) is the corresponding \emph{intuitionistic} theory, i.e., \( \HA ⊢ A \) expresses \( \Set{PA} ⊢_\Nieq A \).
 \end{definition}
 %
 %\( \HA \vdash A \) means that \( A \) is a theorem of Heyting arithmetic.
@@ -94,7 +94,7 @@ The following result is easy to prove.
 	\end{enumerate}
 \end{exercise}
 
-As well as some basics of the theory of arithmetic, we recall the primitive recursive representation theorem. See \cite{LogThe}, for example, for details.
+As well as some basics of the theory of arithmetic, we recall the primitive recursive representation theorem. See \citetalias{LogThe}, for example, for details.
 %
 \begin{definition}
 	A formula is \( Δ_0 \) if it can be constructed from atomic formulas excluding \( P \) by the propositional connectives and bounded quantifiers.
@@ -137,7 +137,7 @@ I state the representation theorem for primitive recursive relations.
 
 There are important subtheories of Peano arithmetic that are worth introducing.
 I will begin with the theory of primitive recursion, called \emph{primitive recursive arithmetic}, \( \PRA \). 
-Primitive recursive arithmetic is, in essence, the equational theory of primitive recursive functions. For a recap on primitive recursive functions see, e.g.~\cite[ch~15]{LogThe}.
+Primitive recursive arithmetic is, in essence, the equational theory of primitive recursive functions. For a recap on primitive recursive functions see, e.g.~\citetalias[ch~15]{LogThe}.
 The theory is formulated in the extension of \( \La \) by function symbols for all primitive recursive functions.
 
 As the theories introduced this section will all be formulated over classical logic, I take the opportunity to the logical connectives are \( ⊥ \), \( ∧ \), \( → \) and \( ∀ \). Note, I am including implication rather than primitive negation as a matter of convenience.
@@ -350,8 +350,12 @@ Define \( \HA ⊢ Γ ⇒ Δ \) as there exists a sequent calculus derivation wit
 \end{proof}
 
 \begin{exercise}
-	Show that \( \PA \) derives the same sequents as the calculus with induction axioms as initial sequents (along with the basic axioms) and no induction rule.
+	Complete the proof of \cref{oa-PA-as-SC}.
 \end{exercise}
+%
+%\begin{exercise}
+%	Show that \( \PA \) derives the same sequents as the calculus with induction axioms as initial sequents (along with the basic axioms) and no induction rule.
+%\end{exercise}
 
 
 Sequent calculi for fragments of arithmetic can be obtained by simply restricting the complexity of formulas in the induction rule.

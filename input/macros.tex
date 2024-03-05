@@ -10,16 +10,19 @@
 \newcommand{\Lpra}{\Lang{L}_{\mathrm{PRA}}}
 %---------------------------------
 % LOGICS & THEORIES
-\newcommand{\NDc}{\Logic{Nc}}
-\newcommand{\NDi}{\Logic{Ni}}
-\newcommand{\NDceq}{\Logic{Nc_=}}
-\newcommand{\NDieq}{\Logic{Ni_=}}
+\newcommand{\Nc}{\Logic{Nc}}
+\newcommand{\Ni}{\Logic{N}}
+\newcommand{\Nceq}{\Logic{Nc_=}}
+\newcommand{\Nieq}{\Logic{N_=}}
+
+\newcommand{\IL}{\Logic{I}}
+\newcommand{\CL}{\Logic{C}}
 
 \newcommand{\Gip}{\Logic{IPL}}
 \newcommand{\Gcp}{\Logic{CPL}}
 \newcommand{\Gmp}{\Logic{ML}}
-\newcommand{\Gi}{\Logic{IL}}
-\newcommand{\Gc}{\Logic{CL}}
+\newcommand{\Gi}{\Logic{I}}
+\newcommand{\Gc}{\Logic{C}}
 \newcommand{\Gieq}{\Logic{IL}_=}
 \newcommand{\Gceq}{\Logic{CL}_=}
 
@@ -78,9 +81,33 @@
 \newcommand{\eqR}{\RightRule{=}}
 \newcommand{\eqL}{\LeftRule{=}}
 
+% Natural deduction
+
+\newcommand{\assump}{\Rule{a}}
+
+\newcommand{\botE}{\ElimRule{⊥}}
+\newcommand{\RAA}{\Rule{RAA}}
+
+\newcommand{\conjI}{\IntroRule{∧}}
+\newcommand{\conjE}{\ElimRule{∧}}
+%
+\newcommand{\disjI}{\IntroRule{∨}}
+\newcommand{\disjE}{\ElimRule{∨}}
+%
+\newcommand{\impI}{\IntroRule{→}}
+\newcommand{\impE}{\ElimRule{→}}
+%
+\newcommand{\faI}{\IntroRule{∀}}
+\newcommand{\faE}{\ElimRule{∀}}
+%
+\newcommand{\exI}{\IntroRule{∃}}
+\newcommand{\exE}{\ElimRule{∃}}
+
 %
 %---------------------------------
 % TERMS & FORMULAS
+\newcommand{\arity}{\mathop{\mathit{ar}}}
+
 \newcommand{\rk}[1]{\lvert{#1}\rvert}
 \newcommand{\nrk}[1]{\lvert{#1}\rvert_*}
 \newcommand{\qrk}[1]{\lvert{#1}\rvert_q}
@@ -102,16 +129,20 @@
 \newcommand{\Prog}[2][\prec]{\Frml{Prog}_{#1}{#2}}
 \newcommand{\TI}[2][\prec]{\Frml{TI}_{#1}({#2})}
 %---------------------------------
-\NewDocumentCommand{\setof}{mo}{\{\,{#1}\IfValueT{#2}{\mid {#2}}\,\}}
-\NewDocumentCommand{\Setof}{mo}{\bigl\{\,{#1}\IfValueT{#2}{\bigm| {#2}}\,\bigr\}}
-\NewDocumentCommand{\supof}{mo}{\sup\{\,{#1}\IfValueT{#2}{\mid {#2}}\,\}}
-\newcommand{\supseq}[1][i]{\sup_i}
 
 %---------------------------------
 % SETS
 \newcommand{\Nat}{\mathbb{N}}
 
+\newcommand{\Child}{\Set{Child}}
+\newcommand{\Pow}{\mathscr{P}}
+
 \newcommand{\card}[1]{\lvert{#1}\rvert}
+
+\NewDocumentCommand{\setof}{mo}{\{\,{#1}\IfValueT{#2}{\mid {#2}}\,\}}
+\NewDocumentCommand{\Setof}{mo}{\bigl\{\,{#1}\IfValueT{#2}{\bigm| {#2}}\,\bigr\}}
+
+\RenewDocumentCommand{\maxof}{mo}{\max\{\,{#1}\IfValueT{#2}{\mid {#2}}\,\}}
 
 %---------------------------------
 % Ordinals
@@ -121,6 +152,9 @@
 \newcommand{\NF}{\textsc{nf}}
 
 \newcommand{\nsum}{\mathbin{\#}}
+
+\NewDocumentCommand{\supof}{mo}{\sup\{\,{#1}\IfValueT{#2}{\mid {#2}}\,\}}
+\newcommand{\supseq}[1][i]{\sup_i}
 %---------------------------------
 % Proof-theoretic tools
 \NewDocumentCommand{\pto}{m}{\lVert{#1}\rVert}
