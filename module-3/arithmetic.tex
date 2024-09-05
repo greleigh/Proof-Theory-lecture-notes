@@ -13,7 +13,7 @@ Elementary results about this theory covered in the pre-requisite course \emph{L
 \section{Peano and Heyting arithmetic}\label{s-oa-arithmetic}
 %---------------------------------
 %
-\begin{definition}
+\begin{definition}[Language of arithmetic]
 	The \emph{language of arithmetic} is the first-order language \( \La \) comprising the following nonlogical symbols with associated arities:
 	\begin{enumerate}
 		\item function symbols: \( \0^0 \), \( \suc^1 \), \( +^2 \), \( ×^2 \).
@@ -22,12 +22,13 @@ Elementary results about this theory covered in the pre-requisite course \emph{L
 \end{definition}
 %
 The theory of arithmetic is formulated over predicate logic \emph{with equality}. 
-I will first present theory with logic given by the classical natural deduction calculus with equality \( \Nceq \) before presenting an equivalent presentation based on the sequent calculus \( \Gceq \).
-Both logics were introduced in \cref{c-equality}; see also~\cite[§6.5]{Negri_von_Plato}.
+I will first present theory with logic given by the classical natural deduction calculus with equality \( \Nceq \).
+Following a short examination of this theory I give an equivalent presentation as a sequent calculus extending \( \Gceq \).
+The logics \( \Nceq \) and \( \Gceq \) were introduced in \cref{c-equality} (see also~\cite[§6.5]{Negri_von_Plato}).
 
 Henceforth, \emph{formula} will always refer to the language of arithmetic.
 %
-\begin{definition}
+\begin{definition}[Peano axioms]
 	The Peano axioms of arithmetic are the following sentences.
 	\begin{itemize}
 		\item \emph{Basic axioms:}
@@ -39,14 +40,14 @@ Henceforth, \emph{formula} will always refer to the language of arithmetic.
 			\item \( ∀ x ( x × \0 = \0 ) \)
 			\item \( ∀ x ∀ y ( x × \suc y = ( x × y ) + x ) \)
 		\end{axioms}
-		\item \emph{Axiom scheme of induction:}
+		\item \emph{Axiom schema of induction:}
 		\begin{axioms}[pa][start=7]
 			\item The universal closure of \( A(\0) ∧ ∀x ( A(x) → A(\suc x) ) → ∀x A(x) \) for every formula \( A(a) \).
 		\end{axioms}
 	\end{itemize}
 \end{definition}
 %
-\begin{definition}
+\begin{definition}[Peano arithmetic]
 	\emph{Peano arithmetic} (\( \PA \)) is theory over classical predicate logic axiomatised by the Peano axioms.
 	I will write \( \PA \vdash A \) to express that \( A \) is a theorem of Peano arithmetic, that is, \( \Set{PA} ⊢_\Nceq A \) where \( \Set{PA} \) is the set of Peano axioms.
 	\emph{Heyting arithmetic} (\( \HA \)) is the corresponding \emph{intuitionistic} theory, i.e., \( \HA ⊢ A \) expresses \( \Set{PA} ⊢_\Nieq A \).
@@ -96,7 +97,7 @@ The following result is easy to prove.
 
 As well as some basics of the theory of arithmetic, we recall the primitive recursive representation theorem. See \citetalias{LogThe}, for example, for details.
 %
-\begin{definition}
+\begin{definition}[Formula classes \( Δ_0 \), \( Π_1 \), \( Σ_1 \)]
 	A formula is \( Δ_0 \) if it can be constructed from atomic formulas excluding \( P \) by the propositional connectives and bounded quantifiers.
 	That is, the \( Δ_0 \) formulas forms the smallest collection of \( \La \)-formulas satisfying:
 	\begin{enumerate}
@@ -130,6 +131,153 @@ I state the representation theorem for primitive recursive relations.
 	\end{align*}
 \end{theorem}
 %
+
+
+
+%---------------------------------
+\section{Sequent calculi for arithmetic}\label{s-oa-omega-logic}
+%---------------------------------
+
+There are different ways to formulate arithmetic in sequent calculi.
+One can incorporate all the axioms of arithmetic as initial sequents or treat each Peano axiom as contributing a rule of the calculus.
+A more convenient definition is the following.
+
+\begin{definition}[Peano arithmetic as a sequent calculus]
+	
+\( \PA ⊢ Γ ⇒ Δ \) expresses that the sequent \( Γ ⇒ Δ \) has a derivation in the sequent calculus \( \Gceq \) expanded by:
+\begin{itemize}
+	\item Initial sequents \( Π ⇒ Σ , A \) for \( A \) a basic Peano axiom.
+	\item The \emph{induction rule}:
+	\[
+	  \begin{prooftree}
+	  	\hypo{ F(a) , Π ⇒ Σ , F( \suc a ) }
+	  	\infer1[\IRule]{ F(\0) , Π ⇒ Σ , ∀ x F(x) }
+	  \end{prooftree}
+	\]
+	where \( a \) does not occur in the lower sequent.
+%	\item The \emph{substitution rule}:
+%	\[
+%	  \begin{prooftree}
+%	  	\hypo{ Γ ⇒ Δ }
+%	  	\infer1[\SRule]{ Γ[A/P] ⇒ Δ[A/P] }
+%	  \end{prooftree}
+%	\]
+%	where substitution is extended to sets of formulas pointwise:\\ \( Γ[A/P] ≔ \setof{ B[A/P] }[B ∈ Γ ] \)
+\end{itemize}
+\end{definition}
+
+The sequent calculus for Heyting arithmetic is the restriction to intuitionistic sequents where, recall, a sequent \( Γ ⇒ Δ \) is \emph{intuitionistic} iff \( \card{Δ} = 1 \).
+%
+\begin{definition}[Heyting arithmetic as a sequent calculus]
+	\( \HA ⊢ Γ ⇒ Δ \)  expresses that \( \PA ⊢ Γ ⇒ Δ \) via a derivation using only intuitionistic sequents.
+\end{definition}
+
+It is straightforward to see that \( \PA \), as a sequent calculus, is also closed under substitution 
+	where substitution is extended to sets of formulas pointwise: \( Γ[A/P] ≔ \setof{ B[A/P] }[B ∈ Γ ] \)
+\begin{proposition}
+	\label{oa-PA-subs}
+	For every sequent \( Γ ⇒ Δ \) and formula \( F(a) \), if \( \PA ⊢ Γ ⇒ Δ \) then \( \PA ⊢ Γ[F/P] ⇒ Δ[F/P] \).
+	Likewise, if \( \HA ⊢ Γ ⇒ A \) then \( \HA ⊢ Γ[F/P] ⇒ A[F/P] \).
+\end{proposition}
+\begin{proof}
+	By induction on the derivation witnessing \( \PA ⊢ Γ ⇒ Δ \).
+	If this is an initial sequent then \( Γ[F/P] ⇒ Δ[F/P] \) is also initial.
+	Furthermore, for every inference
+	\[
+	  \begin{prooftree}
+			\hypo{ Γ_0 ⇒ Δ_0 }
+			\hypod 
+			\hypo{ Γ_k ⇒ Δ_k }
+			\infer3{ Γ ⇒ Δ }
+		\end{prooftree}
+	\]
+	the result of substituting \( F \) for \( P \) in all premises and conclusion is an instance of the same inference rule.
+\end{proof}
+
+An equivalent calculus can be given where substitution is given as an explicit rule of inference and the induction rule is restricted to the predicate \( P \):
+
+\begin{definition}%[Peano arithmetic as a sequent calculus]
+	
+\( \PA^* ⊢ Γ ⇒ Δ \) expresses that the sequent \( Γ ⇒ Δ \) has a derivation in the sequent calculus \( \Gceq \) expanded by:
+\begin{itemize}
+	\item Initial sequents \( Π ⇒ Σ , A \) for \( A \) a basic Peano axiom.
+	\item The \emph{induction rule}:
+	\[
+	  \begin{prooftree}
+	  	\hypo{ P a , Π ⇒ Σ , P( \suc a ) }
+	  	\infer1[\IRule[0]]{ P \0 , Π ⇒ Σ , ∀ x P x }
+	  \end{prooftree}
+	\]
+	where \( a \) does not occur in the lower sequent.
+	\item The \emph{substitution rule} for every formula \( F \):
+	\[
+	  \begin{prooftree}
+	  	\hypo{ Γ ⇒ Δ }
+	  	\infer1[\SRule]{ Γ[F/P] ⇒ Δ[F/P] }
+	  \end{prooftree}
+	\]
+\end{itemize}
+\end{definition}
+
+\begin{proposition}
+	\label{oa-PA-vs-PA*}
+	For every sequent \( Γ ⇒ Δ \), \( \PA ⊢ Γ ⇒ Δ \) iff \( \PA^* ⊢ Γ ⇒ Δ \).
+\end{proposition}
+\begin{proof}
+	\Cref{oa-PA-subs} provides the embedding of \( \PA^* \) into \( \PA \).
+	The converse direction requires replacing each instance of the (unrestricted) induction rule by a combination of \( \IRule[0] \) and \( \SRule \).
+	Let \( F' = ∀x( P x ↔ F(x) ) \). The next derivation witnesses derivability of the induction rule for \( F \):
+	\[
+	\begin{prooftree}
+		\hypo{Pa , F' ⇒ F(a)}
+	  	\hypo{ F(a) , Π ⇒ Σ , F( \suc a ) }
+	  	\infer2[\Cut]{ P a , F' , Π ⇒ Σ , F( \suc a )  }
+		\hypo{ F( \suc a ) , F' ⇒ P ( \suc a)}
+	  	\infer2[\Cut]{ P a , F' , Π ⇒ Σ , P( \suc a )  }
+	  	\infer1[\IRule[0]]{ P(\0) , F' , Π ⇒ Σ , ∀ x P(x) }
+	\end{prooftree}
+	\]
+\end{proof}
+
+\begin{proposition}\relax
+	\label{oa-PA-as-SC}
+	For every sentence \( A \),
+	\begin{enumerate}
+		\item \( \PA ⊢ A \) iff \( \PA ⊢ {} ⇒ A \).
+		\item \( \HA ⊢ A \) iff \( \HA ⊢ {} ⇒ A \).
+	\end{enumerate}
+\end{proposition}
+%
+\begin{proof}
+	I will show that every induction axiom admits a sequent calculus proof. The remainder of the proof is left as an exercise.
+	
+	Fix a formula \( F(a) \). Let \( Γ = \setof{ P(\0) , ∀x( P(x) → P( \suc x) ) } \).
+	By logic, a derivation of \( P(a) , Γ ⇒ P( \suc a )  \) is readily obtained which, followed by an application of the induction and substitution rules, and more logic completes the derivation:
+	\begin{prooftree*}
+		\subproof{ P(a), Γ ⇒ P(a) }
+		\subproof{ P( \suc a), Γ ⇒ P(\suc a)}
+		\infer2[\impL]{ P(a) → P( \suc a ) , P(a), Γ ⇒ P(\suc a) }
+		\infer1[\faL]{ P(a) , Γ ⇒ P(\suc a) }
+		\infer1[\IRule]{ Γ ⇒ ∀ x P(x) }
+		\infer1[\SRule]{ F(\0) , ∀x( F(x) → F( \suc x) ) ⇒ ∀ x F(x) }
+		\infer[double]1[\conjL, \impR, \faR]{ ⇒ ∀x_1 ⋯ ∀ x_k \bigl(\,F(\0) ∧ ∀x( F(x) → F( \suc x) ) → ∀x F(x) \,\bigr) }
+	\end{prooftree*}
+\end{proof}
+
+\begin{proposition}
+	If \( \PA ⊢ Γ ⇒ Δ \) then \( \PA ⊢ Γ[A/P] ⇒ Δ[A/P] \).
+\end{proposition}
+\begin{proof}
+	By definition.
+\end{proof}
+
+\begin{exercise}
+	Complete the proof of \cref{oa-PA-as-SC}.
+\end{exercise}
+%
+%\begin{exercise}
+%	Show that \( \PA \) derives the same sequents as the calculus with induction axioms as initial sequents (along with the basic axioms) and no induction rule.
+%\end{exercise}
 
 %---------------------------------
 \section{Fragments of arithmetic}\label{s-oa-sub-PA}
@@ -250,15 +398,8 @@ Recall the implication rank introduced at the end of \cref{c-cut-elim}, defined 
 	\nrk{F → G} &= \max\setof{ \nrk F +1 , \nrk G }
 \end{align*}
 
-\begin{definition}[The quantifier hierarchy in arithmetic]
-	The \( Π_{n}^P \) formulas (the \( ^P \) expresses that the predicate \( P \) is permitted, in contrast to our earlier definition of \( Π_1 \)) is the set of formulas of implication depth \( < n \).
-%	smallest set of formulas that contains
-%	\begin{enumerate}
-%		\item all prime formulas 
-%		\item \( F ∧ G \) if \( F , G ∈ Π_{n}^P \),
-%		\item \( ∀x F(x) \) if \( F(a) ∈ Π_{n}^P \) and \( n > 0 \),
-%		\item \( F → G \) if \( F ∈ Π_{n-1}^P ∪ Π_0^P \) and \( G ∈ \Pi_{n}^P \).
-%	\end{enumerate}
+\begin{definition}[The implication hierarchy]
+	The \( \ID_{n} \) formulas is the set of formulas of implication depth \( n \).
 \end{definition}
 
 To understand the definition, notice that the formula \( ∀x ∃y ∀ z F \) will have implication depth \( 2 \) if \( \nrk F = 0 \). 
@@ -294,113 +435,72 @@ Modulo equivalence, however, \( Π_n^P \) corresponds to implication rank \( n+1
 \end{comment}
 
 \begin{definition}[Theories with restricted induction]
-	For each \( n \), \( \PA_n \) denotes the theory in the language \( \Lpra \) extending \( \PRA \) by the axiom of induction for \( \Pi^P_n \) formulas.
-	That is, \( \PA_n \) extends \( \PRA \) by the universal closure of 
+	For each \( n \), \( \IP_n \) denotes the theory in the language \( \Lpra \) extending \( \PRA \) by the axiom of induction for \( \ID_n \) formulas.
+	That is, \( \IP_n \) extends \( \PRA \) by the universal closure of 
 	\[ A(\0) ∧ ∀x ( A(x) → A(\suc x) ) → ∀x A(x) \] 
 	for every formula \( A(a) \) satisfying \( \nrk{A(a)} < n \).
 \end{definition}
 
 
-%---------------------------------
-\section{Sequent calculi for arithmetic}\label{s-oa-omega-logic}
-%---------------------------------
+Sequent calculi for fragments of arithmetic can be obtained by restricting the complexity of formulas in the substitution rule:
+%We begin with the restriction to \( Π_n(P) \) formulas:
+\begin{prooftree*}
+	\hypo{ Γ ⇒ Δ }
+	\hypo{ \nrk A ≤ n }
+	\infer2[\( \SRule[n] \)]{ Γ[A/P] ⇒ Δ[A/P] }
+\end{prooftree*}
+%Notice that every
 
-There are different ways to formulate arithmetic in sequent calculi.
-One can incorporate all the axioms of arithmetic as initial sequents or treat each Peano axiom as contributing a rule of the calculus.
-A convenient definition is the following.
-\( \PA ⊢ Γ ⇒ Δ \) means that the sequent \( Γ ⇒ Δ \) has a derivation in the sequent calculus \( \Gceq \) expanded by:
-\begin{itemize}
-	\item Initial sequents \( Π ⇒ Σ , A \) for \( A \) a basic Peano axiom.
-	\item The \emph{induction rule}:
-	\[
-	  \begin{prooftree}
-	  	\hypo{ A(a) , Π ⇒ Σ , A( \suc a ) }
-	  	\infer1[\IRule]{A(\0) , Π ⇒ Σ , ∀ x A(x) }
-	  \end{prooftree}
-	\]
-	where \( a \) does not occur in the lower sequent.
-\end{itemize}
-The sequent calculus for Heyting arithmetic is the restriction to intuitionistic sequents. 
-Recall, a sequent \( Γ ⇒ Δ \) is \emph{intuitionistic} if \( \card{Δ} = 1 \).
-Define \( \HA ⊢ Γ ⇒ Δ \) as there exists a sequent calculus derivation witnessing \( \PA ⊢ Γ ⇒ Δ \) using only intuitionistic sequents.
-
-
-\begin{proposition}\relax
-	\label{oa-PA-as-SC}
-	For every sentence \( A \),
-	\begin{enumerate}
-		\item \( \PA ⊢ A \) iff \( \PA ⊢ {} ⇒ A \).
-		\item \( \HA ⊢ A \) iff \( \HA ⊢ {} ⇒ A \).
-	\end{enumerate}
-\end{proposition}
-%
-\begin{proof}
-	I will show that every induction axiom admits a sequent calculus proof. The remainder of the proof is left as an exercise.
+\begin{definition}[Sequent calculi for fragments of arithmetic]
 	
-	Fix a formula \( F(a) \) and let \( Γ = \setof{ F(\0) , ∀x( F(x) → F( \suc x) ) } \).
-	By logic, a derivation of \( F(a) , Γ ⇒ F( \suc a )  \) is readily obtained. An application of the induction rule, followed by more logic completes the derivation:
-	\begin{prooftree*}
-		\subproof{ F(a), Γ ⇒ F(a) }
-		\subproof{ F( \suc a), Γ ⇒ F(\suc a)}
-		\infer2[\impL]{ F(a) → F( \suc a ) , F(a), Γ ⇒ F(\suc a) }
-		\infer1[\faL]{ F(a) , Γ ⇒ F(\suc a) }
-		\infer1[\IRule]{ Γ ⇒ ∀ x F(x) }
-%		\infer[double]1[\conjL, \impR]{ ⇒ F(\0) ∧ G → ∀x F(x)}
-	\end{prooftree*}
-\end{proof}
+	\( \IP_n ⊢ Γ ⇒ Δ \) holds iff \( \PA ⊢ Γ ⇒ Δ \) via a derivation employing no more than \( 1 \) applications of the rule \( \SRule[1] \) (every path passes through at most one substitution and, in each case, the substituted formula is \( \Pi_n \)).
+\end{definition}
 
-\begin{exercise}
-	Complete the proof of \cref{oa-PA-as-SC}.
-\end{exercise}
-%
-%\begin{exercise}
-%	Show that \( \PA \) derives the same sequents as the calculus with induction axioms as initial sequents (along with the basic axioms) and no induction rule.
-%\end{exercise}
+%So, … 
 
-
-Sequent calculi for fragments of arithmetic can be obtained by simply restricting the complexity of formulas in the induction rule.
-I write \( \PA_n ⊢ Γ ⇒ Δ \) if in all uses of the induction rule \( \IRule \) above, \( \nrk{A} ≤ n \).
-When induction is restricted, so can the cut rank.
+When induction is restricted, the cut rank can also be so.
 
 \begin{theorem}[Partial cut elimination]\label{oa-partial-ce}
 	Suppose \( \PA_n ⊢ Γ ⇒ Δ \) and \( n ≥ 1 \).
 	Then \( \PA ⊢ Γ ⇒ Δ \) with a derivation in which all cut formulas have implication depth \( < n \).
 \end{theorem}
 %
-\begin{proof}
-	By induction on the number of induction rules in the derivation.
-	I leave the base case, when there are no induction rules, to the reader.
-%	Let \( U \) be the (finite) set of Peano axioms.
-%	Consider first a derivation \( ⊢ Γ ⇒ Δ \) with no use of the induction rule.
-%	Then clearly \( \Gc ⊢ U, Γ ⇒ Δ \), whence there is a cut-free proof of the sequent, and a \( \PA \)-proof with only cuts on basic axioms. 
-%	The basic axioms are all implication rank \( 0 \).
-	
-	Now consider a sequent proof containing an instance of \( \IRule \):
-	\[
-	  \begin{prooftree}
-	  	\subproof{ A(a) , Π ⇒ Σ , A( \suc a ) }
-	  	\infer1[\IRule]{A(\0) , Π ⇒ Σ , ∀ x A(x) }
-	  	\ellipsis{}{ Γ ⇒ Δ }
-	  \end{prooftree}
-	\]
-	I split this into two \( \PA \)-proofs:
-	\[
-	  \begin{prooftree} 
-	  	\subproof{ A(a) , Π ⇒ Σ , A( \suc a ) }
-	  	\infer1[\IRule]{A(\0) , Π ⇒ Σ , ∀ x A(x) }
-	  \end{prooftree}
-	  \quad\text{and}\quad
-	  \begin{prooftree}
-	  	\axiom[\idRule]{∀x A(x) , A(\0) , Π ⇒ Σ , ∀ x A(x) }
-	  	\ellipsis{}{∀x A(x) , Γ ⇒ Δ }
-	  \end{prooftree}
-	\]
-	By the induction hypothesis, each of the two sequents can be derived with cut formulas of rank \( < n \) and a cut on \( ∀x A(x) \) combines the two proofs.
+\begin{proof} 
+	I omit the proof.
+%xXX this proof is broken XXXx\\
+%	By induction on the number of induction rules in the derivation.
+%	I leave the base case, when there are no induction rules, to the reader.
+%%	Let \( U \) be the (finite) set of Peano axioms.
+%%	Consider first a derivation \( ⊢ Γ ⇒ Δ \) with no use of the induction rule.
+%%	Then clearly \( \Gc ⊢ U, Γ ⇒ Δ \), whence there is a cut-free proof of the sequent, and a \( \PA \)-proof with only cuts on basic axioms. 
+%%	The basic axioms are all implication rank \( 0 \).
+%	
+%	Now consider a sequent proof containing an instance of \( \IRule \):
+%	\[
+%	  \begin{prooftree}
+%	  	\subproof{ A(a) , Π ⇒ Σ , A( \suc a ) }
+%	  	\infer1[\IRule]{A(\0) , Π ⇒ Σ , ∀ x A(x) }
+%	  	\ellipsis{}{ Γ ⇒ Δ }
+%	  \end{prooftree}
+%	\]
+%	I split this into two \( \PA \)-proofs:
+%	\[
+%	  \begin{prooftree} 
+%	  	\subproof{ A(a) , Π ⇒ Σ , A( \suc a ) }
+%	  	\infer1[\IRule]{A(\0) , Π ⇒ Σ , ∀ x A(x) }
+%	  \end{prooftree}
+%	  \quad\text{and}\quad
+%	  \begin{prooftree}
+%	  	\axiom[\idRule]{∀x A(x) , A(\0) , Π ⇒ Σ , ∀ x A(x) }
+%	  	\ellipsis{}{∀x A(x) , Γ ⇒ Δ }
+%	  \end{prooftree}
+%	\]
+%	By the induction hypothesis, each of the two sequents can be derived with cut formulas of rank \( < n \) and a cut on \( ∀x A(x) \) combines the two proofs.
 \end{proof}
 
 \begin{exercise}
-	Show the base case of previous induction:
-	That if \( \IS_0 ⊢ Γ ⇒ Δ \) then there is derivation in which all cuts have implication depth \( 0 \).
+	Prove the base case of \cref{oa-partial-ce}:
+	If \( \PA_0 ⊢ Γ ⇒ Δ \) then there is derivation in which all cuts have implication depth \( 0 \).
 \end{exercise}
 
 

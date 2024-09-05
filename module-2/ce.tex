@@ -244,11 +244,11 @@ In that situation the bounds given by the standard reduction lemma become releva
 \end{exercise}
 
 The inversion technique works well enough for classical logic because the propositional connectives are invertible on both sides of the sequent arrow.
-This method cannot apply to intuitionistic logic, however, due to lack of necessary inversions.
+This method cannot apply to intuitionistic logic, however, due to failure of some inversions.
 %
 Still, there is another way to structure the reduction lemma that works smoothly for both logics.
 The idea is to use the sides of the sequent arrow as the control on complexity.
-The complexity of cut elimination arises can be constrained to the case in which cut formulas ‘switch’ sides of the sequent arrow in reductions.
+In this way, the complexity of cut elimination can be ascribed to the case in which cut formulas ‘switch’ sides of the sequent arrow in reductions.
 To demonstrate this, I introduce a new complexity measure on formulas, called the implication depth, that counts the ‘nesting’ of implications. 
 Let \( \nrk A \) be the implication rank of \( A \), defined by:
 \begin{itemize}
@@ -260,7 +260,7 @@ Let \( \nrk A \) be the implication rank of \( A \), defined by:
 
 It will be necessary to restrict attention to the fragment without \( ∃ \) and \( ∨ \) as these add a level of complexity to the process that is  beyond the scope of this course.
 %
-I will also focus on intuitionistic logic; the reader can check that the statements below also apply to classical logic.
+I will also focus on intuitionistic logic; the reader can check that the statements below also apply just as well to classical logic.
 
 \begin{definition}
 	Let \( \prvs n q \) express derivability in the intuitionistic sequent calculus by a proof with height \( ≤ n \) in which all cut formulas have \emph{implication rank} \( < q \) and do not contain \( ∨ \) or \( ∃ \).
@@ -337,7 +337,7 @@ If using the implication rank of formulas, cuts on the formulas \( A \) and \( B
 			
 		\infer3[\mCut]{ Γ , Σ ⇒ D }
 	\end{prooftree}
-	\caption{Illustration of the \emph{multi-cut} reduction for a conjunctive cut formula. According to the implication rank, cut formulas in the second inference are as complex as in the first.}
+	\caption{Reducing a binary cut on a conjunctive cut formula naturally induces \emph{two} cuts which can be represented as a three-premise \emph{multi-cut}. Cut formulas in the resultant multi-cut may have the same implication depth as in the first.}
 	\label{f-ce-mcut-IL}
 	\end{mdframed}
 \end{figure}
@@ -366,7 +366,7 @@ In the special case of the standard ‘two-premise’ cut (where \( k = 0 \) abo
 \end{center}
 %
 The bound provided by the multi-cut reduction lemma is almost identical to the usual reduction lemma (which actually used the larger bound \( (m+n).2 \)).
-But, crucially, the lemma claims that this bound is sufficient for reducing the \emph{implication rank} of the cut, not only the traditional rank.
+But, crucially, the lemma claims that this bound is sufficient for reducing the \emph{implication rank} of the cut, not merely the traditional rank.
 
 \begin{exercise}
 	Prove the multi-cut reduction lemma.

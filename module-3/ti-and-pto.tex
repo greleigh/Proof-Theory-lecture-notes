@@ -195,38 +195,65 @@ In the following \( ≺ \) denotes the primitive recursive well-ordering of orde
 The proof of \cref{pto-lower-bound} relies on one lemma whose proof is rather time-consuming and will be omitted:
 %
 \begin{lemma}
-	\label{pto-lower-bound-lem}
-	For every formula \( A(a) \) in the language of arithmetic, there exists a formula \( A'(a) \) such that
+	\label{pto-lower-bound-lem-P}
+	There exists a \( \ID_2 \)-formula \( F(a) \) such that
 	\[
-		\PA ⊢ ∀x\bigl( \TI[≺] {A' , x } → \TI[≺] {A, \dot{ω}^x} \bigr).
-%		\PA ⊢ \Prog[≺_{ω^α}] {A} → \Prog[≺_α] {A'}.
+		\PA ⊢ ∀x\bigl( \TI[≺] { F , x } → \TI[≺] { P, \dot{ω}^x} \bigr).
 	\]
-%	In particular, \( \PA ⊢ ∀x\bigl( \TI[≺] {A' , x } → \TI[≺] {A, \dot{ω}^x} \bigr) \).
 \end{lemma}
 
-%Viewing \( A \) as a set of ordinals,  
-%\cref{pto-lower-bound-lem} expresses that there is a set \( A' ⊆ \ot \) such that for all \( α < \ot \), if transfinite induction holds for \( A' \) on the segment \( \ot \) up to \( α \) and \( A \) is progressive on the segment \( \ot \), then \( A \) contains all ordinals \( < ω^α \).
+
 %
-Although I won't present the proof, it will be useful to know how \( A' \) is constructed from \( A \).
-First, I present the construction as an operation on sets of ordinals.
+Although I won't present the formal proof, I will show how \( F \) is constructed and the argument proceeds informally.
+First, I describe the construction of \( F \) as an operation on classes of ordinals.
+Let \( O ⊆ \Ord \) be an arbitrary class of ordinals (playing the role of the interpretation of \( P \)).
 I write \( β ⊆ O \) as shorthand for \( (∀ξ< β)ξ ∈ O \).
-Given \( O ⊆ \Ord \), define \( O' \) as the class
+Define \( O' \) as the class
 \[
   O' = \setof{ α }[ ∀ξ ( \, ξ ⊆ O \text{ implies } ξ + ω^α ⊆ O \, )].
 \]
-It is not difficult to see that \( O' \) is a segment and \( α ∈ O' \) implies \( ω^α ∈ O \), from which \( ω^{α+1} ⊆ O \) quickly follows.
-%For the first observation, if \( β < α ∈ O' \) then \( ω^α ⊆ O \) (pick \( ξ = 0 \)), so \( β ∈ O \).
-%And if \( α ∈ O' \) then \( ω^α ⊆ O \) (again picking \( ξ = 0 \)), so \( ω^α ∈ O \) (now picking \( ξ = ω^α \)).
-%
-%Looking closer at the definition, it is clear that \( O' \) is simply the largest segment of \( O \) such that \( \setof{ ω^α }[α ∈ O'] \) is a segment of \( O \).
-%
-Expressing the operation in the language of arithmetic provides the formula \( A' \) in \cref{pto-lower-bound-lem}:
+It is not difficult to see that \( O' \) is a segment.
+Furthermore, \( 0 ∈ O' \) is equivalent to the statement that \( O \) is progressive: \( ξ ⊆ O \) implies \( ξ ∈ O \) for all ordinals \( ξ \).
+I claim that \( O' \) is progressive iff \( O \) is progressive.
+The ‘only if’ direction follows from the previous observation (if \( O' \) is progressive then, in particular, \( 0 ∈ O' \) and so \( O \) is progressive).
+For the converse, suppose that \( O \) is progressive.
+I have already reasoned that \( 0 ∈ O' \), so suppose \( α > 0 \) is such that \( α ⊆ O' \).
+To establish \( α ∈ O' \) I am required to show that 
+whenever \( ξ ⊆ O \) also \( ξ + ω^α ⊆ O \).
+Suppose \( ξ ⊆ O \) and let \( β < α \) be arbitrary.
+Vacuously, \( ξ + ω^β.0 ⊆ O \).
+Moreover, if \( ξ + ω^β.n ⊆ O \) then, as \( β ∈ O' \), also 
+\( ξ + ω^β.(n+1) ⊆ O \).
+Therefore, \( ξ + ω^β. n ⊆ O \) for all \( n < ω \) by induction.
+Given that \( β < α \) was arbitrary, I conclude that \( ξ + ω^α ⊆ O \), as required.
+
+The link with \cref{pto-lower-bound-lem-P} is that \( α ∈ O' \) implies \( ω^α ∈ O \), so the desired formula \( F \) will be one that expresses \( O' \) under the interpretation that \( P \) expresses \( O \):
 \[
-	A'(a) ≔ ∀x ( ∀ y ≺ x \, A(y) → ∀ y ≺ x \oplus \dot{ω}^a \, A(y) ).
+	F(a) ≔ ∀x \bigl(\, ( ∀ y ≺ x \, P y ) → ( ∀ y ≺ x \oplus \dot{ω}^a )\, Py \bigr).
 \]
+Notice that \( F \) is
+\begin{exercise}
+	Prove \cref{pto-lower-bound-lem-P}. Following the
+\end{exercise}
+
 
 The above remarks concerning the properties of \( O \) and \( O' \) can be shown in \( \PA \) to hold for \( A \) and \( A' \). 
-Thus, to prove the \namecref{pto-lower-bound-lem} it suffices to show that \( \PA ⊢ \Prog {A} → \Prog {A'} \), which involves similar argumentation.
+Thus, to prove the \namecref{pto-lower-bound-lem} it suffices to show that \( \PA ⊢ \Prog {A} → \Prog {A'} \).
+
+\Cref{pto-lower-bound-lem-P} provides a sufficient condition for deducing transfinite induction for the predicate \( P \) up to an ordinal \( α \), namely, transfinite induction for \( F \) up to any ordinal \( β \) such that \( α ≤ ω^β \).
+The \namecref{pto-lower-bound-lem-P} readily generalises to the case \( P \) is any formula:
+
+\begin{proposition}
+	\label{pto-lower-bound-lem}
+	For every formula \( F(a) \) in the language of arithmetic, there exists a formula \( F'(a) \) such that
+	\[
+		\PA ⊢ ∀x\bigl( \TI[≺] {F' , x } → \TI[≺] { F, \dot{ω}^x} \bigr).
+	\]
+\end{proposition}
+%
+\begin{proof}
+	
+\end{proof}
 
 
 %---------------------------------

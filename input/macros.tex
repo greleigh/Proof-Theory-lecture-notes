@@ -6,8 +6,8 @@
 \providecommand{\tbw}{\textcolor{magenta}{To be written.}}
 %---------------------------------
 % LANGUAGES
-\newcommand{\La}{\Lang{L}_{\mathrm{A}}}
-\newcommand{\Lpra}{\Lang{L}_{\mathrm{PRA}}}
+\newcommand{\La}{\Lang{L}_{\textsc{a}}}
+\newcommand{\Lpra}{\Lang{L}_{\textsc{pra}}}
 %---------------------------------
 % LOGICS & THEORIES
 \newcommand{\Nc}{\Logic{Nc}}
@@ -30,7 +30,7 @@
 \newcommand{\HA}{\Theory{HA}}
 %
 \newcommand{\IS}{\Theory{I}\Sigma}
-\newcommand{\IP}{\Theory{I}\Pi}
+\newcommand{\IP}{\PA}
 \newcommand{\PRA}{\Theory{PRA}}
 %\newcommand{\HA}{\Theory{HA}}
 
@@ -73,7 +73,8 @@
 \newcommand{\compRule}{\Rule{comp}}
 %
 % for arithmetic
-\newcommand{\IRule}{\Rule{ir}}
+\newcommand{\IRule}[1][]{\ensuremath{\Rule{ir}_{#1}}}
+\newcommand{\SRule}[1][]{\ensuremath{\Rule{sub}_{#1}}}
 %
 % for ω-logic:
 \newcommand{\omR}{\RightRule{ω}}
@@ -111,6 +112,8 @@
 \newcommand{\rk}[1]{\lvert{#1}\rvert}
 \newcommand{\nrk}[1]{\lvert{#1}\rvert_*}
 \newcommand{\qrk}[1]{\lvert{#1}\rvert_q}
+
+\newcommand{\ID}{\Set{ID}}
 
 \newcommand{\nm}[1]{\underline{#1}}
 \newcommand{\cd}[1]{\overline{#1}}

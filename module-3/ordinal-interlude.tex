@@ -251,9 +251,11 @@ Two further properties of enumerations will be useful.
 The basic operations of arithmetic can be extended to ordinals in a straightforward manner.
 Often these are defined by transfinite recursion, but the two operations we desire, addition and exponentiation base \( ω \), can be expressed as enumeration functions.
 I start with addition.
-\begin{definition}
+\begin{definition}[Addition on ordinals]
 	Let \( α^≥ \) be the class of ordinals \( ≥ α \).
 	\emph{Ordinal addition}, \( α + β \), is defined as \( α + β ≔ E_{α^≥}(β) \). That is, \( α + β \) is defined as the \( β \)-th ordinal in the enumeration of the ordinals \( ≥ α \).
+	
+	For \( n < ω \), define \( α . n \) as \( α . 0 ≔ 0 \) and \( α . ( n+ 1 ) ≔ α .n + α  \).
 \end{definition}
 %
 The following are direct consequences of this definition and left to the reader.
@@ -299,56 +301,65 @@ Ordinals satisfying this condition are called \emph{additive principal} ordinals
 The least additive principal ordinal is \( 1 \); the next is clearly \( ω \).
 Most ordinals are \emph{not} additive principal. 
 \( 1 \) is the only additive principal successor ordinal (because \( α + α ≥ α' \) provided \( α ≥ 1 \)).
-Even most limit ordinals not additive principal: If \( α ≥ ω \) then \( α + ω ∉ \AP \) as \( α < α + ω \) but \( α + α ≮ α + ω \).
+Many limit ordinals are not additive principal: If \( α ≥ ω \) then \( α + ω ∉ \AP \) as \( α < α + ω \) but \( α + α ≮ α + ω \).
+
+
+\begin{lemma}
+	\label{ord-AP}
+	The following are equivalent for all \( α > 1 \):
+	\begin{enumerate}
+		\item \( α \) is additive principal.\label{ord-AP-1}
+		\item \( α = \sup \setof{ ξ + ξ }[ξ < α ] \).\label{ord-AP-2}
+		\item For all \( β < α \), \( β + α = α \).\label{ord-AP-3}
+	\end{enumerate}
+\end{lemma}
+\begin{proof}
+	Fix \( α > 1 \).
+
+	\ref{ord-AP-1} $⇒$ \ref{ord-AP-2}. If \( α \) is additive principal then \( \sup \setof{ ξ + ξ }[ξ < α ] ≤ α \) by definition. Also, the additive principal ordinals except \( 1 \) are all limits, so if \( α > 1 \) then \( α = \sup \setof{ ξ }[ξ < α ] ≤ \sup \setof{ ξ + ξ }[ξ < α ] \).
+	
+	\ref{ord-AP-2} $⇒$ \ref{ord-AP-3}. By assumption \( α \) is a limit and for \( β < α \) it is the case that 
+	\[ β + α = \sup \setof{ β + ξ }[ξ < α ] ≤ \sup \setof{ ξ + ξ }[ξ < α ] ≤ α . \] 
+%	As \( α = \sup \setof{ ξ + ξ }[ξ < α ] \) the claim is established.
+	
+	\ref{ord-AP-3} $⇒$ \ref{ord-AP-1}. For every \( β , ξ < α \) it is the case that \( β + ξ < β + α = α \).
+\end{proof}
+%
+
+
+Additive principal ordinals are central to the theory of ordinals.
+As with addition, I will introduce more suggestive notation for the enumeration function for additive principal ordinals.
+First, I need
+%The next \namecref{ord-AP-normal} shows that the function enumerating the additive principal ordinals is defined on all ordinals, is order preserving and continuous.
 
 \begin{lemma}
 	\label{ord-AP-normal}
 	The enumeration function \( E_\AP \) for additive principal ordinals is continuous and has domain \( \Ord \).
-%	The additive principal ordinals are
-%	\begin{enumerate}
-%		\item Closed: for every set \( O ⊆ \AP \), \( \sup O ∈ \AP \).
-%		\item Unbounded in \( \Ord \). For every set \( α ∈ \AP \) there exists \( β > α \) such that \( β ∈ \AP \).
-%	\end{enumerate}
 \end{lemma}
 \begin{proof}
-%	Begin with the domain. By transfinite induction. Suppose \( ξ ∈ \dom E_\AP \) for every \( ξ < α \). I claim that \( α ∈ \dom E_\AP \). It suffices to show that there exists an additive principal ordinal \( β > E_\AP(ξ) \) for every \( ξ < α \).
-%	Let \( O_0 = \setof{ E_\AP(ξ) }[ξ < α] \) and \( O_{n+1} = \setof{ ξ + η }[ξ , η ∈ O_n ] \). Set \(  \)
 	Exercise.
 \end{proof}
 
-\Cref{ord-AP-normal} shows that the function enumerating the additive principal ordinals is defined on all ordinals, is order preserving and continuous.
-
-\begin{lemma}
-	\label{ord-AP}
-	The following are equivalent for all \( α > 0 \):
-	\begin{enumerate}
-		\item \( α \) is additive principal.\label{ord-AP-1}
-		\item \( α = 1 \) or \( α = \sup \setof{ ξ + ξ }[ξ < α ] \).\label{ord-AP-2}
-		\item for all \( β < α \), \( β + α = α \).\label{ord-AP-3}
-	\end{enumerate}
-\end{lemma}
-\begin{proof}
-	\ref{ord-AP-1} $⇒$ \ref{ord-AP-2}. If \( α \) is additive principal then \( \sup \setof{ ξ + ξ }[ξ < α ] ≤ α \) by definition. Also, the additive principal ordinals except \( 1 \) are all limits, so if \( α ≠ 1 \) then \( α = \sup \setof{ ξ }[ξ < α ] ≤ \sup \setof{ ξ + ξ }[ξ < α ] \).
-	
-	\ref{ord-AP-2} $⇒$ \ref{ord-AP-3}. For \( α = 1 \) the claim is trivial. Otherwise, \( α  \) is a limit and \( β + α ≤ \sup \setof{ β + ξ }[ξ < α ] ≤ \sup \setof{ ξ + ξ }[ξ < α ] \). As \( α = \sup \setof{ ξ + ξ }[ξ < α ] \) the claim is established.
-	
-	\ref{ord-AP-3} $⇒$ \ref{ord-AP-1}. Straightforward.
-\end{proof}
-%
-
-As a consequence of part \ref{ord-AP-3}, \( ω^α + ω^β = ω^β \) iff \( α < β \).
-A corollary is the observation made earlier, that \( n + ω = ω \), which now follows from repeated applications of \cref{ord-AP}: \( α' + ω = α + ( ω^0 + ω^1 ) = α + ω^1 \).
-
-Additive principal ordinals are central to the theory of ordinals.
-As with addition, I will introduce more suggestive notation for the enumeration function for additive principal ordinals.
-
-\begin{definition}
+\begin{definition}[Enumeration of the additive principal ordinals]
 	\( ω^α ≔ E_\AP(α) \).
 \end{definition}
 
 By the definition \( ω^0 = 1 \) and \( ω^1 = ω \).
-The reader can confirm that next additive principal ordinal above \( ω \) is the supremum of \( ω \), \( ω + ω \), \( ω + ω + ω \), …, \( ω + ⋯ + ω , … \) which is denoted \( ω^2 \).
-%I will shortly show that the function \( ξ ↦ ω^ξ \) behaves as one would expect exponentiation (in particular, \( ω^(α + β) \)
+The reader can confirm that next additive principal ordinal above \( ω \) is the supremum of \( ω \), \( ω.2 \ ( = ω + ω ) \), \( ω.3 \ ( = ω + ω + ω ) \), …, \( ω.n \) which is denoted \( ω^2 \).
+
+As a consequence of part \ref{ord-AP-3} of \cref{ord-AP}, \( ω^α + ω^β = ω^β \) iff \( α < β \).
+A corollary is the observation made earlier that \( n + ω = ω \) which now follows from repeated applications of \cref{ord-AP}: \( ( k + 1 ) + ω = k + ( ω^0 + ω^1 ) = k + ω \).
+
+Applying the new notation to \cref{ord-AP} yields
+
+\begin{lemma}
+	For every \( α > 0 \), \( ω^α = \sup \setof{ ω^ξ.n }[ ξ < α \text{ and } n < ω ] \).\label{ord-AP-4}
+\end{lemma}
+\begin{exercise}
+	Prove \cref{ord-AP-4}.
+\end{exercise}
+
+The next observation has a number of important consequences.
 
 \begin{lemma}
 	\label{ord-AP-NF}
@@ -374,7 +385,7 @@ The reader can confirm that next additive principal ordinal above \( ω \) is th
 
 \Cref{ord-AP-NF} above provides the basis of a normal form representation of ordinals. This concept is introduced in the next definition.
 
-\begin{definition}
+\begin{definition}[Additive normal form]
 	I write \( α =_\NF ω^β + γ \) to express that (i) \( α = ω^β + γ \) and (ii) \( γ < α \).
 \end{definition}
 
@@ -400,7 +411,7 @@ Cantor, in 1897,\nocite{Cantor1897} established an expanded version of this norm
 \end{proof}
 
 
-\begin{definition}
+\begin{definition}[Cantor normal form]
 	The normal form notation is extended in the following way. Writing \( α =_\NF ω^{α_1} + ⋯ + ω^{α_n} \) expresses that (i) \( α = ω^{α_1} + ⋯ + ω^{α_n} \) and (ii) \( α ≥ α_1 ≥ ⋯ ≥ α_n \).
 \end{definition}
 
@@ -482,7 +493,7 @@ It is possible to provide a natural notion of addition that \emph{is} commutativ
 This is called the \emph{natural sum} (sometimes \emph{Hessenberg sum} after its originator Gerhard Hessenberg~\cite{Hess1906}). 
 The Cantor normal theorem provides the means to achieve this.
 
-\begin{definition}
+\begin{definition}[Natural sum]
 	The natural sum of ordinals \( α \) and \( β \), denoted \( α \nsum β \) is defined by recursion on the two ordinals. \( 0 \nsum α = α \nsum 0 ≔ α \) for all \( α \).
 	For non-zero \( α =_\NF ω^{α_0} + α_1 \) and \( β =_\NF ω^{β_0} + β_1 \)
 	\[

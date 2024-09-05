@@ -6,7 +6,7 @@ Ordinals will now be used to measure the \emph{height} of \( ω \)-proofs.
 I begin by formalising the infinitary sequent calculi for arithmetic described at the end of \cref{c-oa-arith}.
 Building on that definition, it will prove convenient to view Peano arithmetic as extending primitive recursive arithmetic.
 %
-\begin{definition}%\label{d-PAomega}
+\begin{definition}[Infinitary sequent calculus for arithmetic]%\label{d-PAomega}
 	\( \PAo \) is the sequent calculus given by the following:
 	Sequents comprise closed formulas in the language of primitive recursive arithmetic \( \Lpra \).
 	
@@ -33,7 +33,7 @@ This is precisely because sequents do not contain free variables, whereby it is 
 Likewise, for each of the rules of \( \PAo \): The property of being the \( n \)-th premise of a rule whose conclusion is \( Γ ⇒ Δ \) with specified principle formula is decidable.
 
 %
-\begin{definition}\label{d-bound-omega-logic}
+\begin{definition}[Bounding infinitary derivations]\label{d-bound-omega-logic}
 	Let \( \Theory{T} \) be \( \PAo \), \( \HAo \) or an extension of either calculus by rules that are at most \( ω \)-branching.
 	The ternary relation \( \Theory{T} \prv{α}k Γ ⇒ Δ \), between a sequent \( Γ ⇒ Δ \), an ordinal \( α \) and \( k < ω \), is defined by transfinite recursion on the rules of \( \Theory{T} \):
 	\begin{enumerate}
@@ -201,7 +201,7 @@ The use of natural sum is crucial to the argument: the lifting of the finitary a
 	If \( \rk C ≤ k \) then \( \prv{α\nsum β }k Γ, Σ ⇒ Δ, Λ \).
 \end{lemma}
 
-The reader may surprised to know that there is a great deal of flexibility in proofs of the reduction lemma, which I will demonstrate by presenting a slightly different strategy than we used for in the analysis of classical predicate logic.
+There is a remarkable amount of flexibility proving the reduction lemma, which I will demonstrate by presenting a slightly different strategy than we used for in the analysis of classical predicate logic.
 %The statement of the lemma already offers a minor, though insignificant, departure from previously by allowing \( \rk C < k \). 
 %Provided that \( α , β \) are non-zero, \( \max\setof{ α , β } + 1 ≤ α \nsum β \), so whether.
 
