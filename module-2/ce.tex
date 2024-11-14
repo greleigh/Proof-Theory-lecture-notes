@@ -3,7 +3,15 @@
 %---------------------------------
 Here we present cut elimination for the calculi.
 
-Cut rank,
+\begin{definition}[Cut rank]
+	The \emph{rank} of a cut is the complexity of the cut formula.
+	
+	The \emph{cut rank} of a derivation is \( d \) is defined to be
+	\[
+	  \mathsf{cr} (d) ≔ \setof{ r + 1 }[d \text{ contains a cut of rank } r].
+	\]
+\end{definition}
+
 Inversion lemma and the like
 
 \begin{lemma}[First inversion]\label{ce-inversion-lemma}
@@ -250,7 +258,7 @@ Still, there is another way to structure the reduction lemma that works smoothly
 The idea is to use the sides of the sequent arrow as the control on complexity.
 In this way, the complexity of cut elimination can be ascribed to the case in which cut formulas ‘switch’ sides of the sequent arrow in reductions.
 To demonstrate this, I introduce a new complexity measure on formulas, called the implication depth, that counts the ‘nesting’ of implications. 
-Let \( \nrk A \) be the implication rank of \( A \), defined by:
+Let \( \nrk A \) be the implication depth of \( A \), defined by:
 \begin{itemize}
 	\item \( \nrk A = 0 \) for \( A \) prime.
 	\item \( \nrk {QxA} = \nrk A \) for \( Q ∈ \{ ∀ , ∃ \} \).
@@ -263,7 +271,7 @@ It will be necessary to restrict attention to the fragment without \( ∃ \) and
 I will also focus on intuitionistic logic; the reader can check that the statements below also apply just as well to classical logic.
 
 \begin{definition}
-	Let \( \prvs n q \) express derivability in the intuitionistic sequent calculus by a proof with height \( ≤ n \) in which all cut formulas have \emph{implication rank} \( < q \) and do not contain \( ∨ \) or \( ∃ \).
+	Let \( \prvs n q \) express derivability in the intuitionistic sequent calculus by a proof with height \( ≤ n \) in which all cut formulas have \emph{implication depth} \( < q \) and do not contain \( ∨ \) or \( ∃ \).
 \end{definition}
 %
 So the version of the cut rule used employed in \( \prvs{}{} \) is
@@ -312,7 +320,7 @@ The multi-cut has is origins in Gentzen's original proof of the \emph{Haupsatz} 
 \]
 The purpose of the multi-cut, however, is to hold together (in a single inference) the many individual cuts that are to be ‘eliminated’ at the once.
 A typical example of when the multi-cut rule is useful is in the reduction process attached to a binary cut with a conjunctive cut formula (see \cref{f-ce-mcut-IL}).
-If using the implication rank of formulas, cuts on the formulas \( A \) and \( B \) are considered as complex as on the conjunction \( A ∧ B \) itself.
+If using the implication depth of formulas, cuts on the formulas \( A \) and \( B \) are considered as complex as on the conjunction \( A ∧ B \) itself.
 % ------------------
 \begin{figure}
 	\begin{mdframed}
@@ -366,7 +374,7 @@ In the special case of the standard ‘two-premise’ cut (where \( k = 0 \) abo
 \end{center}
 %
 The bound provided by the multi-cut reduction lemma is almost identical to the usual reduction lemma (which actually used the larger bound \( (m+n).2 \)).
-But, crucially, the lemma claims that this bound is sufficient for reducing the \emph{implication rank} of the cut, not merely the traditional rank.
+But, crucially, the lemma claims that this bound is sufficient for reducing the \emph{implication depth} of the cut, not merely the the rank.
 
 \begin{exercise}
 	Prove the multi-cut reduction lemma.

@@ -387,7 +387,7 @@ By the above convention, the function symbol \( \Symbol e \) is denoted by writi
 \end{lemma}
 
 %The level in the quantifier hierarchy at a formula first appears is, unsurprisingly, closely related to
-Recall the implication rank introduced at the end of \cref{c-cut-elim}, defined by counting the nesting depth on the negative side of implications:
+Recall the implication depth introduced at the end of \cref{c-cut-elim}, defined by counting the nesting depth on the negative side of implications:
 \begin{align*}
 	\nrk{A} &= 0 \quad(\text{$A$ prime})
 	&
@@ -408,14 +408,14 @@ Thus, \( Π^0_2 \) formulas in the usual sense correspond to implication depth \
 \begin{comment}
 
 As \( Π_0^P \) happens to be closed under arbitrary implications, there is no a priori bound on the negation depth of formulas in \( Π_n^P \).
-Modulo equivalence, however, \( Π_n^P \) corresponds to implication rank \( n+1 \)
+Modulo equivalence, however, \( Π_n^P \) corresponds to implication depth \( n+1 \)
 
 \begin{lemma}
-	Every formula is equivalent to \( Π_n^P \) formula for some \( n \), and every \( Π_n^P \) formula is equivalent, over \( \PRA \), to a formula with implication rank \( n+1 \).
+	Every formula is equivalent to \( Π_n^P \) formula for some \( n \), and every \( Π_n^P \) formula is equivalent, over \( \PRA \), to a formula with implication depth \( n+1 \).
 \end{lemma}
 
 \begin{proof}
-	It is routine to show that every \( Π_0^P \) formula is equivalent to a quantifier-free formula of implication rank \( 1 \).
+	It is routine to show that every \( Π_0^P \) formula is equivalent to a quantifier-free formula of implication depth \( 1 \).
 	The case of \( n > 0 \) is now straightforward.
 %
 %	Using the full logical language, express \( F ∈ Π_n^P \) in prefix normal form as
@@ -473,7 +473,7 @@ When induction is restricted, the cut rank can also be so.
 %%	Let \( U \) be the (finite) set of Peano axioms.
 %%	Consider first a derivation \( ⊢ Γ ⇒ Δ \) with no use of the induction rule.
 %%	Then clearly \( \Gc ⊢ U, Γ ⇒ Δ \), whence there is a cut-free proof of the sequent, and a \( \PA \)-proof with only cuts on basic axioms. 
-%%	The basic axioms are all implication rank \( 0 \).
+%%	The basic axioms are all implication depth \( 0 \).
 %	
 %	Now consider a sequent proof containing an instance of \( \IRule \):
 %	\[
@@ -495,7 +495,7 @@ When induction is restricted, the cut rank can also be so.
 %	  	\ellipsis{}{∀x A(x) , Γ ⇒ Δ }
 %	  \end{prooftree}
 %	\]
-%	By the induction hypothesis, each of the two sequents can be derived with cut formulas of rank \( < n \) and a cut on \( ∀x A(x) \) combines the two proofs.
+%	By the induction hypothesis, each of the two sequents can be derived with cut formulas of complexity \( < n \) and a cut on \( ∀x A(x) \) combines the two proofs.
 \end{proof}
 
 \begin{exercise}

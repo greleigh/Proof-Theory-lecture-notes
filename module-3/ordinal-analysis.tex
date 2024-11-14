@@ -109,7 +109,7 @@ The result will be useful in \cref{s-oa-upper}.
 \end{proposition}
 %
 \begin{proof}
-	By induction on the rank of \( A \).
+	By induction on the complexity of \( A \).
 \end{proof}
 
 Henceforth, I will omit explicit mention of \( \PAo \) and write \( \prv{α}k Γ ⇒ Δ \) to mean \( \PAo \prv{α}k Γ ⇒ Δ \).
@@ -335,7 +335,7 @@ An obvious candidate is \( f \colon α ↦ 2^α \) (see exercise~\ref{ex-ord-bas
 Certainly, \( 2^α ≤ ω^α \) for all \( α \), so working with this bound seems a significant improvement. 
 But given that for every additive principal ordinal \( α ≥ ω^ω \) in fact \( 2^α = ω^α \) (cf.\ exercise~\ref{ex-ord-cnf-2o}), the distinction between exponentiation in the two bases does little in reducing the complexity of cut elimination.
 
-In the next section I will present a strict refinement of the cut elimination theorem in which ordinal exponentiation is directly tied to the \emph{quantifier} rank of the cut formula rather than the full rank.
+In the next section I will present a strict refinement of the cut elimination theorem in which ordinal exponentiation is directly tied to the \emph{quantifier} rank of the cut formula rather than the complexity.
 
 Let \( ω_0^α ≔ α \) and \( ω_{k+1}^α ≔ ω^{ω_k^α} \).
 
@@ -549,8 +549,7 @@ As the focus is on better bounds on cut elimination, I will switch to base-$2$ e
 %
 %
 \begin{proof}[sketch]
-	From \( \PA_n ⊢ A \) we deduce that \( \PA ⊢ {} ⇒ A \) with a proof in which all cut formulas have implication rank \( < n \) (\cref{oa-partial-ce}).
-%	The reason is that the induction rule is only applied to formulas with n-rank \( ≤ n \) and finitary cut elimination is available in \( \PA \) to reduce the cut rank to formulas of the same n-rank as uses of induction.
+	From \( \PA_n ⊢ A \) we deduce that \( \PA ⊢ {} ⇒ A \) with a proof in which all cut formulas have implication depth \( < n \) (\cref{oa-partial-ce}).
 	The embedding lemma of \( \PA \) into \( \PAo \) yields
 	\( \PAo \prvs{ω.k}{n} {}⇒ A \), so \( \PAo \prv{γ}0 {}⇒ A \) where
 	\[

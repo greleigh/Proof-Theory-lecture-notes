@@ -95,14 +95,14 @@ With terms come formulas.
 
 It is helpful in many cases to associate a numerical measure of \emph{complexity} to (pre-)formulas.
 There are many choices.
-I take the following, which I call the \emph{rank}.
+I take the following.
 
-\begin{definition}[Rank]
-	The \emph{rank} of a pre-formula \( F \) is denoted \( \rk F \) and determined by recursion on its generation:
+\begin{definition}[Formula complexity]
+	The \emph{complexity} of a pre-formula \( F \) is denoted \( \rk F \) and determined by recursion on its generation:
 	\begin{itemize}
 		\item \( \rk F = 0 \) if \( F \) is prime.
-		\item \( \rk{ F ∧ G } = \rk{ F ∨ G } = \rk{ F → G } = \maxof{ \rk F, \rk G} \).
-		\item \( \rk{ ∀x F } = \rk{ ∃x F } = \rk{ F } \).
+		\item \( \rk{ F ∧ G } = \rk{ F ∨ G } = \rk{ F → G } = \maxof{ \rk F, \rk G} + 1 \).
+		\item \( \rk{ ∀x F } = \rk{ ∃x F } = \rk{ F } + 1 \).
 	\end{itemize}
 \end{definition}
 
@@ -235,12 +235,12 @@ Such trees will still maintain another notion of finiteness in the sense of not 
 
 %Although I recap the main
 I assume the reader is familiar with some deduction calculus/proof system for classical predicate logic.
-The precise calculus is not so important, so long as you understand the concept of a derivation system and the kind of object that can constitute a formal proof.
+The precise calculus is not so important, so long as you understand the concept of a derivation system and the kind of object that constitutes a formal proof.
 
 In these notes, I utilise two such calculi: \emph{natural deduction} and \emph{sequent calculi}.
 The latter will be introduced and covered in much detail, beginning in the next chapter.
 Natural deduction will also be given a formal definition.
-But I will gloss over some aspects that would be considered important in a first introduction, assuming that you either have seen the material before (for instance in the course~\citetalias{LogThe}) or can quickly relate the natural deduction calculus to the formal calculus you are most familiar with.
+But I will gloss over some aspects that would be considered important in a first introduction, assuming that you either have seen the material before (for instance, in~\citetalias{LogThe}) or can quickly relate the natural deduction calculus to the formal calculus you are most familiar with.
 
 The various notions of \emph{(formal) deduction/proof}, including those addressed in this work, have a common underlying structure.
 Namely, they are trees in which vertices are labelled by a certain kind of syntactic object --- formulas in the case of natural deduction --- and the relation between the label of a vertex and the label of its children corresponds to one of number of specified \emph{rules of inference}.
@@ -407,18 +407,126 @@ I deliberately refrain from giving a formal definition of what constitutes a cor
 
 %A \emph{deduction} is a finite tree of formulas such that the formula labelling a vertex is related to the formula(s) labelling the children
 %The rules of intuitionistic natural deduction are
-In natural deduction, each logical connective and quantifier is associated two rules: an \emph{introduction} rule and an \emph{elimination} rule.
-In some cases, either category is further split into cases (such as \( \conjE \) below).
+In natural deduction, each logical connective and quantifier is associated two kinds of rule: an \emph{introduction} rule, how to \emph{infer} a formula using the connective, and an \emph{elimination} rule, what can \emph{inferred} from the connective.
+%In some cases, either category is further split into cases (such as \( \conjE \) below).
 
 I present each rule in turn. Unless otherwise stated, in all cases symbols $F$, $G$, $a$, $t$, etc.\@ act as meta-variables ranging over all objects of the appropriate type, rather than denoting specific instances.
+\begin{figure}
+\centering \ebproofset{center=false}
+\begin{gather*}
+\begin{prooftree}
+	\axiom[\assumpo]{F}
+\end{prooftree}
+\qquad
+\begin{prooftree}
+	\axiom[\assumpd]{F}
+\end{prooftree}
+\end{gather*}
+\caption{Natural deduction assumption rules}
+\label{f-ND-ass}
+\end{figure}
+%
+\begin{figure}
+\centering \ebproofset{center=false}
+\begin{gather*}
+\begin{prooftree}
+	\hypo{ [F] }
+	\ellipsis{}{G}
+	\infer1[$\impI$]{ F → G }
+\end{prooftree}
+\qquad
+\begin{prooftree}
+	\hypo{F}
+	\hypo{G}
+	\infer2[$\conjI$]{ F ∧ G }
+\end{prooftree}
+\qquad
+\begin{prooftree}
+	\hypo{ F(a) }
+	\infer1[$\faI_a$]{ ∀x F(x) }
+\end{prooftree}
+\\[8pt]
+\begin{prooftree}
+	\hypo{ F }
+	\infer1[$\disjI_0$]{ F ∨ G }
+\end{prooftree}
+\qquad
+\begin{prooftree}
+	\hypo{ G }
+	\infer1[$\disjI_1$]{ F ∨ G }
+\end{prooftree}
+\qquad
+\begin{prooftree}
+	\hypo{ F(t) }
+	\infer1[$\exI$]{ ∃ x F(x) }
+\end{prooftree}
+\end{gather*}
+\caption{Natural deduction introduction rules}
+\label{f-ND-intro}
+\end{figure}
+%
+\begin{figure}
+\centering \ebproofset{center=false}
+\begin{gather*}
+\begin{prooftree}
+	\hypo{ ⊥ }
+	\infer1[$\botE$]{ F }
+\end{prooftree}
+\qquad
+\begin{prooftree}
+	\hypo{F ∧ G}
+	\infer1[$\conjE_0$]{ F }
+\end{prooftree}
+\qquad
+\begin{prooftree}
+	\hypo{F ∧ G}
+	\infer1[$\conjE_1$]{ G }
+\end{prooftree}
+\qquad
+\begin{prooftree}%[center=false]
+	\hypo{ ∀x F(x) }
+	\infer1[$\faE$]{ F(t) }
+\end{prooftree}
+\\[8pt]
+\begin{prooftree}
+	\hypo{ F → G }
+	\hypo{ F }
+	\infer2[$\impE$]{ G }
+\end{prooftree}
+\qquad
+\begin{prooftree}
+	\hypo{ F ∨ G }
+	\hypo{ [F] }
+	\ellipsis{}{H}
+	\hypo{ [G] }
+	\ellipsis{}{H}
+	\infer3[$\disjE$]{ H }
+\end{prooftree}
+\qquad
+\begin{prooftree}[center=false]
+	\hypo{ ∃x F(x) }
+	\hypo{ [F(a)] }
+	\ellipsis{}{H}
+	\infer2[$\exE_a$]{ H }
+\end{prooftree}
+\end{gather*}
+\caption{Natural deduction elimination rules}
+\label{f-ND-elim}
+\end{figure}
 
-\paragraph{Assumption.} A zero-premise rule for introducing assumptions (leaves of a derivation):
+\paragraph{Assumption.} There are two zero-premise rules for initiating formulas as \emph{assumptions}:
 \[
   \begin{prooftree}
-  	\axiom[\assump]{F}
+  	\axiom[\assumpo]{F}
+  \end{prooftree}
+  \qquad
+  \begin{prooftree}
+  	\axiom[\assumpd]{F}
   \end{prooftree}
 \]
-As the assumption rule is the only zero-premise rule in natural deduction, mention of it will be suppressed.
+The only difference between the rules is their name. The fact that we have two, identical, rules for assumptions is because of their double role, either as \emph{open} assumptions or as assumptions which have been \emph{discharged} by another rule.
+The two rules \( (\assumpo) \) and \( (\assumpd) \) represent this dichotomy: the conclusion of the rule \( (\assumpo) \) will be called an \emph{open} assumption, and conclusions of \( (\assumpd) \) as \emph{discharged}, or \emph{closed}, assumptions.
+%As the assumption rule is the only zero-premise rule in natural deduction, mention of it will be suppressed.
 
 \paragraph{Falsum.} The connective \( ⊥ \) has no introduction rule, but an elimination rule that permits the derivation of any formula from it.
 \[
