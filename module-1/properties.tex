@@ -1,4 +1,28 @@
 %
 \chapter{Properties of the sequent calculus}
 %
-Some content
+
+Height \& cut rank.
+
+\begin{exercise}
+	Devise a function \( f \colon ℕ → ℕ \) such that \( \IL \prv {f(\rk A)} 0 A ⇒ A \) for every formula \( A \), and prove your claim.
+\end{exercise}
+
+% ------------------------------
+\section{Height-preserving translations}
+% ------------------------------
+
+\begin{lemma}[Height preserving weakening]
+	\label{weak-lem-hp}
+	For all sequents \( Γ ⇒ Δ \) and all \( n ,k < ω \),
+	\begin{enumerate}
+		\item If \( \CL \prv n k Γ ⇒ Δ \) then \( \CL \prv n k Γ , Σ ⇒ Δ , Π \) for every \( Σ \) and \( Π \).
+		\item If \( \IL \prv n k Γ ⇒ Δ \) and \( \card{Δ ∪ Π } ≤ 1 \) then \( \IL \prv n k Γ , Σ ⇒ Δ , Π \).
+	\end{enumerate}
+\end{lemma}
+
+
+% ------------------------------
+\section{Negative translations}
+% ------------------------------
+

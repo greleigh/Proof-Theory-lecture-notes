@@ -7,8 +7,36 @@ Now we are getting somewhere
 \bigskip
 
 \begin{itemize}
+	\item Non-classical restrictions
 	\item Subformula and conservativity
 	\item Interpolation theorem -- Exercise.
 	\item Harrop's theorem
 	\item Herbrand's theorem
+\end{itemize}
+
+The separation of classical and intuitionistic logic is usually established by semantic means.
+One show that there certain classical validities are not intuitionistic validities, from which a soundness theorem for intuitionistic logic completes the separation.
+The first application of cut elimination I present is purely syntactic (that is, without recourse to any semantic notions)  counterpart of these theorems.
+%
+\begin{proposition}
+%	The law of excluded middle is not derivable in \( \IL \).
+	There is a formula \( F \) such that 
+	\begin{enumerate}
+		\item \( \CL ⊢ { } ⇒ F \),
+		\item \( \IL ⊬ {} ⇒ F  \).
+	\end{enumerate}
+\end{proposition}
+%
+\begin{proof}
+	A natural choice for \( F \) is an instance of the law of excluded middle. Indeed, let \( P \) be a propositional letter.
+	That \( \CL ⊢ {} ⇒ P ∨ \lnot P \) has already been shown (\cref{CL-exc-mid}).
+	Now suppose, to the contrary, that 
+	\( \IL ⊢ {} ⇒ P ∨ \lnot P  \).
+	By cut elimination (\cref{ce-theorem}), there exists  a cut-free intuitionistic proof, i.e., 
+	\( \IL \prv n 0 {} ⇒ P ∨ \lnot P  \) for some \( n \).
+	As the proof is cut-free, the only rule that can derive this sequent is one of the two \( \disjR \), but then there must be an intuitionistic cut-free proof of either \( ⇒ P \) or \( P ⇒ ⊥ \), neither of which exists as no rule (except cut) can have either sequent as its conclusion.
+\end{proof}
+
+\begin{itemize}
+	\item Peirce
 \end{itemize}

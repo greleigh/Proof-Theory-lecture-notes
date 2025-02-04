@@ -2,13 +2,146 @@
 \chapter{The sequent calculus}
 % --------------------------------------
 
+\begin{itemize}
+	\item Sequents: antecedent \& consequent.
+\end{itemize}
 
+\begin{convention}[Notation for sequents]
+	Uppercase Greek symbols \( Γ \), \( Δ \), etc.\ denote finite sets of formulas. 
+	In the context of sequents, formulas are identified with their singleton set and comma abbreviates (set) union.
+	That is, \( Γ , Δ \) abbreviates \( Γ ∪ Δ \) and \( Γ , F \) abbreviates \( Γ ∪ \setof{ F} \).
+\end{convention}
+
+\begin{itemize}
+	\item The (classical) sequent calculus
+	\item The intuitionistic sequent calculus
+	\item Principal, minor and side.
+	\item On ambiguity of rules
+\end{itemize}
+
+\begin{proposition}
+	\label{SC-IL-in-CL}
+	If \( \IL ⊢ Γ ⇒ Δ \), then \( \CL ⊢ Γ ⇒ Δ \).
+\end{proposition}
+
+% ------------------------------
+\section{Examples}
+% ------------------------------
+
+\begin{example}
+	A couple of examples of SC proofs and one that fails the e-var condition.
+\end{example}
+
+More informative examples are presented by the propositions below.
+For those, however, I need to establish one result about sequent calculus proofs:
+\begin{lemma}[Weakening]
+	\label{weak-lem}
+	For all sequents \( Γ ⇒ Δ \) and \( Σ ⇒ Π \),
+	\begin{enumerate}
+		\item If \( \CL ⊢ Γ ⇒ Δ \) then \( \CL ⊢ Γ , Σ ⇒ Δ , Π \) for every \( Σ \) and \( Π \).
+		\item If \( \IL ⊢ Γ ⇒ Δ \) and \( \card{Δ ∪ Π } ≤ 1 \) then \( \IL ⊢ Γ , Σ ⇒ Δ , Π \).
+	\end{enumerate}
+\end{lemma}
+
+\begin{proposition}
+	\label{CL-id-gen}
+	For every formula \( F \) and set \( Γ \), \( \IL ⊢ F ⇒ F \).
+\end{proposition}
 %
-Some content
+\begin{proof}[by induction on \( \rk F \)]
+	If \( \rk F = 0 \) there are two scenarios:
+	\begin{enumerate}
+		\item \( F = ⊥ \), in which case \( F ⇒ F \) is an instance of \( \botL \).
+		\item \( F \) is atomic, in which case \( F ⇒ F \) is an instance of \( \idRule \).
+	\end{enumerate}
+	If \( \rk F > 0 \), the sequence calculus proof is given by a case distinction on the syntactic form of \( F \).
+	I present two cases.
+	
+	Suppose \( F = G ∧ H \).
+	The induction hypothesis, gives
+	\begin{itemize}
+		\item \( \IL ⊢ G ⇒ G \).
+		\item \( \IL ⊢ H ⇒ H \).
+	\end{itemize}
+	I want to combine these two proofs by an applications of \conjL\ and \conjR\ (in some order).
+	As they stand, however, I cannot do this. 
+	An instance of \conjL\ requires at least two formulas in the antecedent whereas an instance of \conjR\ requires that both premise sequents have the \emph{same} antecedent.
+	This is where the weakening \cref{weak-lem} is needed.
+	By it, I know there are sequent calculus proofs witnessing
+	\begin{itemize}
+		\item \( \IL ⊢ G , H ⇒ G \), and
+		\item \( \IL ⊢ G , H ⇒ H \),
+	\end{itemize}
+	which I can combine via the rules for conjunction:
+	\begin{prooftree*}
+		
+		\subproof{ G, H ⇒ G}
+		\subproof{ G , H ⇒ H }
+		\infer2[\conjR]{ G , H ⇒ F }
+		\infer1[\conjL]{ G ∧ H ⇒ F }
+	\end{prooftree*}
+
+	
+	Now suppose \( F = ∀ x G(x) \).
+	Let \( a \) be a free variable not occurring in \( F \).
+	Since \( \rk{G(a)} < \rk{F} \), the induction implies that \( \IL ⊢ G(a) ⇒ G(a) \). Applications of two quantifier rules creates the desired proof:
+	\begin{prooftree*}
+		\hypo{ G(a) ⇒ G(a)}
+		\infer1[\faL]{ F ⇒ G(a) }
+		\infer1[\faR]{ F ⇒ F }
+	\end{prooftree*}
+	The final rule is applicable because \( a \) fulfils the eigenvariable condition (it does not occur in the concluding sequent \( F ⇒ F \)).
+\end{proof}
+
+\begin{exercise}
+	Complete the missing cases of \cref{CL-id-gen}.
+\end{exercise}
+
+\begin{proposition}
+	\label{CL-exc-mid}
+	For every formula \( F \), \( \CL ⊢ {} ⇒ F ∨ \lnot F \).
+\end{proposition}
+%
+\begin{proof}
+	By \cref{CL-id-gen} and the weakening lemma, I have \( \CL ⊢ F ⇒ F , ⊥ \).
+	Thereby,
+	\begin{prooftree*}
+		\subproof{ F ⇒ F , ⊥  }
+		\infer1[\disjR]{ F ⇒ F ∨ ¬ F , ⊥ }
+		\infer1[\impR]{ ⇒ F ∨ ¬ F , ¬ F }
+		\infer1[\disjR]{ ⇒ F ∨ ¬ F }
+	\end{prooftree*}
+\end{proof}
+In the above proof I use, in the last step, that a formula can be \emph{both} principal and a side formula in the same sequent.
+More specifically, I use an instance of the \( \disjR \) rule:
+\begin{prooftree*}
+	\hypo{ Γ ⇒ Δ , B }
+	\infer1[\disjR]{ Γ ⇒ Δ , A ∨ B }
+\end{prooftree*}
+wherein \( A ∨ B \) is also part of the set \( Δ \) (hence it occurs in the premise also).
+
+This is necessary for the preceding proof, since if I wanted to derive \( ⇒ F ∨ ¬ F \) via \disjR\ \emph{without} any side formula, I would have to derive \emph{either} \( ⇒ F \) or \( ⇒ ¬ F \).
+Instantiating an arbitrary atomic formula for \( F \) shows that neither sequent admits a cut-\emph{free} proof (of course, at this stage there is nothing to imply that if the sequent has a proof \emph{with} cut, then it has one \emph{without} cut).
+
+The above considerations do not apply to intuitionistic logic, as rule \disjR\ given above is intuitionistic iff \( Δ = ∅ \), but can occur with the left rules.
+
+\begin{exercise}
+	Show \( \IL ⊢ F ∧ ¬ F ⇒  \).
+\end{exercise}
+
+
+
+
+% ------------------------------
+\section{On the choice of rules}
+% ------------------------------
 
 \begin{convention}[The rule \( \impL \) in sequent calculi]
 	The rule \( \impL \) in classical or intuitionistic contexts.
 \end{convention}
 
-\bigskip
-Negation translation magic (exercise)
+\begin{itemize}
+	\item Negation.
+\end{itemize}
+
+
